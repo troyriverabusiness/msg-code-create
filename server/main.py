@@ -3,6 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from .models import RouteRequest, RouteOption, StationInfo, RealTimeStatus
 from .services.travel_service import TravelService
 
+# Colleague's router (assuming it's in server/routes/example.py)
+# Using relative import since we are in server/main.py
+try:
+    from .routes.example import router as example_router
+except ImportError:
+    example_router = None
+
 app = FastAPI(title="Smart Travel Assistant API")
 
 # CORS
@@ -13,6 +20,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register Colleague's Router
+if example_router:
+    app.include_router(example_router)
 
 # Service Injection (Simple singleton for now)
 travel_service = TravelService()
@@ -42,3 +53,7 @@ def get_station_info(name: str):
     if not info:
         raise HTTPException(status_code=404, detail="Station not found")
     return info
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
