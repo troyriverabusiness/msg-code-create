@@ -1,0 +1,5 @@
+# Ignore saved API response files
+*.xml
+
+# Keep this file to preserve the folder
+!.gitignore
