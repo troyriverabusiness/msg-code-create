@@ -5,7 +5,7 @@
         <v-col cols="12" md="10" lg="8">
           <div class="db-card">
             <h1 class="db-title">Reiseauskunft</h1>
-            
+
             <div class="db-search-box">
               <v-text-field
                 v-model="prompt.text"
@@ -28,9 +28,9 @@
                 <v-expansion-panel-text>
                   <v-row class="mb-4">
                     <v-col cols="12" sm="5">
-                      <v-combobox 
-                        v-model="prompt.manualInput.start" 
-                        label="Von" 
+                      <v-combobox
+                        v-model="prompt.manualInput.start"
+                        label="Von"
                         variant="outlined"
                         density="comfortable"
                         hide-details
@@ -42,27 +42,27 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" sm="5">
-                      <v-combobox 
-                        v-model="prompt.manualInput.destination" 
-                        label="Nach" 
+                      <v-combobox
+                        v-model="prompt.manualInput.destination"
+                        label="Nach"
                         variant="outlined"
                         density="comfortable"
                         hide-details
                       />
                     </v-col>
                   </v-row>
-                  
+
                   <v-row class="mb-4">
                     <v-col cols="12" sm="6">
-                      <DateTimePicker 
-                        v-model="prompt.manualInput.departureDate" 
-                        label="Hinfahrt" 
+                      <DateTimePicker
+                        v-model="prompt.manualInput.departureDate"
+                        label="Hinfahrt"
                       />
                     </v-col>
                     <v-col cols="12" sm="6">
-                      <DateTimePicker 
-                        v-model="prompt.manualInput.returnDate" 
-                        label="Rückfahrt (optional)" 
+                      <DateTimePicker
+                        v-model="prompt.manualInput.returnDate"
+                        label="Rückfahrt (optional)"
                       />
                     </v-col>
                   </v-row>
@@ -93,9 +93,9 @@
 
                   <v-row class="mt-4">
                     <v-col cols="12">
-                      <v-btn 
-                        color="#EC0016" 
-                        size="large" 
+                      <v-btn
+                        color="#EC0016"
+                        size="large"
                         class="db-search-btn"
                         @click="send"
                       >
