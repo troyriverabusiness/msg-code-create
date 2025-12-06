@@ -1,15 +1,16 @@
 from pydantic import BaseModel
 from typing import List, Optional
 from .station import Station
-from .leg import Leg
+from .train import Train
+from .stationChange import StationChange
 
 class Journey(BaseModel):
-    id: str
     startStation: Station
     endStation: Station
     
-    legs: List[Leg]
-    transfers: int
+    trains: List[Train]
+    # Can be direct trains
+    changes: Optional[List[StationChange]]
 
     totalTime: int
     description: str
