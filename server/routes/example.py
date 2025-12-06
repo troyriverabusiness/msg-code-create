@@ -3,7 +3,7 @@
 from fastapi import APIRouter
 from server.service import example_service
 
-router = APIRouter(prefix="/api", tags=["example"])
+router = APIRouter(prefix="/api/v1", tags=["example"])
 
 
 @router.get("/hello")
