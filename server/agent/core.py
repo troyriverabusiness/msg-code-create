@@ -210,15 +210,31 @@ def get_bearer_token() -> str:
 
 
 def get_agent_executor():
-    """Initialize the LangGraph agent with Bedrock bearer token auth."""
-    bearer_token = get_bearer_token()
-    region = AWS_REGION
+    """Initialize the LangGraph agent with Bedrock auth (Long-term or Bearer)."""
+    from server.service.config import AWS_ACCESS_KEY, AWS_SECRET
+    from langchain_aws import ChatBedrock
 
-    llm = BedrockBearerTokenLLM(
-        bearer_token=bearer_token,
-        region=region,
-        model_id=MODEL_ID
-    )
+    region = AWS_REGION
+    
+    # Priority 1: Long-term credentials (standard ChatBedrock)
+    if AWS_ACCESS_KEY and AWS_SECRET:
+        print("Using AWS Long-Term Credentials")
+        llm = ChatBedrock(
+            model_id=MODEL_ID,
+            region_name=region,
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET,
+            model_kwargs={"temperature": 0.1, "max_tokens": 2048}
+        )
+    # Priority 2: Short-term Bearer Token (Custom LLM)
+    else:
+        print("Using AWS Bearer Token")
+        bearer_token = get_bearer_token()
+        llm = BedrockBearerTokenLLM(
+            bearer_token=bearer_token,
+            region=region,
+            model_id=MODEL_ID
+        )
 
     tools = [get_live_departures, get_train_details]
 

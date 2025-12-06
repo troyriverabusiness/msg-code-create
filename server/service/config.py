@@ -27,7 +27,7 @@ API_KEY = os.getenv("TROY_API_KEY")
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
 AWS_SECRET = os.getenv("AWS_SECRET")
 AWS_SHORT_TERM_KEY = os.getenv("AWS_SHORT_TERM_KEY")
-AWS_REGION = "eu-central-1"
+AWS_REGION = os.getenv("AWS_REGION", "eu-central-1")
 BEDROCK_MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"
 
 # Data directory for saving responses

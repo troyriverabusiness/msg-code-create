@@ -1,5 +1,50 @@
-# vibe-template
-Perfect repo template for you to start vibecoding
+# Smart Travel Assistant 🚆✨
+
+A hackathon project combining **GTFS** (Static Schedule), **NeTEx** (Accessibility/Platforms), and **DB Timetables API** (Live Data) with an **AI Agent** (LangGraph + Bedrock) to provide intelligent travel assistance.
+
+## 🚀 Quick Start
+
+### 1. Setup Environment
+Ensure you have `uv` installed.
+
+```bash
+# Install dependencies
+uv sync
+```
+
+### 2. Configure Credentials
+Create a `server/.env` file with your API keys:
+
+```bash
+cp server/.env.example server/.env
+```
+
+Required keys:
+*   `TROY_API_CLIENT` / `TROY_API_KEY`: DB Timetables API (Primary)
+*   `LARS_API_CLIENT` / `LARS_API_KEY`: DB Timetables API (Fallback)
+*   `AWS_SHORT_TERM_KEY`: AWS Bedrock Bearer Token (expires every 12h)
+*   `AWS_REGION`: `eu-central-1`
+
+### 3. Data Ingestion (One-Time)
+Populate the SQLite database with GTFS and NeTEx data:
+
+```bash
+./scripts/reset_data.sh
+```
+
+### 4. Run the System
+
+**Start the API Server:**
+```bash
+uv run server/main.py
+```
+> API available at: http://localhost:8000/docs
+> Frontend at: http://localhost:8000
+
+**Run the AI Agent CLI:**
+```bash
+uv run -m scripts.chat_cli
+```
 
 
 ## API Endpoints
