@@ -1,9 +1,9 @@
 import sqlite3
 from pathlib import Path
 from typing import List, Dict, Optional
-from ..models import RouteOption, PlatformInfo, StationInfo
+from ..models import RouteOption, PlatformInfo, StationInfo, Leg, Train, Station
 
-DB_PATH = Path("server/data/travel.db")
+DB_PATH = Path(__file__).parent.parent / "data" / "travel.db"
 
 from .simulation import SimulationService
 
@@ -14,13 +14,32 @@ class TravelService:
         self.simulation = SimulationService()
 
     def get_all_station_ids(self, name: str) -> List[str]:
-        # 1. Find the parent station (or any match)
-        cursor = self.conn.execute(
-            "SELECT stop_id, parent_station FROM stations WHERE stop_name LIKE ? LIMIT 1", 
-            (f"%{name}%",)
-        )
-        row = cursor.fetchone()
+        # Normalize name for better matching
+        # 1. Try exact/like match first
+        # 2. Try swapping Hbf <-> Hauptbahnhof
+        
+        search_terms = [name]
+        if "Hbf" in name:
+            search_terms.append(name.replace("Hbf", "Hauptbahnhof"))
+        elif "Hauptbahnhof" in name:
+            search_terms.append(name.replace("Hauptbahnhof", "Hbf"))
+            
+        # Also try "Frankfurt (Main) Hbf" -> "Frankfurt(Main)Hbf" (remove spaces)
+        # But DB seems to have spaces "Frankfurt (Main) Hauptbahnhof"
+        
+        row = None
+        for term in search_terms:
+            cursor = self.conn.execute(
+                "SELECT stop_id, parent_station FROM stations WHERE stop_name LIKE ? LIMIT 1", 
+                (f"%{term}%",)
+            )
+            row = cursor.fetchone()
+            if row:
+                break
+                
         if not row:
+            # Fallback: Try fuzzy search without "Hbf" part if it failed? 
+            # Risk of matching wrong station.
             return []
             
         primary_id = row['stop_id']
@@ -144,3 +163,69 @@ class TravelService:
             facilities=list(facilities),
             entrances=["Main Entrance"] # Stub
         )
+
+    def find_segment(self, start_name: str, end_name: str, time_str: str) -> List[Leg]:
+        start_ids = self.get_all_station_ids(start_name)
+        end_ids = self.get_all_station_ids(end_name)
+        
+        if not start_ids or not end_ids:
+            return []
+
+        start_ph = ','.join(['?'] * len(start_ids))
+        end_ph = ','.join(['?'] * len(end_ids))
+
+        query = f"""
+            SELECT 
+                t.trip_id,
+                t.trip_short_name,
+                r.route_short_name,
+                t.trip_headsign,
+                st1.departure_time as start_time,
+                st2.arrival_time as end_time,
+                s1.stop_name as start_station,
+                s1.stop_id as start_id,
+                s2.stop_name as end_station,
+                s2.stop_id as end_id,
+                p.name as platform_name,
+                p.height as platform_height
+            FROM trips t
+            JOIN routes r ON t.route_id = r.route_id
+            JOIN stop_times st1 ON t.trip_id = st1.trip_id
+            JOIN stop_times st2 ON t.trip_id = st2.trip_id
+            JOIN stations s1 ON st1.stop_id = s1.stop_id
+            JOIN stations s2 ON st2.stop_id = s2.stop_id
+            LEFT JOIN platforms p ON st1.stop_id = p.global_id
+            WHERE st1.stop_id IN ({start_ph}) 
+              AND st2.stop_id IN ({end_ph})
+              AND st1.stop_sequence < st2.stop_sequence
+              AND st1.departure_time >= ?
+            ORDER BY st1.departure_time LIMIT 10
+        """
+        
+        params = start_ids + end_ids + [time_str]
+        cursor = self.conn.execute(query, params)
+        
+        legs = []
+        for row in cursor:
+            train = Train(
+                name=row['route_short_name'],
+                trainNumber=row['trip_short_name'] or "",
+                startLocation=Station(name=row['start_station'], eva=row['start_id']),
+                endLocation=Station(name=row['end_station'], eva=row['end_id']),
+                departureTime=row['start_time'],
+                arrivalTime=row['end_time'],
+                path=[], 
+                platform=0, 
+                wagons=[]
+            )
+            
+            legs.append(Leg(
+                origin=Station(name=row['start_station'], eva=row['start_id']),
+                destination=Station(name=row['end_station'], eva=row['end_id']),
+                train=train,
+                departureTime=row['start_time'],
+                arrivalTime=row['end_time']
+            ))
+            
+        return legs
+

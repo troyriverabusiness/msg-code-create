@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from server.service import connections
-from server.models.API import ConnectionsRequest, ConnectionsResponse
+from server.models.connection_schema import ConnectionsRequest, ConnectionsResponse
 
 router = APIRouter(prefix="/api/v1", tags=["connections"])
 

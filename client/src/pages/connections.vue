@@ -1,215 +1,205 @@
 <template>
-    <v-row class="ma-1">
-      <v-col cols="12">
-        
-      </v-col>
+  <v-container>
+    <!-- Search Form -->
+    <v-card class="mb-4 pa-4" elevation="2">
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="search.origin"
+            label="Start Station"
+            prepend-inner-icon="mdi-train"
+            variant="outlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="search.destination"
+            label="Destination"
+            prepend-inner-icon="mdi-flag-checkered"
+            variant="outlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="2">
+          <v-text-field
+            v-model="search.time"
+            label="Time (HH:MM)"
+            type="time"
+            variant="outlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="2" class="d-flex align-center">
+          <v-btn
+            color="primary"
+            block
+            height="56"
+            :loading="store.loading"
+            @click="doSearch"
+          >
+            Search
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+
+    <!-- Error Alert -->
+    <v-alert
+      v-if="store.error"
+      type="error"
+      title="Error"
+      class="mb-4"
+      closable
+    >
+      {{ store.error }}
+    </v-alert>
+
+    <!-- Results List -->
+    <v-row v-if="store.connections.length > 0">
       <v-col cols="12">
         <v-expansion-panels>
-          <v-expansion-panel v-for="item in items" :key="item.name">
+          <v-expansion-panel v-for="journey in store.connections" :key="journey.id">
             <template #title>
               <v-row no-gutters align="center" class="w-100">
-                <v-col cols="1" class="text-left pl-2">
-                  <div class="line-badge">{{ item.line }}</div>
+                <!-- Line / Badge -->
+                <v-col cols="2" sm="1" class="text-left pl-2">
+                  <div class="line-badge">
+                    {{ getJourneyLabel(journey) }}
+                  </div>
+                  <div class="transfers-badge" v-if="journey.transfers > 0">
+                    {{ journey.transfers }} Transfer(s)
+                  </div>
                 </v-col>
-                <v-col cols="8">
+                
+                <!-- Route Info -->
+                <v-col cols="7" sm="8">
                   <div class="route-text">
-                    {{ item.route }}
+                    {{ formatTime(journey.legs[0].departureTime) }} • {{ journey.startStation.name }}
                   </div>
                   <div class="destination-text">
-                    {{ item.destination }}
+                    → {{ journey.endStation.name }}
+                  </div>
+                  <div class="caption text-grey">
+                     Duration: {{ formatDuration(journey.totalTime) }}
                   </div>
                 </v-col>
+                
+                <!-- Times -->
                 <v-col cols="3" class="text-right pr-2">
-                  <div class="time-scheduled">{{ item.scheduled_time }}</div>
-                  <div class="time-actual">{{ item.actual_time }}</div>
+                  <div class="time-scheduled">
+                    {{ formatTime(journey.legs[journey.legs.length-1].arrivalTime) }}
+                  </div>
                 </v-col>
               </v-row>
             </template>
+            
             <v-expansion-panel-text>
-              <CoachSequence :coaches="item.coaches"/>
               <div class="panel-content">
-                <p>Weitere Informationen und Optionen hier...</p>
+                <!-- Iterate over Legs -->
+                <v-timeline density="compact" align="start">
+                  <v-timeline-item
+                    v-for="(leg, index) in journey.legs"
+                    :key="index"
+                    dot-color="primary"
+                    size="small"
+                  >
+                    <div class="mb-2">
+                      <div class="font-weight-bold">
+                        {{ formatTime(leg.departureTime) }} - {{ leg.origin.name }}
+                      </div>
+                      <div>
+                        <v-icon icon="mdi-train" size="small" class="mr-1"></v-icon>
+                        {{ leg.train.name }} ({{ leg.train.trainNumber }})
+                        to {{ leg.destination.name }}
+                      </div>
+                      <div class="text-caption text-grey">
+                        Arr: {{ formatTime(leg.arrivalTime) }}
+                      </div>
+                    </div>
+                  </v-timeline-item>
+                </v-timeline>
               </div>
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
       </v-col>
     </v-row>
+    
+    <v-sheet v-else-if="!store.loading && hasSearched" class="pa-4 text-center text-grey">
+      No connections found.
+    </v-sheet>
+  </v-container>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import CoachSequence from '@/components/CoachSequence.vue'
+import { ref, reactive } from 'vue'
+import { useBackendCalls } from '@/stores/backendCalls'
 
-const items = ref([
-  {
-    name: 'RE 54',
-    line: 'RE 54',
-    route: 'Frankfurt (Main) Süd - Hanau Hbf - Aschaffenburg Hbf',
-    destination: 'Würzburg Hbf',
-    scheduled_time: '23:30',
-    actual_time: '23:30',
-    coaches: [
-  {
-    number: '1',
-    type: '1st Class',
-    available: true,
-    isQuiet: false,
-    isFamily: true,
-    isBarrierefrei: true,
-    hasBikes: false,
-    load: 45,
-  },
-  {
-    number: '2',
-    type: '2nd Class',
-    available: true,
-    isQuiet: true,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: true,
-    load: 60,
-  },
-  {
-    number: '3',
-    type: '2nd Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: true,
-    hasBikes: true,
-    load: 30,
-  },
-  {
-    number: '4',
-    type: 'Bistro',
-    available: false,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: false,
-    load: 0,
-  },
-  {
-    number: '5',
-    type: '2nd Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: false,
-    load: 75,
-  },
-  {
-    number: '6',
-    type: '1st Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: true,
-    hasBikes: false,
-    load: 50,
-  },
-]
-  },
-  {
-    name: 'ICE 690',
-    line: 'ICE 690',
-    route: 'Frankfurt Hbf - Mannheim Hbf - Karlsruhe Hbf',
-    destination: 'Munich Hbf',
-    scheduled_time: '10:05',
-    actual_time: '10:10'
-  }
-])
+const store = useBackendCalls()
+const hasSearched = ref(false)
 
-    const mockTrainRouteOption = {
-      
-  // 🚂 Die Route Option (The "Card") - Kurzübersicht für Listenansicht
-  trip_id: "ICE690_F-H_20251205",
-  line_name: "ICE 690",
-  type: "ICE", // Für visuelle Darstellung (Icon)
+const search = reactive({
+  origin: 'Frankfurt (Main) Hbf',
+  destination: 'München Hbf',
+  time: '08:00'
+})
+
+async function doSearch() {
+  hasSearched.value = true
+  // TODO: Construct full ISO date if needed by backend, currently passing time string mostly
+  // Backend expects HH:MM:SS or ISO. Let's send ISO for today with this time.
+  const today = new Date().toISOString().split('T')[0]
+  const isoDate = `${today}T${search.time}:00`
   
-  times: {
-    scheduled_departure: "10:00",
-    real_time_departure: "10:05",
-    delay_minutes: 5,
-    scheduled_arrival: "11:30",
-    real_time_arrival: "11:35"
-  },
-  
-  platform: {
-    name: "Gleis 4",
-    // Info aus pathways.txt (oder ähnlicher Quelle)
-    accessibility: "Barrierefreier Zugang (Aufzug/Rampe)" 
-  },
-  
-  // Simulationswert, z.B. basierend auf Wochentag/Uhrzeit
-  occupancy: "high", // Mögliche Werte: 'low', 'medium', 'high', 'full'
-  
-  // 🏢 Stationsdetails (The "Context") - Zusätzliche Infos
-  station_details: {
-    name: "Frankfurt (Main) Hbf",
-    
-    // Abgeleitet aus pathways.txt
-    facilities: [
-      { name: "Aufzug Gleis 4", status: "operational" },
-      { name: "Rolltreppe Gleis 4", status: "operational" },
-      { name: "Information", status: "operational" }
-    ],
-    
-    // Abgeleitet aus NeTEx/GTFS
-    entrances: [
-      { name: "Haupteingang (Süden)", accessibility: "Barrierefrei" },
-      { name: "Eingang Nordseite", accessibility: "Eingeschränkte Barrierefreiheit" }
-    ]
-  },
-  
-  // ⚠️ Echtzeit-Status (The "Ticker") - Wichtige Meldungen (SIRI)
-  real_time_status: {
-    is_disrupted: true, // Ist die Fahrt betroffen?
-    
-    // Abgeleitet aus SIRI oder anderen Echtzeit-Quellen
-    messages: [
-      { 
-        severity: "critical", 
-        text: "Zug fällt wegen technischer Störung aus.",
-        source: "SIRI"
-      }
-    ],
-    
-    // Logik für Alternativen bei Ausfall
-    alternatives: [
-      {
-        line_name: "IC 2018",
-        departure: "10:20",
-        platform: "Gleis 5"
-      },
-      {
-        line_name: "RB 82 (via Offenbach)",
-        departure: "10:15",
-        platform: "Gleis 8"
-      }
-    ]
-  }
-};
+  await store.fetchConnections(search.origin, search.destination, isoDate)
+}
+
+function getJourneyLabel(journey) {
+  // Use the first train's name (e.g. ICE)
+  return journey.legs[0].train.name.split(' ')[0]
+}
+
+function formatTime(isoString) {
+  // Handles HH:MM:SS
+  if (!isoString) return ''
+  const parts = isoString.split(':')
+  return `${parts[0]}:${parts[1]}`
+}
+
+function formatDuration(minutes) {
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return `${h}h ${m}m`
+}
 </script>
 
 <style scoped>
 .line-badge {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: rgb(217, 46, 40);
   letter-spacing: 0.5px;
 }
 
+.transfers-badge {
+  font-size: 11px;
+  color: #666;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px 4px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
 .route-text {
   font-size: 14px;
   color: #666;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .destination-text {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
 }
@@ -220,19 +210,8 @@ const items = ref([
   color: #333;
 }
 
-.time-actual {
-  font-size: 13px;
-  color: #7ed321;
-  margin-top: 8px;
-}
-
 .panel-content {
   padding: 12px 0;
-}
-
-.panel-content p {
-  margin: 8px 0;
-  color: #333;
 }
 
 .w-100 {

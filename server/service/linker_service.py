@@ -64,14 +64,6 @@ class LinkerService:
         """
         is_today = date.date() == datetime.now().date()
         
-        if is_today:
-            # Try to get live data
-            # We need the EVA number of a station on the trip to query the API.
-            # But TimetableService needs EVA. We only have trip_id.
-            # We can get the static stops first, then query live data for the start station?
-            # Or just use the static data and enrich it?
-            pass
-            
         # For MVP, we always fetch static data first as the base
         static_details = self._get_static_trip_details(trip_id)
         if not static_details:
@@ -80,47 +72,24 @@ class LinkerService:
         if is_today:
             # Enrich with Live Data
             # TODO: Implement live enrichment properly.
-            # For now, we just return static.
-            # Real implementation would query TimetableService for the start station of the trip
-            # and find this specific train to get live delays.
             pass
         else:
-            # Simulate Delay
-            # TODO: Use Data-Driven Simulation here later.
-            # For now, use the simple random simulation.
-            delay = self.simulation_service.get_delay(static_details['train'])
-            if delay > 0:
-                static_details['messages'] = [f"Simulated delay: +{delay} min"]
-                # Adjust times? Or just add delay field?
-    def get_trip_details(self, trip_id: str) -> Dict:
-        """
-        Get details for a specific trip (stops, times).
-        """
-        conn = self._get_conn()
-        cursor = conn.cursor()
+            # Simulate Delay using Data-Driven Simulation
+            if 'stops' in static_details and static_details['stops']:
+                first_stop = static_details['stops'][0]
+                station_name = first_stop['station']
+                try:
+                    hour = int(first_stop['departure'].split(':')[0])
+                except:
+                    hour = 12
+                
+                delay = self.simulation_service.get_delay(static_details['train'], station_name, hour)
+                
+                if delay > 0:
+                    static_details['messages'] = [f"Predicted delay: +{delay} min (Historical Data)"]
+                    static_details['delay'] = delay
         
-        cursor.execute("""
-            SELECT s.stop_name, st.arrival_time, st.departure_time, st.stop_sequence
-            FROM stop_times st
-            JOIN stations s ON st.stop_id = s.stop_id
-            WHERE st.trip_id = ?
-            ORDER BY st.stop_sequence
-        """, (trip_id,))
-        
-        stops = []
-        for row in cursor.fetchall():
-            stops.append({
-                "name": row[0],
-                "arrival": row[1],
-                "departure": row[2]
-            })
-            
-        conn.close()
-        
-        return {
-            "trip_id": trip_id,
-            "stops": stops
-        }
+        return static_details
 
     def find_trips(self, origin_id: str, dest_id: str, date_str: str, min_time: str) -> List[Dict]:
         """

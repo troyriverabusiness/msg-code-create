@@ -4,11 +4,11 @@ from server.models.connection_schema import ConnectionsRequest
 def test_hybrid_flow():
     print("Testing Hybrid Flow...")
     
-    # Test Case: Frankfurt to Munich (Major Hubs)
+    # Test Case: Hainichen to Niederwiesa (Known Route)
     req = ConnectionsRequest(
-        origin="Frankfurt (Main) Hbf",
-        destination="München Hbf",
-        date="2025-12-12T14:00:00"
+        origin="Hainichen, Bahnhof",
+        destination="Niederwiesa",
+        date="2025-12-12T04:30:00"
     )
     
     print(f"Request: {req.origin} -> {req.destination} at {req.date}")
@@ -24,9 +24,9 @@ def test_hybrid_flow():
         print(f"SUCCESS: Found journey {journey.id}")
         print(f" - Start: {journey.startStation.name}")
         print(f" - End: {journey.endStation.name}")
-        print(f" - Trains: {len(journey.trains)}")
-        for train in journey.trains:
-            print(f"   - {train.name}: {train.startLocation.name} -> {train.endLocation.name}")
+        print(f" - Legs: {len(journey.legs)}")
+        for leg in journey.legs:
+            print(f"   - {leg.train.name}: {leg.origin.name} -> {leg.destination.name}")
             
     except Exception as e:
         print(f"CRASHED: {e}")

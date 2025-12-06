@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, Optional
 import random
+import sqlite3
 
 # For MVP, we use the sample message.txt as our "Live Feed" source
 SIRI_PATH = Path("datachaos/message.txt")
@@ -17,8 +18,18 @@ class SimulationService:
             return
 
         try:
-            tree = ET.parse(SIRI_PATH)
-            root = tree.getroot()
+            with open(SIRI_PATH, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Wrap in a root element to handle multiple <s> elements
+            # and remove potential trailing junk like '%' and XML declarations
+            content = content.strip().rstrip('%')
+            if content.startswith("<?xml"):
+                content = content.split("?>", 1)[1]
+            
+            xml_content = f"<root>{content}</root>"
+            
+            root = ET.fromstring(xml_content)
             
             # Namespace map (SIRI often uses namespaces)
             # We'll just search by tag name for simplicity in MVP
@@ -41,14 +52,39 @@ class SimulationService:
         except Exception as e:
             print(f"Error parsing SIRI: {e}")
 
-    def get_delay(self, train_number: str) -> int:
-        # Return known delay or 0
-        # For demo "aliveness", we can add random jitter
+    def get_delay(self, train_number: str, station_name: str = None, hour: int = None) -> int:
+        """
+        Get simulated delay based on historical patterns.
+        """
+        # 1. Try to query DB if station and hour are provided
+        if station_name and hour is not None:
+            try:
+                conn = sqlite3.connect("server/data/travel.db")
+                cursor = conn.cursor()
+                
+                # Clean train number (remove letters)
+                import re
+                clean_number = re.search(r'\d+', str(train_number))
+                clean_number = clean_number.group(0) if clean_number else train_number
+                
+                cursor.execute("""
+                    SELECT avg_delay FROM delay_patterns 
+                    WHERE train_number = ? AND station_name = ? AND hour_of_day = ?
+                """, (clean_number, station_name, hour))
+                
+                row = cursor.fetchone()
+                conn.close()
+                
+                if row:
+                    return int(row[0])
+            except Exception as e:
+                print(f"Simulation DB Error: {e}")
+
+        # 2. Fallback: Return known delay from manual overrides
         if train_number in self.delays:
             return self.delays[train_number]
         
-        # Randomly delay 10% of other trains
-        # Use hash of train number to be consistent
+        # 3. Fallback: Random simulation
         h = hash(train_number)
         if h % 10 == 0:
             return (h % 15) + 1 # 1-15 min delay
