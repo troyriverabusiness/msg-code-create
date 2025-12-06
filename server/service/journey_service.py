@@ -41,6 +41,25 @@ class JourneyService:
                     
                     for l2 in leg2_options:
                         # Create Journey
+                        # TODO: Propagate delays.
+                        # If l1 has delay, l1.arrivalTime increases.
+                        # min_departure_dt must be calculated from REAL arrival time.
+                        
+                        # Update legs with delay info
+                        # We already have delay from TravelService (populated in find_segment)
+                        # But we might want to refresh it or just use it.
+                        # Since find_segment calls simulation, l1.delayInMinutes and l2.delayInMinutes should be set.
+                        
+                        delay1 = l1.delayInMinutes
+                        delay2 = l2.delayInMinutes
+                        
+                        real_arrival_l1 = arrival_dt + timedelta(minutes=delay1)
+                        real_departure_l2 = self._parse_time(l2.departureTime) + timedelta(minutes=delay2)
+                        
+                        # Check if transfer is still possible (e.g. 5 min buffer)
+                        if real_departure_l2 < real_arrival_l1 + timedelta(minutes=5):
+                            continue # Transfer broken by delay
+                            
                         journeys.append(self._create_journey([l1, l2]))
                 except Exception as e:
                     # print(f"Error processing transfer at {transfer_station}: {e}")

@@ -219,12 +219,16 @@ class TravelService:
                 wagons=[]
             )
             
+            # Get delay
+            delay = self.simulation.get_delay(train.trainNumber)
+            
             legs.append(Leg(
                 origin=Station(name=row['start_station'], eva=row['start_id']),
                 destination=Station(name=row['end_station'], eva=row['end_id']),
                 train=train,
                 departureTime=row['start_time'],
-                arrivalTime=row['end_time']
+                arrivalTime=row['end_time'],
+                delayInMinutes=delay
             ))
             
         return legs

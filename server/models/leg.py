@@ -8,3 +8,4 @@ class Leg(BaseModel):
     train: Train
     departureTime: str
     arrivalTime: str
+    delayInMinutes: int = 0
