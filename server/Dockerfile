@@ -5,13 +5,15 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 WORKDIR /app
 
-# Copy project files
-COPY pyproject.toml ./
-COPY main.py ./
+# Copy all files from server directory to /app/server/ to match import structure
+COPY . ./server/
 
-# Install dependencies
-RUN uv sync 
+# Install dependencies (uv sync needs pyproject.toml)
+WORKDIR /app/server
+RUN uv sync
 
-# Run the application
-CMD ["uv", "run", "python", "main.py"]
+# Run the application (from /app so server package is importable)
+WORKDIR /app
+ENV PYTHONPATH=/app
+CMD ["uv", "run", "--directory", "/app/server", "uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8000"]
 

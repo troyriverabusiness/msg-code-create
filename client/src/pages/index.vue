@@ -3,9 +3,26 @@
     <v-container class="db-container">
       <v-row justify="center">
         <v-col cols="12" md="10" lg="8">
+          
           <div class="db-card">
             <h1 class="db-title">Reiseauskunft</h1>
-
+          <v-row v-if="showPrePlan" justify="center">
+            <v-col cols="12" md="10" lg="8">
+              <v-card class="db-preplan-card" outlined color="#F5F5F7">
+                <v-card-title class="db-preplan-title" style="color: #444;">Pre-Plan</v-card-title>
+                <v-progress-linear
+                  v-if="loading"
+                  indeterminate
+                  color="grey"
+                  height="4"
+                  class="mb-2"
+                />
+                <v-card-text v-if="!loading && prePlan" class="db-preplan-text" style="color: #444;">
+                  {{ prePlan }}
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
             <div class="db-search-box">
               <v-text-field
                 v-model="prompt.text"
@@ -115,11 +132,42 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
+  import { useBackendCalls } from '@/stores/backendCalls'
   import DateTimePicker from '@/components/DateTimePicker.vue'
+
+  const backendCallsStore = useBackendCalls()
+
 
   const verkehrsmittel = ref(['ICE', 'IC', 'RE', 'RB', 'S-Bahn', 'U-Bahn', 'Tram', 'Bus'])
   const umstiegszeiten = ref(['5 Minuten', '10 Minuten', '15 Minuten', '20 Minuten', '30 Minuten'])
+
+  const showPrePlan = ref(true)
+  const loading = ref(true)
+
+  const prePlan2 = computed(() => "Based on the preferences you provided, I’ve recommended the following trip from Frankfurt to Hamburg. This route offers a good balance between travel time, convenience, and connection reliability. You’ll depart from Frankfurt Hbf and arrive in Hamburg Hbf with a smooth, direct connection. The total travel duration is around 3 hours and 15 minutes, which is one of the fastest options available for your selected date. If you’d like, I can also show you alternative routes with more flexibility in departure times or lower prices.")
+
+  const prePlan = "Based on the preferences you provided, I’ve recommended the following trip from Frankfurt to Hamburg. This route offers a good balance between travel time, convenience, and connection reliability. You’ll depart from Frankfurt Hbf and arrive in Hamburg Hbf with a smooth, direct connection. The total travel duration is around 3 hours and 15 minutes, which is one of the fastest options available for your selected date. If you’d like, I can also show you alternative routes with more flexibility in departure times or lower prices."
+
+  const trip = {
+  start: "Hamburg",
+  dest: "Berlin",
+  travel_duration: "2h 05m",
+  start_date: "2025-01-12",
+  connection_plan: {
+    type: "train",
+    provider: "DB",
+    legs: [
+      {
+        from: "Hamburg Hbf",
+        to: "Berlin Hbf",
+        departure: "10:30",
+        arrival: "12:35",
+        platform: "8"
+      }
+    ]
+  }
+};
 
   const prompt = ref({
     text: null,
@@ -134,6 +182,9 @@
   })
 
   async function send () {
+    showPrePlan.value = true
+
+
     console.log('Sending prompt to backend')
     console.log(prompt.value)
   }
@@ -304,5 +355,26 @@
 
 .mt-4 {
   margin-top: 1rem;
+}
+
+.db-preplan-card {
+  margin-bottom: 2rem;
+  background: #F5F5F7;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(44,44,44,0.07);
+  padding: 1.5rem 2rem;
+}
+.db-preplan-title {
+  color: #EC0016;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.db-preplan-text {
+  color: #282D37;
+  font-size: 1.05rem;
+  font-family: inherit;
+  white-space: pre-line;
 }
 </style>

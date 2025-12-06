@@ -1,0 +1,5 @@
+--- Searching for Frankfurt ---
+['Frankfurt (Main) Burgstraße', 'Frankfurt (Main) Prüfling', 'Frankfurt (Main) Prüfling', 'Frankfurt (Main) Bornheim Mitte', 'Frankfurt (Main) Bornheim Mitte', 'Frankfurt (Main) Saalburg-/Wittelsbacherallee', 'Frankfurt (Main) Saalburg-/Wittelsbacherallee', 'Frankfurt (Main) Eissporthalle/Festplatz', 'Frankfurt (Main) Eissporthalle/Festplatz', 'Eschborn Frankfurter Straße', 'Eschborn Frankfurter Straße', 'Bad Vilbel Alte Frankfurter Straße', 'Bad Vilbel Alte Frankfurter Straße', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof', 'Frankfurt (Main) Hauptbahnhof']
+
+--- Searching for Berlin ---
+[]

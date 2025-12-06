@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB Live Station Board</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e30613;
+            /* DB Red */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c50511;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #404040;
+        }
+
+        th {
+            background-color: #333;
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .time-col {
+            width: 80px;
+        }
+
+        .train-col {
+            width: 120px;
+            font-weight: bold;
+        }
+
+        .plat-col {
+            width: 80px;
+            text-align: center;
+        }
+
+        .delayed {
+            color: #ff4d4d;
+        }
+
+        .platform-change {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .message {
+            font-size: 0.85em;
+            color: #ffd700;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>DB Live Station Board</h1>
+
+        <div class="search-box">
+            <input type="text" id="stationInput" placeholder="Station Name (e.g. München Hbf)" value="München Hbf">
+            <button onclick="fetchBoard()">Show Board</button>
+        </div>
+
+        <div id="results">
+            <!-- Table will go here -->
+        </div>
+
+        <hr style="border: 1px solid #333; margin: 40px 0;">
+
+        <h2>Travel Assistant Agent 🤖</h2>
+        <div class="chat-container" style="background: #2d2d2d; padding: 20px; border-radius: 8px;">
+            <div id="chatOutput"
+                style="height: 200px; overflow-y: auto; border: 1px solid #404040; padding: 10px; margin-bottom: 10px; background: #1a1a1a;">
+                <div style="color: #888;">Ask me about trains, delays, or station info...</div>
+            </div>
+            <div style="display: flex;">
+                <input type="text" id="chatInput" placeholder="e.g. Is the ICE 690 on time?" style="flex-grow: 1;">
+                <button onclick="sendMessage()" style="background-color: #4CAF50;">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBoard() {
+            const station = document.getElementById('stationInput').value;
+            const resultsDiv = document.getElementById('results');
+
+            resultsDiv.innerHTML = '<div class="loading">Loading live data...</div>';
+
+            try {
+                const response = await fetch(`/api/v1/live/${encodeURIComponent(station)}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    resultsDiv.innerHTML = `<div style="text-align:center; color: #ff4d4d;">Error: ${data.detail || 'Unknown error'}</div>`;
+                    return;
+                }
+
+                renderTable(data);
+            } catch (e) {
+                resultsDiv.innerHTML = `<div style="text-align:center; color: #ff4d4d;">Network Error: ${e.message}</div>`;
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const output = document.getElementById('chatOutput');
+            const message = input.value;
+            if (!message) return;
+
+            // User Message
+            output.innerHTML += `<div style="margin: 5px 0; color: #fff;"><strong>You:</strong> ${message}</div>`;
+            input.value = '';
+            output.scrollTop = output.scrollHeight;
+
+            // Loading
+            const loadingId = 'loading-' + Date.now();
+            output.innerHTML += `<div id="${loadingId}" style="margin: 5px 0; color: #aaa;"><em>Thinking...</em></div>`;
+
+            try {
+                const response = await fetch('/api/v1/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+
+                // Remove loading
+                document.getElementById(loadingId).remove();
+
+                if (data.response) {
+                    output.innerHTML += `<div style="margin: 5px 0; color: #4CAF50;"><strong>Agent:</strong> ${data.response.replace(/\n/g, '<br>')}</div>`;
+                } else {
+                    output.innerHTML += `<div style="margin: 5px 0; color: #ff4d4d;"><strong>Error:</strong> Failed to get response.</div>`;
+                }
+            } catch (e) {
+                document.getElementById(loadingId).remove();
+                output.innerHTML += `<div style="margin: 5px 0; color: #ff4d4d;"><strong>Error:</strong> ${e.message}</div>`;
+            }
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function renderTable(data) {
+            const resultsDiv = document.getElementById('results');
+            const departures = data.departures;
+
+            if (!departures || departures.length === 0) {
+                resultsDiv.innerHTML = '<div class="loading">No departures found for this time.</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="time-col">Time</th>
+                            <th class="train-col">Train</th>
+                            <th>Direction</th>
+                            <th class="plat-col">Plat.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            departures.forEach(dep => {
+                // Time Formatting
+                const rawTime = dep.time; // YYMMDDHHMM
+                const displayTime = rawTime ? `${rawTime.slice(6, 8)}:${rawTime.slice(8, 10)}` : "??:??";
+
+                // Real-time Logic
+                let timeClass = "";
+                let timeDisplay = displayTime;
+                let delayText = "";
+
+                if (dep.real_time.delay) {
+                    timeClass = "delayed";
+                    const newTimeRaw = dep.real_time.time;
+                    const newTimeDisplay = `${newTimeRaw.slice(6, 8)}:${newTimeRaw.slice(8, 10)}`;
+                    timeDisplay = `<span style="text-decoration:line-through; color:#888; font-size:0.8em;">${displayTime}</span> <br> ${newTimeDisplay}`;
+                    delayText = `<span class="message">+${dep.real_time.delay} min</span>`;
+                }
+
+                // Platform Logic
+                let platClass = "";
+                let platDisplay = dep.platform || "?";
+
+                if (dep.real_time.platform) {
+                    platClass = "platform-change";
+                    platDisplay = `<span style="text-decoration:line-through; color:#888; font-size:0.8em;">${dep.platform}</span> <br> ${dep.real_time.platform}`;
+                }
+
+                html += `
+                    <tr>
+                        <td class="${timeClass}">${timeDisplay} ${delayText}</td>
+                        <td class="train-col">${dep.train}</td>
+                        <td>
+                            ${dep.direction}
+                            ${dep.real_time.messages ? `<span class="message">${dep.real_time.messages}</span>` : ''}
+                        </td>
+                        <td class="plat-col ${platClass}">${platDisplay}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // Load default on start
+        fetchBoard();
+    </script>
+</body>
+
+</html>
