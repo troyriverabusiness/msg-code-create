@@ -2,21 +2,19 @@
 Shared Pydantic domain models for the server application.
 
 Import models from here for use across routes and services.
-Note: Request/Response models belong in their respective route files.
 """
-from .platform_info import PlatformInfo
-from .route_option import RouteOption
-from .station_info import StationInfo
-from .real_time_status import RealTimeStatus
-from .station_change import StationChange
+from .journey import Journey
+from .station import Station
+from .stationChange import StationChange
 from .train import Train
+from .API import ConnectionsRequest, ConnectionsResponse
 
 __all__ = [
-    "PlatformInfo",
-    "RouteOption",
-    "StationInfo",
-    "RealTimeStatus",
+    "Journey",
+    "Station",
     "StationChange",
     "Train",
+    "ConnectionsRequest",
+    "ConnectionsResponse",
 ]
 

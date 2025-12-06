@@ -1,5 +1,5 @@
 from server.examples import journey_examples
-from server.routes.connections import ConnectionsRequest, ConnectionsResponse
+from server.models.API import ConnectionsRequest, ConnectionsResponse
 
 
 def get_connections_example(request: ConnectionsRequest) -> ConnectionsResponse:
