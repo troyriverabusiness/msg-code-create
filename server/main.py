@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -9,7 +8,6 @@ app = FastAPI(title="Smart Travel Assistant API")
 
 # Register routes
 app.include_router(chat.router)
-app.include_router(travel_router)
 app.include_router(travel_router)
 
 # Mount static files for frontend
