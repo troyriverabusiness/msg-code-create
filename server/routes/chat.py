@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Header, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-from service import chat as chat_service
+from server.agent.core import get_agent_executor
 
 
-router = APIRouter(prefix="/api", tags=["chat"])
+router = APIRouter(prefix="/api/v1", tags=["chat"])
+
+# Initialize agent executor (lazy loaded)
+agent_executor = None
 
 
 # Request/Response Models
@@ -36,33 +39,45 @@ async def chat_endpoint(
     x_session_id: Optional[str] = Header(None, alias="X-Session-Id"),
 ):
     """
-    Chat endpoint with AWS Bedrock integration.
+    Chat endpoint with LangGraph agent.
 
-    Supports conversation continuity through session management.
-    If X-Session-Id header is not provided, a new session will be created.
+    Uses a ReAct agent with tools for live departures and train details.
+    Session management is simplified for MVP.
 
     Args:
         request: ChatRequest with message field
-        x_session_id: Optional session ID from X-Session-Id header
+        x_session_id: Optional session ID (for future conversation continuity)
 
     Returns:
         ChatResponse with session_id and AI response message
 
     Raises:
-        HTTPException: 500 if Bedrock API call fails
+        HTTPException: 500 if agent execution fails
     """
+    global agent_executor
+
     try:
-        # Call chat service
-        response_message, session_id = chat_service.chat(
-            message=request.message, session_id=x_session_id
-        )
+        # Lazy initialize agent
+        if agent_executor is None:
+            agent_executor = get_agent_executor()
 
-        return ChatResponse(session_id=session_id, message=response_message)
+        # Invoke the LangGraph agent
+        response = agent_executor.invoke({
+            "messages": [{"role": "user", "content": request.message}]
+        })
 
-    except RuntimeError as e:
-        # Return error response for API failures
-        raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
+        # Extract the last message (AI response)
+        last_message = response["messages"][-1]
+        response_text = last_message.content
+
+        # Generate session ID if not provided (simplified for MVP)
+        session_id = x_session_id or "default-session"
+
+        return ChatResponse(session_id=session_id, message=response_text)
 
     except Exception as e:
-        # Catch any unexpected errors
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        print(f"Agent Error: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"AI service error: {str(e)}"
+        )
