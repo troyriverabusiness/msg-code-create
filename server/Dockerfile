@@ -15,5 +15,5 @@ RUN uv sync
 # Run the application (from /app so server package is importable)
 WORKDIR /app
 ENV PYTHONPATH=/app
-CMD ["/app/server/.venv/bin/uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "--directory", "/app/server", "uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
