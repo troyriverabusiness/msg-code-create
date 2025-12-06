@@ -16,7 +16,7 @@ def init_db():
 
 def parse_netex_file(filepath, conn):
     try:
-    try:
+
         # Use iterparse for memory efficiency with large XML files
         context = ET.iterparse(filepath, events=("end",))
         

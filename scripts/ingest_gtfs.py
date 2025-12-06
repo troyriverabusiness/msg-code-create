@@ -35,18 +35,37 @@ def ingest_routes(conn):
 
 def ingest_trips(conn, valid_route_ids):
     print("Loading trips.txt...")
-    df = pd.read_csv(GTFS_DIR / "trips.txt", dtype=str)
+    chunk_size = 100000
+    valid_trip_ids = set()
+    total_trips = 0
     
-    # Filter by valid routes
-    valid_trips = df[df['route_id'].isin(valid_route_ids)].copy()
+    # Create table first
+    # We need to know columns or let first chunk create it. 
+    # Safest is to let first chunk create with 'replace', subsequent with 'append'.
+    first_chunk = True
     
-    print(f"Filtered {len(valid_trips)} train trips from {len(df)} total.")
-    
-    # Ensure columns match schema
-    valid_trips = valid_trips[['trip_id', 'route_id', 'service_id', 'trip_headsign', 'trip_short_name', 'direction_id']]
-    
-    valid_trips.to_sql('trips', conn, if_exists='replace', index=False, method='multi', chunksize=500)
-    return set(valid_trips['trip_id'])
+    for chunk in pd.read_csv(GTFS_DIR / "trips.txt", chunksize=chunk_size, dtype=str):
+        # Filter by valid routes
+        valid_chunk = chunk[chunk['route_id'].isin(valid_route_ids)].copy()
+        
+        if not valid_chunk.empty:
+            valid_trip_ids.update(valid_chunk['trip_id'])
+            
+            # Ensure columns match schema
+            cols = ['trip_id', 'route_id', 'service_id', 'trip_headsign', 'trip_short_name', 'direction_id']
+            # Handle missing cols
+            for c in cols:
+                if c not in valid_chunk.columns:
+                    valid_chunk[c] = None
+            
+            if_exists = 'replace' if first_chunk else 'append'
+            valid_chunk[cols].to_sql('trips', conn, if_exists=if_exists, index=False, method='multi', chunksize=500)
+            first_chunk = False
+            total_trips += len(valid_chunk)
+            print(f"Processed {total_trips} trips...", end='\r')
+            
+    print(f"\nFiltered {total_trips} train trips.")
+    return valid_trip_ids
 
 def ingest_stop_times(conn, valid_trip_ids):
     print("Loading stop_times.txt (this may take a while)...")
@@ -82,7 +101,16 @@ def ingest_stop_times(conn, valid_trip_ids):
 
 def ingest_stops(conn, valid_stop_ids):
     print("Loading stops.txt...")
-    df = pd.read_csv(GTFS_DIR / "stops.txt", dtype=str)
+    # Only load necessary columns to save memory
+    cols_to_load = ['stop_id', 'stop_name', 'stop_lat', 'stop_lon', 'wheelchair_boarding', 'parent_station']
+    # Check if columns exist first? pd.read_csv will error if usecols has missing cols.
+    # We'll assume standard GTFS but handle potential missing optional cols by reading header first.
+    
+    # Read header
+    header = pd.read_csv(GTFS_DIR / "stops.txt", nrows=0).columns.tolist()
+    actual_cols = [c for c in cols_to_load if c in header]
+    
+    df = pd.read_csv(GTFS_DIR / "stops.txt", dtype=str, usecols=actual_cols)
     
     # Filter: Keep stops used in trips OR parent stations of used stops
     # First, get used stops
