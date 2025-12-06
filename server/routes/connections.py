@@ -20,10 +20,11 @@ async def get_connections(request: ConnectionsRequest):
     - start: Name of the departure station (e.g., "Frankfurt", "München Hbf")
     - end: Name of the destination station (e.g., "Berlin", "Hamburg Hbf")
     - trip_plan: Additional trip planning preferences (optional context)
+    - departure_time: Optional departure time in ISO format (e.g., "2025-12-07T13:00:00")
 
     Returns a list of possible journeys sorted by total travel time.
     """
-    return connections.get_connections(request)
+    return connections.get_connections(request, departure_time=request.departure_time)
 
 
 @router.post("/connections/example", response_model=ConnectionsResponse)
