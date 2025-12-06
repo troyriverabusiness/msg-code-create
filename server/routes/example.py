@@ -1,7 +1,7 @@
 """Example routes"""
 
 from fastapi import APIRouter
-from service import example_service
+from server.service import example_service
 
 router = APIRouter(prefix="/api", tags=["example"])
 

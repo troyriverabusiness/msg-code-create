@@ -18,7 +18,11 @@ class BedrockService:
     """Service for interacting with AWS Bedrock Runtime API."""
 
     def __init__(
-        self, aws_access_key: str, aws_secret_key: str, region: str = "eu-central-1"
+        self, 
+        aws_access_key: Optional[str] = None, 
+        aws_secret_key: Optional[str] = None, 
+        region: str = "eu-central-1",
+        bearer_token: Optional[str] = None
     ):
         """
         Initialize Bedrock service.
@@ -27,20 +31,26 @@ class BedrockService:
             aws_access_key: AWS access key for authentication
             aws_secret_key: AWS secret key for authentication
             region: AWS region (default: eu-central-1)
+            bearer_token: Optional bearer token for direct HTTP access
         """
         self.region = region
         self.model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+        self.bearer_token = bearer_token
+        self.client = None
 
-        # Initialize boto3 Bedrock Runtime client
-        try:
-            self.client = boto3.client(
-                service_name="bedrock-runtime",
-                region_name=region,
-                aws_access_key_id=aws_access_key,
-                aws_secret_access_key=aws_secret_key,
-            )
-        except Exception as e:
-            raise RuntimeError(f"Failed to initialize Bedrock client: {str(e)}")
+        # Initialize boto3 Bedrock Runtime client if keys are provided
+        if aws_access_key and aws_secret_key:
+            try:
+                self.client = boto3.client(
+                    service_name="bedrock-runtime",
+                    region_name=region,
+                    aws_access_key_id=aws_access_key,
+                    aws_secret_access_key=aws_secret_key,
+                )
+            except Exception as e:
+                print(f"Warning: Failed to initialize Bedrock boto3 client: {str(e)}")
+        elif not bearer_token:
+            print("Warning: No AWS credentials provided (keys or token). BedrockService may fail.")
 
     def send_message(
         self,
@@ -74,6 +84,18 @@ class BedrockService:
 
         # Add current user message
         messages.append({"role": "user", "content": [{"text": message}]})
+
+        # Use HTTP method if no boto3 client but we have a token
+        if not self.client and self.bearer_token:
+            return self.send_message_http(
+                bearer_token=self.bearer_token,
+                message=message,
+                conversation_history=conversation_history,
+                system_prompt=system_prompt
+            )
+
+        if not self.client:
+            raise RuntimeError("Bedrock client not initialized and no bearer token provided.")
 
         try:
             # Call Bedrock Converse API

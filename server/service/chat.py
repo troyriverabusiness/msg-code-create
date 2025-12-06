@@ -1,16 +1,19 @@
 """Chat service with AWS Bedrock integration"""
 
 from typing import Optional
-from service.bedrock_service import BedrockService
-from service.session_manager import session_manager
-from service.config import AWS_ACCESS_KEY, AWS_SECRET, AWS_REGION
+from .bedrock_service import BedrockService
+from .session_manager import session_manager
+from .config import AWS_ACCESS_KEY, AWS_SECRET, AWS_REGION
 
 
 # Initialize Bedrock service
-if not AWS_ACCESS_KEY or not AWS_SECRET:
+# Initialize Bedrock service
+from .config import AWS_SHORT_TERM_KEY
+
+if (not AWS_ACCESS_KEY or not AWS_SECRET) and not AWS_SHORT_TERM_KEY:
     raise ValueError(
         "AWS credentials not found in .env file. "
-        "Please add AWS_ACCESS_KEY and AWS_SECRET to .env"
+        "Please add AWS_ACCESS_KEY and AWS_SECRET OR AWS_SHORT_TERM_KEY to .env"
     )
 
 bedrock_service = BedrockService(

@@ -16,16 +16,17 @@ load_dotenv(env_path)
 BASE_URL = "https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1"
 
 # Credentials - using TROY credentials by default, can be switched to LARS
-CLIENT_ID = os.getenv("TROY_CLIENT_ID")
+CLIENT_ID = os.getenv("TROY_API_CLIENT")
 API_KEY = os.getenv("TROY_API_KEY")
 
 # Alternative: Use LARS credentials
-# CLIENT_ID = os.getenv("LARS_CLIENT_ID")
+# CLIENT_ID = os.getenv("LARS_API_CLIENT")
 # API_KEY = os.getenv("LARS_API_KEY")
 
 # AWS Bedrock Configuration
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
 AWS_SECRET = os.getenv("AWS_SECRET")
+AWS_SHORT_TERM_KEY = os.getenv("AWS_SHORT_TERM_KEY")
 AWS_REGION = "eu-central-1"
 BEDROCK_MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"
 

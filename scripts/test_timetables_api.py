@@ -6,12 +6,12 @@ from datetime import datetime
 
 # Configuration
 BASE_URL = "https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1"
-CLIENT_ID = os.environ.get("DB_CLIENT_ID")
-API_KEY = os.environ.get("DB_API_KEY")
+CLIENT_ID = os.environ.get("TROY_API_CLIENT")
+API_KEY = os.environ.get("TROY_API_KEY")
 
 def make_request(endpoint, method="GET", data=None, headers_extra=None):
     if not CLIENT_ID or not API_KEY:
-        print("Error: DB_CLIENT_ID and DB_API_KEY environment variables are required.")
+        print("Error: TROY_API_CLIENT and TROY_API_KEY environment variables are required.")
         exit(1)
 
     url = f"{BASE_URL}{endpoint}"

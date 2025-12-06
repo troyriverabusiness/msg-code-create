@@ -9,20 +9,38 @@ class TimetableService:
     BASE_URL = "https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1"
 
     def __init__(self):
-        self.client_id = os.environ.get("DB_CLIENT_ID")
-        self.api_key = os.environ.get("DB_API_KEY")
+        # Primary Keys (Troy)
+        self.troy_client_id = os.environ.get("TROY_API_CLIENT")
+        self.troy_api_key = os.environ.get("TROY_API_KEY")
         
-        if not self.client_id or not self.api_key:
-            print("Warning: DB_CLIENT_ID or DB_API_KEY not set. TimetableService will not work.")
+        # Fallback Keys (Lars)
+        self.lars_client_id = os.environ.get("LARS_API_CLIENT")
+        self.lars_api_key = os.environ.get("LARS_API_KEY")
+        
+        if not self.troy_client_id or not self.troy_api_key:
+            print("Warning: TROY_API_CLIENT or TROY_API_KEY not set. TimetableService will not work.")
 
     def _make_request(self, endpoint: str) -> Optional[str]:
-        if not self.client_id or not self.api_key:
+        # Try with Troy's keys first
+        result = self._execute_request(endpoint, self.troy_client_id, self.troy_api_key)
+        if result:
+            return result
+            
+        # If failed, try with Lars's keys
+        if self.lars_client_id and self.lars_api_key:
+            print(f"⚠️ Primary API key failed for {endpoint}. Switching to fallback (Lars)...")
+            return self._execute_request(endpoint, self.lars_client_id, self.lars_api_key)
+            
+        return None
+
+    def _execute_request(self, endpoint: str, client_id: str, api_key: str) -> Optional[str]:
+        if not client_id or not api_key:
             return None
 
         url = f"{self.BASE_URL}{endpoint}"
         headers = {
-            "DB-Client-ID": self.client_id,
-            "DB-Api-Key": self.api_key,
+            "DB-Client-ID": client_id,
+            "DB-Api-Key": api_key,
             "Accept": "application/xml"
         }
 

@@ -1,6 +1,6 @@
 from langchain_core.tools import tool
-from server.services.timetable_service import TimetableService
-from server.services.linker_service import LinkerService
+from server.service.timetable_service import TimetableService
+from server.service.linker_service import LinkerService
 from datetime import datetime
 
 timetable_service = TimetableService()

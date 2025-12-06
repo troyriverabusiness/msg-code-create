@@ -7,10 +7,8 @@ from langchain_core.outputs import ChatResult, ChatGeneration
 from langchain_core.tools import BaseTool
 from langgraph.prebuilt import create_react_agent
 from server.agent.tools import get_live_departures, get_train_details
-from dotenv import load_dotenv
+from server.service.config import AWS_REGION, AWS_SHORT_TERM_KEY
 from pydantic import Field
-
-load_dotenv("server/.env")
 
 # Model configuration
 MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0"
@@ -204,16 +202,17 @@ class BedrockBearerTokenLLM(BaseChatModel):
 
 def get_bearer_token() -> str:
     """Get bearer token from environment - use as-is, including prefix."""
-    token = os.environ.get("AWS_BEARER_TOKEN_BEDROCK", "")
+    token = AWS_SHORT_TERM_KEY
+    
     if not token:
-        raise ValueError("AWS_BEARER_TOKEN_BEDROCK not set in environment")
+        raise ValueError("AWS_SHORT_TERM_KEY not set in environment")
     return token
 
 
 def get_agent_executor():
     """Initialize the LangGraph agent with Bedrock bearer token auth."""
     bearer_token = get_bearer_token()
-    region = os.environ.get("AWS_REGION", "eu-central-1")
+    region = AWS_REGION
 
     llm = BedrockBearerTokenLLM(
         bearer_token=bearer_token,

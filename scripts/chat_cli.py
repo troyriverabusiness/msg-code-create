@@ -15,8 +15,8 @@ async def main():
     print("-" * 40)
     
     # Check for credentials
-    if not os.environ.get("DB_CLIENT_ID") or not os.environ.get("DB_API_KEY"):
-        print("⚠️  WARNING: DB_CLIENT_ID or DB_API_KEY not set. Live data tools will fail.")
+    if not os.environ.get("TROY_API_CLIENT") or not os.environ.get("TROY_API_KEY"):
+        print("⚠️  WARNING: TROY_API_CLIENT or TROY_API_KEY not set. Live data tools will fail.")
     
     try:
         agent = get_agent_executor()

@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
-from server.services.timetable_service import TimetableService
-from server.services.simulation import SimulationService
+from server.service.timetable_service import TimetableService
+from server.service.simulation import SimulationService
 
 router = APIRouter(prefix="/api/v1", tags=["travel"])
 
