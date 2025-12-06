@@ -64,15 +64,30 @@ class BedrockService:
             )
 
         try:
+            # Debug: Verify system prompt is being sent
+            print(f"DEBUG BOTO3: System prompt length: {len(system_prompt)} chars")
+            print(f"DEBUG BOTO3: System prompt starts with: {system_prompt[:150]}...")
+            print(f"DEBUG BOTO3: Model ID: {self.model_id}")
+            print(f"DEBUG BOTO3: Number of messages: {len(messages)}")
+            
+            # Verify system_prompt is not empty
+            if not system_prompt or len(system_prompt.strip()) == 0:
+                raise ValueError("System prompt is empty! This should not happen.")
+            
+            system_payload = [{"text": system_prompt}]
+            print(f"DEBUG BOTO3: System payload: {system_payload}")
+            
             response = self.client.converse(
                 modelId=self.model_id,
                 messages=messages,
-                system=[{"text": system_prompt}],
+                system=system_payload,
                 inferenceConfig={
                     "maxTokens": 2048,
-                    "temperature": 0.7,
+                    "temperature": 0.1,  # Lower temperature for more deterministic, instruction-following behavior
                 },
             )
+            
+            print(f"DEBUG BOTO3: Response received successfully")
 
             output_message = response["output"]["message"]
             assistant_text = output_message["content"][0]["text"]
@@ -122,11 +137,17 @@ class BedrockService:
             "system": [{"text": system_prompt}],
             "inferenceConfig": {
                 "maxTokens": 2048,
-                "temperature": 0.7,
+                "temperature": 0.1,  # Lower temperature for more deterministic, instruction-following behavior
             },
         }
 
-        url = f"https://bedrock-runtime.{self.region}.amazonaws.com/model/{target_model}/invoke"
+        url = f"https://bedrock-runtime.{self.region}.amazonaws.com/model/{target_model}/converse"
+
+        # Debug: Verify system prompt is being sent via HTTP
+        print(f"DEBUG HTTP: System prompt length: {len(system_prompt)} chars")
+        print(f"DEBUG HTTP: System prompt starts with: {system_prompt[:150]}...")
+        print(f"DEBUG HTTP: URL: {url}")
+        print(f"DEBUG HTTP: Payload system field: {payload.get('system')}")
 
         try:
             response = requests.post(url, headers=headers, json=payload)
