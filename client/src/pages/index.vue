@@ -269,8 +269,16 @@
 /* DB-inspired styling with characteristic red (#EC0016) and clean layout */
 .db-page {
   min-height: 100vh;
-  background: #F0F3F5;
+  background: #F0F3F5 url('@/assets/ice_bild.png') no-repeat center top;
+  background-size: 1700px auto;
   padding: 2rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .db-page {
+    background-size: cover;
+    background-position: center top;
+  }
 }
 
 .db-container {
