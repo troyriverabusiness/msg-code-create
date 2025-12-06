@@ -7,5 +7,5 @@ router = APIRouter(prefix="/api/v1", tags=["connections"])
 
 @router.post("/connections", response_model=ConnectionsResponse)
 async def get_connections(request: ConnectionsRequest):
-    return connections.get_connections_example(request)
+    return connections.get_connections(request)
 
