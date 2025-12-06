@@ -1,0 +1,141 @@
+<!-- Recent Changes Response from Deutsche Bahn Timetables API -->
+<!-- Contains all changes that became known within the last 2 minutes for station 8000105 (Frankfurt Main Hbf) -->
+<!-- This is a subset of the full changes and should be loaded periodically to save bandwidth -->
+<timetable station="Frankfurt(Main)Hbf" eva="8000105">
+
+
+<!-- Stop Entry (s) - Represents a train stop at this station -->
+<!-- Attributes:
+     id: Unique stop identifier (format: dailyTripId-YYMMddHHmm-stopIndex)
+     eva: EVA station number for this stop -->
+<s id="5603348731517268506-2512060107-1" eva="8000105">
+    <!-- Departure Event (dp) - Information about the train's departure from this station -->
+    <!-- Attributes:
+         cpth: Changed path - sequence of stations (pipe-separated) AFTER this station showing the train's route
+         cs: Changed status - 'c' means CANCELLED (this departure has been cancelled)
+         clt: Cancellation time - when this cancellation was created (format: YYMMddHHmm)
+         l: Line - the line indicator for this service (e.g., RB82 = Regional train line 82) -->
+    <dp cpth="Darmstadt Hbf|Darmstadt Nord|Darmstadt Ost|Darmstadt TU-Lichtwiese|Mühltal|Ober Ramstadt|Reinheim(Odenw)|Otzberg Lengfeld|Groß-Umstadt Wiebelsbach|Höchst Hetschbach|Höchst(Odenw)|Höchst Mümling-Grumbach|Bad König|Bad König Zell|Michelstadt|Erbach(Odenw) Nord|Erbach(Odenw)" cs="c" clt="2512052340" l="RB82">
+        <!-- Message (m) - Associated information/alerts for this event -->
+        <!-- Attributes:
+             id: Unique message identifier
+             t: Message type - 'd' = CAUSE OF DELAY
+             c: Message code (58 = specific delay/cancellation reason)
+             ts: Timestamp when message was created (format: YYMMddHHmm)
+             ts-tts: Timestamp with full precision (format: YY-MM-DD HH:MM:SS.mmm) -->
+        <m id="r37448382" t="d" c="58" ts="2512052340" ts-tts="25-12-05 23:40:53.883"/>
+        <m id="r37448384" t="d" c="58" ts="2512052340" ts-tts="25-12-05 23:40:53.883"/>
+    </dp>
+</s>
+
+
+<s id="4052070690066184400-2512052232-13" eva="8000105">
+    <!-- Arrival Event (ar) - Information about the train's arrival at this station -->
+    <!-- Attributes:
+         ct: Changed time - new estimated/actual arrival time (format: YYMMddHHmm)
+         l: Line - the line indicator for this service -->
+    <ar ct="2512052355" l="33">
+        <m id="r37447414" t="d" c="43" ts="2512052325" ts-tts="25-12-05 23:25:32.568"/>
+    </ar>
+</s>
+
+
+<s id="-8061247609116052278-2512052356-1" eva="8000105">
+    <!-- Departure Event -->
+    <dp ct="2512060000" l="33">
+        <m id="r37447430" t="d" c="48" ts="2512052326" ts-tts="25-12-05 23:26:03.939"/>
+    </dp>
+</s>
+
+
+<s id="3084810096028086433-2512052136-23" eva="8000105">
+    <!-- Arrival with platform change -->
+    <!-- Attributes:
+         ppth: Planned path - sequence of stations BEFORE this station showing where the train came from
+         cp: Changed platform - the train now arrives at platform 16
+         pp: Planned platform - originally scheduled to arrive at platform 13
+         ct: Changed time - new arrival time
+         pt: Planned time - originally scheduled arrival time
+         l: Line indicator
+         fb: Full train designation (HLB = operator, RB41 = regional train line 41) -->
+    <ar ppth="Kirchhain(Bz Kassel)|Anzefahr|Bürgeln|Cölbe|Marburg(Lahn)|Marburg Süd|Niederweimar|Niederwalgern|Fronhausen(Lahn)|Friedelhausen|Lollar|Gießen Oswaldsgarten|Gießen|Großen Linden|Lang Göns|Kirch Göns|Butzbach|Ostheim(b Butzbach)|Bad Nauheim|Friedberg(Hess)|Bad Vilbel|Frankfurt(Main)West" cp="16" pp="13" ct="2512052357" pt="2512052325" l="RB41" fb="HLB RB41"/>
+    <!-- Trip Label (tl) - Identifies the train/trip -->
+    <!-- Attributes:
+         f: Filter flags - 'D' indicates specific filtering properties
+         t: Trip type - 'p' = PLANNED (regular scheduled trip)
+         o: Owner - operator code (K4RB = specific operator)
+         c: Category - trip category (HLB = Hessische Landesbahn)
+         n: Train number (15045) -->
+    <tl f="D" t="p" o="K4RB" c="HLB" n="15045"/>
+</s>
+
+
+<s id="7474414276230536927-2512051838-17" eva="8000105">
+    <!-- ICE (Inter-City Express) long-distance train -->
+    <!-- This train traveled from Kiel in northern Germany through major cities -->
+    <ar ppth="Kiel Hbf|Neumünster|Hamburg Dammtor|Hamburg Hbf|Hamburg-Harburg|Bremen Hbf|Osnabrück Hbf|Münster(Westf)Hbf|Dortmund Hbf|Bochum Hbf|Essen Hbf|Duisburg Hbf|Düsseldorf Hbf|Köln Hbf|Siegburg/Bonn|Frankfurt(M) Flughafen Fernbf" pp="18" ct="2512060145" pt="2512060110" fb="ICE 619">
+        <m id="r37418002" t="d" c="49" ts="2512051832" ts-tts="25-12-05 18:32:53.441"/>
+        <m id="r37418004" t="d" c="49" ts="2512051832" ts-tts="25-12-05 18:32:53.441"/>
+    </ar>
+    <!-- Same train's departure - continuing to Munich -->
+    <dp ppth="Mannheim Hbf|Heidelberg Hbf|Stuttgart Hbf|Ulm Hbf|Günzburg|Augsburg Hbf|München-Pasing|München Hbf" pp="18" ct="2512060150" pt="2512060119" fb="ICE 619">
+        <m id="r37418002" t="d" c="49" ts="2512051832" ts-tts="25-12-05 18:32:53.441"/>
+        <m id="r37418004" t="d" c="49" ts="2512051832" ts-tts="25-12-05 18:32:53.441"/>
+    </dp>
+    <!-- Trip Label: f='F' for long-distance, o='80' for DB Fernverkehr (DB Long Distance), ICE 619 -->
+    <tl f="F" t="p" o="80" c="ICE" n="619"/>
+</s>
+
+
+<s id="8573811631662133764-2512052048-6" eva="8000105">
+    <!-- Arrival with multiple messages (delays, free text updates) -->
+    <ar cp="6" ct="2512060043">
+        <!-- Message type 'f' = FREE TEXT message (general information) -->
+        <m id="r37431041" t="f" c="0" ts="2512052001" ts-tts="25-12-05 20:01:15.866"/>
+        <m id="r37431803" t="f" c="0" ts="2512052004" ts-tts="25-12-05 20:04:25.571"/>
+        <m id="r37431805" t="f" c="0" ts="2512052004" ts-tts="25-12-05 20:04:25.571"/>
+        <!-- Message type 'd' = CAUSE OF DELAY -->
+        <m id="r37445637" t="d" c="44" ts="2512052249" ts-tts="25-12-05 22:50:04.653"/>
+        <m id="r37445639" t="d" c="44" ts="2512052249" ts-tts="25-12-05 22:50:04.653"/>
+    </ar>
+</s>
+
+
+<s id="6246205014592858079-2512060009-23" eva="8000105">
+    <!-- Simple arrival with time change -->
+    <ar ct="2512060124" l="70">
+        <m id="r37446986" t="f" c="0" ts="2512052316" ts-tts="25-12-05 23:17:10.039"/>
+    </ar>
+</s>
+
+
+<s id="1727073522629915379-2512051925-10" eva="8000105">
+    <!-- Station-level message (outside ar/dp events) -->
+    <!-- Message type 'h' = HIM (Hafas Information Manager - general station/trip announcements) -->
+    <!-- Attributes:
+         from: Valid from timestamp
+         to: Valid until timestamp
+         cat: Category of the message
+         pr: Priority - '3' = LOW priority -->
+    <m id="r2536155" t="h" from="2512041014" to="2512102359" cat="Information" ts="2512041015" ts-tts="25-12-05 12:16:01.729" pr="3"/>
+    <ar cp="4" ct="2512052350">
+        <m id="r37412288" t="f" c="0" ts="2512051759" ts-tts="25-12-05 18:00:01.349"/>
+        <m id="r37426652" t="f" c="0" ts="2512051924" ts-tts="25-12-05 19:24:26.500"/>
+    </ar>
+</s>
+
+
+<s id="1077851836241039338-2512052154-8" eva="8000105">
+    <!-- Regional Express train arrival with time change -->
+    <ar ct="2512052351" l="RE99"/>
+</s>
+
+
+<s id="-7778999803007630054-2512052239-16" eva="8000105">
+    <!-- Line 70 arrival with free text message -->
+    <ar ct="2512052346" l="70">
+        <m id="r37441936" t="f" c="0" ts="2512052148" ts-tts="25-12-05 21:48:33.863"/>
+    </ar>
+</s>
+
+</timetable>

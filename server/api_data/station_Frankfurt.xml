@@ -1,0 +1,14 @@
+<!-- Station Data Response from Deutsche Bahn Timetables API -->
+<!-- Contains information about railway stations matching a search query -->
+<stations>
+
+<!-- Individual station entry -->
+<!-- Attributes:
+     name: Full name of the station
+     eva: EVA station number (unique 7-digit identifier for each station)
+     ds100: DS100/RL100 code (German railway station shorthand code)
+     db: Whether this is a Deutsche Bahn operated station
+     creationts: Timestamp when this station data was created (format: YY-MM-DD HH:MM:SS.mmm) -->
+<station name="Frankfurt am Main - Stadion" eva="8002040" ds100="FSP" db="true" creationts="25-11-30 15:18:46.091"/>
+
+</stations>
