@@ -133,6 +133,122 @@ Response:
 }
 ```
 
+### Connections Endpoint
+
+Find train connections between two stations, including direct trains and journeys requiring changes.
+
+#### POST `/api/v1/connections`
+
+**Request Body:**
+```json
+{
+  "start": "Frankfurt Hbf",
+  "end": "Berlin Hbf",
+  "trip_plan": "",
+  "departure_time": "2025-12-07T14:00:00"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `start` | string | Yes | Name of the departure station (e.g., "Frankfurt", "München Hbf") |
+| `end` | string | Yes | Name of the destination station (e.g., "Berlin", "Hamburg Hbf") |
+| `trip_plan` | string | No | Additional trip planning preferences (optional context) |
+| `departure_time` | string | No | ISO 8601 format (e.g., "2025-12-07T14:00:00"). Defaults to current time |
+
+**Response (200):**
+```json
+{
+  "journeys": [
+    {
+      "startStation": {
+        "name": "Frankfurt(Main)Hbf",
+        "eva": 8000105
+      },
+      "endStation": {
+        "name": "Berlin Hbf",
+        "eva": 8011160
+      },
+      "trains": [
+        {
+          "trainNumber": "ICE 920",
+          "trainId": "unique-stop-id",
+          "trainCategory": "ICE",
+          "startLocation": { "name": "Frankfurt(Main)Hbf", "eva": 8000105 },
+          "endLocation": { "name": "Berlin Hbf", "eva": 8011160 },
+          "departureTime": "2025-12-07T14:30:00",
+          "arrivalTime": "2025-12-07T18:45:00",
+          "actualDepartureTime": "2025-12-07T14:32:00",
+          "actualArrivalTime": "2025-12-07T18:50:00",
+          "path": [
+            { "name": "Fulda", "eva": 8000115 },
+            { "name": "Erfurt Hbf", "eva": 8010101 }
+          ],
+          "platform": 8,
+          "wagons": [],
+          "delayMinutes": 5
+        }
+      ],
+      "changes": [
+        {
+          "station": { "name": "Erfurt Hbf", "eva": 8010101 },
+          "timeMinutes": 15
+        }
+      ],
+      "totalTime": 255,
+      "description": "Direct ICE connection via Erfurt"
+    }
+  ]
+}
+```
+
+**Response Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `journeys` | array | List of possible journeys sorted by total travel time (max 10) |
+| `journeys[].startStation` | Station | Departure station with name and EVA code |
+| `journeys[].endStation` | Station | Destination station with name and EVA code |
+| `journeys[].trains` | array | List of trains in the journey (1 for direct, multiple for changes) |
+| `journeys[].trains[].trainNumber` | string | Train identifier (e.g., "ICE 920", "RE 50") |
+| `journeys[].trains[].trainCategory` | string | Type of train: ICE, IC, RE, RB, S |
+| `journeys[].trains[].departureTime` | string | Scheduled departure (ISO 8601) |
+| `journeys[].trains[].arrivalTime` | string | Scheduled arrival (ISO 8601) |
+| `journeys[].trains[].actualDepartureTime` | string | Real-time departure if available |
+| `journeys[].trains[].actualArrivalTime` | string | Real-time arrival if available |
+| `journeys[].trains[].platform` | int | Departure platform number |
+| `journeys[].trains[].delayMinutes` | int | Current delay in minutes |
+| `journeys[].trains[].path` | array | Intermediate stations the train passes through |
+| `journeys[].changes` | array | Station changes with transfer time (null for direct trains) |
+| `journeys[].totalTime` | int | Total journey time in minutes |
+| `journeys[].description` | string | Human-readable journey description |
+
+#### GET `/api/v1/connections`
+
+Alternative GET endpoint with query parameters.
+
+**Query Parameters:**
+- `start` (required): Name of the departure station
+- `end` (required): Name of the destination station
+- `departure_time` (optional): ISO 8601 format
+
+**Example:**
+```bash
+curl "http://localhost:8000/api/v1/connections?start=Frankfurt&end=Berlin&departure_time=2025-12-07T14:00:00"
+```
+
+#### POST `/api/v1/connections/example`
+
+Returns mock data for testing purposes. Accepts the same request body as the main endpoint.
+
+#### How It Works
+
+1. **Station Resolution**: Matches input station names to actual stations in the rail network
+2. **Route Discovery**: Uses the rail network graph to find relevant intermediate stations
+3. **Train Data Fetch**: Queries Deutsche Bahn Timetables API for trains at each station (current hour + next hour)
+4. **Journey Building**: Constructs possible journeys including direct connections and those requiring changes
+5. **Sorting & Limiting**: Returns up to 10 journeys sorted by total travel time
+
 ### Other Routes
 
 **GET** `/hello` - Test endpoint
