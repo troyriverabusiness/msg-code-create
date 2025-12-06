@@ -19,4 +19,5 @@ dependencies = [
     "langchain-core>=0.3.0",
     "langgraph>=0.2.0",
     "langchain-aws>=0.2.35",
+    "networkx>=3.2.1",
 ]

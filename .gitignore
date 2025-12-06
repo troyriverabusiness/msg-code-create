@@ -212,3 +212,5 @@ __marimo__/
 datachaos/
 *.db
 server/data/*.db
+
+.claude/
