@@ -15,7 +15,6 @@ declare module 'vue' {
     CoachSequence: typeof import('./src/components/CoachSequence.vue')['default']
     DateTimePicker: typeof import('./src/components/DateTimePicker.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    NoseBadge: typeof import('./src/components/NoseBadge.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NoseBadge: typeof import('./src/components/NoseBadge.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
