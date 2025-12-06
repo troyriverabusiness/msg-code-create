@@ -3,7 +3,6 @@
     <v-container class="db-container">
       <v-row justify="center">
         <v-col cols="12" md="10" lg="8">
-          
           <div class="db-card">
             <h1 class="db-title">Reiseauskunft</h1>
           <v-row v-if="showPrePlan" justify="center">
@@ -17,6 +16,7 @@
                   height="4"
                   class="mb-2"
                 />
+                
                 <v-card-text v-if="!loading && prePlan" class="db-preplan-text" style="color: #444;">
                   {{ prePlan }}
                 </v-card-text>
@@ -142,12 +142,12 @@
   const verkehrsmittel = ref(['ICE', 'IC', 'RE', 'RB', 'S-Bahn', 'U-Bahn', 'Tram', 'Bus'])
   const umstiegszeiten = ref(['5 Minuten', '10 Minuten', '15 Minuten', '20 Minuten', '30 Minuten'])
 
-  const showPrePlan = ref(true)
-  const loading = ref(true)
+  const showPrePlan = ref(false)
+  const loading = ref(false)
 
-  const prePlan2 = computed(() => "Based on the preferences you provided, I’ve recommended the following trip from Frankfurt to Hamburg. This route offers a good balance between travel time, convenience, and connection reliability. You’ll depart from Frankfurt Hbf and arrive in Hamburg Hbf with a smooth, direct connection. The total travel duration is around 3 hours and 15 minutes, which is one of the fastest options available for your selected date. If you’d like, I can also show you alternative routes with more flexibility in departure times or lower prices.")
+  const prePlan = computed(() => backendCallsStore.prePlan)
 
-  const prePlan = "Based on the preferences you provided, I’ve recommended the following trip from Frankfurt to Hamburg. This route offers a good balance between travel time, convenience, and connection reliability. You’ll depart from Frankfurt Hbf and arrive in Hamburg Hbf with a smooth, direct connection. The total travel duration is around 3 hours and 15 minutes, which is one of the fastest options available for your selected date. If you’d like, I can also show you alternative routes with more flexibility in departure times or lower prices."
+  // const prePlan = "Based on the preferences you provided, I’ve recommended the following trip from Frankfurt to Hamburg. This route offers a good balance between travel time, convenience, and connection reliability. You’ll depart from Frankfurt Hbf and arrive in Hamburg Hbf with a smooth, direct connection. The total travel duration is around 3 hours and 15 minutes, which is one of the fastest options available for your selected date. If you’d like, I can also show you alternative routes with more flexibility in departure times or lower prices."
 
   const trip = {
   start: "Hamburg",
@@ -182,8 +182,12 @@
   })
 
   async function send () {
+    loading.value = true
     showPrePlan.value = true
 
+    await backendCallsStore.fetchPrePlanForPrompt(prompt.value.text)
+
+    loading.value = false
 
     console.log('Sending prompt to backend')
     console.log(prompt.value)

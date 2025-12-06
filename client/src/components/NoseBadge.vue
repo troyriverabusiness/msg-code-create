@@ -1,43 +1,21 @@
 <template>
-	<svg :width="width || size" :height="height || size" viewBox="0 0 150 150" :preserveAspectRatio="preserve" role="img" aria-label="nose">
-		<g :transform="flip ? `translate(150,0) scale(-1,1)` : null">
-			<path
-				:d="shapePath"
-				:fill="bg"
-				:stroke="stroke"
-				stroke-width="3"
-			/>
-		</g>
 
-		<text
-			v-if="showLabel"
-			x="75"
-			y="30"
-			text-anchor="middle"
-			:font-size="labelSize"
-			:fill="labelColor"
-			font-weight="700"
-			alignment-baseline="middle"
-		>
-			{{ label }}
-		</text>
-	</svg>
 </template>
 
 <script setup>
+import ice1 from '@/assets/ice1.png'
+import ice2 from '@/assets/ice2.png'
+import regio1 from '@/assets/regio1.png'
+import regio2 from '@/assets/regio2.png'
+
 const props = defineProps({
-	label: { type: [String, Number], default: '' },
-	size: { type: [Number, String], default: 80 },
-	width: { type: [Number, String], default: null },
-	height: { type: [Number, String], default: null },
-	preserve: { type: String, default: 'xMidYMid meet' },
-	showLabel: { type: Boolean, default: true },
-	bg: { type: String, default: '#ffffff' },
-	stroke: { type: String, default: '#d0d0d0' },
-	labelColor: { type: String, default: '#111' },
-	labelSize: { type: [Number, String], default: 20 },
-	flip: { type: Boolean, default: false }
-})
+	'direction': {
+	type: String,
+}
+,'label': {
+	type: String,
+	default: ''
+}})
 
 // shallower nose curve (flacher): reduced vertical control points for a flatter appearance
 // moved the left start slightly right and lowered control points to flatten the front
