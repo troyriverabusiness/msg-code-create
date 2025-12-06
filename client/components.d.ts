@@ -17,6 +17,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     NoseBadge: typeof import('./src/components/NoseBadge.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    NoseBadge: typeof import('./src/components/NoseBadge.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SequenceEditor: typeof import('./src/components/SequenceEditor.vue')['default']
