@@ -6,7 +6,7 @@ env_path = Path(__file__).parent.parent.parent / ".env"
 load_dotenv(env_path)
 
 BASE_URL = "https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1"
-CLIENT_ID = os.getenv("TROY_API_CLIENT")
+CLIENT_ID = os.getenv("TROY_CLIENT_ID")
 API_KEY = os.getenv("TROY_API_KEY")
 DATA_DIR = Path(__file__).parent.parent.parent / "api_data"
 

@@ -3,19 +3,14 @@ from datetime import datetime
 from server.service.graph_service import GraphService
 from server.service.linker_service import LinkerService
 from server.models.journey import Journey, Station, Train, StationChange
-from server.models.connection_schema import ConnectionsRequest, ConnectionsResponse
+from server.models.API import ConnectionsRequest, ConnectionsResponse
 
 graph_service = GraphService()
 linker_service = LinkerService()
 
-def get_connections_example(request: ConnectionsRequest) -> ConnectionsResponse:
-    # TODO: Implement actual connection logic
-    return ConnectionsResponse(journeys=[journey_examples.journey1, journey_examples.journey2])
-
-
 def get_connections(request: ConnectionsRequest) -> ConnectionsResponse:
-    origin = request.origin
-    destination = request.destination
+    origin = request.start
+    destination = request.end
     date = datetime.fromisoformat(request.date) if request.date else datetime.now()
     
     # 1. Find Intermediate Stations / Path

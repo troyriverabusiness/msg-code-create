@@ -21,9 +21,9 @@ export default createVuetify({
         colors: {
           background: '#FFFFFF',
           surface: '#FFFFFF',
-          primary: '#1976D2',
+          primary: '#EC0016',
           secondary: '#424242',
-          error: '#FF5252',
+          error: '#EC0016',
           info: '#2196F3',
           success: '#4CAF50',
           warning: '#FFC107',
