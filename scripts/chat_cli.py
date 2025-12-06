@@ -1,6 +1,13 @@
 import asyncio
 import os
 import sys
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load env before importing server modules
+env_path = Path(__file__).parent.parent / "server" / ".env"
+load_dotenv(env_path, override=True)
+
 from server.agent.core import get_agent_executor
 
 async def main():
