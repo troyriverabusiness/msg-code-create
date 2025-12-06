@@ -5,7 +5,7 @@ from collections import defaultdict
 from server.models.train import Train
 from server.models.journey import Journey
 from server.models.station import Station
-from server.models.stationChange import StationChange
+from server.models.station_change import StationChange
 
 
 # Minimum transfer time between trains (in minutes)

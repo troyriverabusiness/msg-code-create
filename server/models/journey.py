@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from .station import Station
 from .train import Train
-from .stationChange import StationChange
+from .station_change import StationChange
 
 class Journey(BaseModel):
     startStation: Station
