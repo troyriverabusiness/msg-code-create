@@ -1,0 +1,3002 @@
+[
+  {
+    "id": "de:03241:31",
+    "name": "Hannover Hauptbahnhof",
+    "score": 12987
+  },
+  {
+    "id": "de:11000:900120003",
+    "name": "S Ostkreuz Bhf (Berlin)",
+    "score": 12975
+  },
+  {
+    "id": "de:03241:11",
+    "name": "Hannover Kr\u00f6pcke",
+    "score": 12683
+  },
+  {
+    "id": "de:11000:900003201",
+    "name": "S+U Berlin Hauptbahnhof",
+    "score": 9353
+  },
+  {
+    "id": "de:11000:900024102",
+    "name": "S Westkreuz (Berlin)",
+    "score": 8572
+  },
+  {
+    "id": "de:05111:18235",
+    "name": "D\u00fcsseldorf Hbf",
+    "score": 8433
+  },
+  {
+    "id": "de:11000:900058101",
+    "name": "S S\u00fcdkreuz Bhf (Berlin)",
+    "score": 8333
+  },
+  {
+    "id": "de:03241:101",
+    "name": "Hannover Aegidientorplatz",
+    "score": 8025
+  },
+  {
+    "id": "de:11000:900120005",
+    "name": "S Ostbahnhof (Berlin)",
+    "score": 7569
+  },
+  {
+    "id": "de:11000:900190001",
+    "name": "S Treptower Park (Berlin)",
+    "score": 7551
+  },
+  {
+    "id": "de:11000:900100001",
+    "name": "S+U Friedrichstr. Bhf (Berlin)",
+    "score": 7376
+  },
+  {
+    "id": "de:11000:900007102_G",
+    "name": "S+U Gesundbrunnen Bhf (Berlin)",
+    "score": 7366
+  },
+  {
+    "id": "de:11000:900020202",
+    "name": "S Beusselstr. (Berlin)",
+    "score": 6854
+  },
+  {
+    "id": "de:09162:8",
+    "name": "Donnersbergerbr\u00fccke",
+    "score": 6705
+  },
+  {
+    "id": "de:11000:900078201",
+    "name": "S+U Neuk\u00f6lln (Berlin)",
+    "score": 6471
+  },
+  {
+    "id": "de:09162:100",
+    "name": "M\u00fcnchen Hbf",
+    "score": 6332
+  },
+  {
+    "id": "de:06412:10",
+    "name": "Frankfurt (Main) Hauptbahnhof",
+    "score": 6317
+  },
+  {
+    "id": "de:03241:121",
+    "name": "Hannover Steintor",
+    "score": 6265
+  },
+  {
+    "id": "de:05315:11201",
+    "name": "K\u00f6ln Hbf",
+    "score": 6119
+  },
+  {
+    "id": "de:11000:900079221",
+    "name": "S+U Hermannstr. (Berlin)",
+    "score": 6077
+  },
+  {
+    "id": "de:11000:900120004",
+    "name": "S+U Warschauer Str. (Berlin)",
+    "score": 6061
+  },
+  {
+    "id": "de:11000:900110003",
+    "name": "S Greifswalder Str. (Berlin)",
+    "score": 5915
+  },
+  {
+    "id": "de:11000:900110001",
+    "name": "S+U Sch\u00f6nhauser Allee (Berlin)",
+    "score": 5904
+  },
+  {
+    "id": "de:11000:900110002",
+    "name": "S Prenzlauer Allee (Berlin)",
+    "score": 5900
+  },
+  {
+    "id": "de:11000:900023201",
+    "name": "S+U Zoologischer Garten Bhf (Berlin)",
+    "score": 5809
+  },
+  {
+    "id": "de:11000:900054104_G",
+    "name": "S Sch\u00f6neberg (Berlin)",
+    "score": 5744
+  },
+  {
+    "id": "de:11000:900068201",
+    "name": "S+U Tempelhof (Berlin)",
+    "score": 5689
+  },
+  {
+    "id": "de:11000:900024101",
+    "name": "S Charlottenburg Bhf (Berlin)",
+    "score": 5635
+  },
+  {
+    "id": "de:11000:900110004",
+    "name": "S Landsberger Allee (Berlin)",
+    "score": 5513
+  },
+  {
+    "id": "de:11000:900100003",
+    "name": "S+U Alexanderplatz Bhf (Berlin)",
+    "score": 5384
+  },
+  {
+    "id": "de:09162:2",
+    "name": "Marienplatz",
+    "score": 5231
+  },
+  {
+    "id": "de:09162:7",
+    "name": "Hackerbr\u00fccke",
+    "score": 5224
+  },
+  {
+    "id": "de:09162:6",
+    "name": "Hauptbahnhof (S, U, Bus, Tram)",
+    "score": 5224
+  },
+  {
+    "id": "de:09162:3",
+    "name": "Isartor",
+    "score": 5224
+  },
+  {
+    "id": "de:09162:1",
+    "name": "Karlsplatz (Stachus)",
+    "score": 5224
+  },
+  {
+    "id": "de:11000:900120001",
+    "name": "S+U Frankfurter Allee (Berlin)",
+    "score": 5201
+  },
+  {
+    "id": "de:11000:900110012",
+    "name": "S Storkower Str. (Berlin)",
+    "score": 5201
+  },
+  {
+    "id": "de:02000:10950_G",
+    "name": "Hamburg Hbf",
+    "score": 5099
+  },
+  {
+    "id": "de:09162:4",
+    "name": "Rosenheimer Platz",
+    "score": 5008
+  },
+  {
+    "id": "de:05113:9289",
+    "name": "Essen Hbf",
+    "score": 4877
+  },
+  {
+    "id": "de:11000:900026207",
+    "name": "S Westend (Berlin)",
+    "score": 4837
+  },
+  {
+    "id": "de:11000:900044202",
+    "name": "S+U Bundesplatz (Berlin)",
+    "score": 4814
+  },
+  {
+    "id": "de:11000:900054105",
+    "name": "S+U Innsbrucker Platz (Berlin)",
+    "score": 4718
+  },
+  {
+    "id": "de:11000:900040101",
+    "name": "S Halensee (Berlin)",
+    "score": 4692
+  },
+  {
+    "id": "de:11000:900160004",
+    "name": "S+U Lichtenberg Bhf (Berlin)",
+    "score": 4669
+  },
+  {
+    "id": "de:11000:900192001",
+    "name": "S Sch\u00f6neweide Bhf (Berlin)",
+    "score": 4664
+  },
+  {
+    "id": "de:03241:91",
+    "name": "Hannover Markthalle/Landtag",
+    "score": 4648
+  },
+  {
+    "id": "de:03241:451",
+    "name": "Hannover Waterloo",
+    "score": 4648
+  },
+  {
+    "id": "de:11000:900045102",
+    "name": "S+U Heidelberger Platz (Berlin)",
+    "score": 4593
+  },
+  {
+    "id": "de:11000:900044101",
+    "name": "S Hohenzollerndamm (Berlin)",
+    "score": 4593
+  },
+  {
+    "id": "de:03241:1073",
+    "name": "Hannover Braunschweiger Platz",
+    "score": 4547
+  },
+  {
+    "id": "de:03241:1041",
+    "name": "Hannover Marienstra\u00dfe",
+    "score": 4547
+  },
+  {
+    "id": "de:11000:900077106",
+    "name": "S Sonnenallee (Berlin)",
+    "score": 4514
+  },
+  {
+    "id": "de:09564:510",
+    "name": "N\u00fcrnberg Hbf",
+    "score": 4506
+  },
+  {
+    "id": "de:03241:841",
+    "name": "Hannover Bahnhof Linden/Fischerhof",
+    "score": 4460
+  },
+  {
+    "id": "de:11000:900024106",
+    "name": "S Messe Nord/ZOB (Berlin)",
+    "score": 4421
+  },
+  {
+    "id": "de:11000:900020201",
+    "name": "S+U Jungfernheide Bhf (Berlin)",
+    "score": 4409
+  },
+  {
+    "id": "de:11000:900024203",
+    "name": "S Savignyplatz (Berlin)",
+    "score": 4319
+  },
+  {
+    "id": "de:11000:900003103",
+    "name": "S Tiergarten (Berlin)",
+    "score": 4289
+  },
+  {
+    "id": "de:11000:900003102",
+    "name": "S Bellevue (Berlin)",
+    "score": 4289
+  },
+  {
+    "id": "de:05913:131",
+    "name": "Dortmund Hbf",
+    "score": 4279
+  },
+  {
+    "id": "de:11000:900100004",
+    "name": "S+U Jannowitzbr\u00fccke (Berlin)",
+    "score": 4253
+  },
+  {
+    "id": "de:11000:900100002",
+    "name": "S Hackescher Markt (Berlin)",
+    "score": 4249
+  },
+  {
+    "id": "de:02000:10950",
+    "name": "Hamburg Hbf",
+    "score": 4174
+  },
+  {
+    "id": "de:11000:900009104",
+    "name": "S+U Wedding (Berlin)",
+    "score": 3983
+  },
+  {
+    "id": "de:05112:16032",
+    "name": "Duisburg Hbf",
+    "score": 3940
+  },
+  {
+    "id": "de:02000:80953",
+    "name": "Altona",
+    "score": 3896
+  },
+  {
+    "id": "de:08111:6115",
+    "name": "Hauptbahnhof (oben)",
+    "score": 3892
+  },
+  {
+    "id": "de:11000:900001201",
+    "name": "S+U Westhafen (Berlin)",
+    "score": 3884
+  },
+  {
+    "id": "de:11000:900029101",
+    "name": "S Spandau Bhf (Berlin)",
+    "score": 3872
+  },
+  {
+    "id": "de:03241:971",
+    "name": "Hannover Wallensteinstra\u00dfe",
+    "score": 3850
+  },
+  {
+    "id": "de:03241:961",
+    "name": "Hannover Beekestra\u00dfe",
+    "score": 3850
+  },
+  {
+    "id": "de:03241:951",
+    "name": "Hannover Sch\u00fcnemannplatz",
+    "score": 3850
+  },
+  {
+    "id": "de:03241:881",
+    "name": "Hannover Stadionbr\u00fccke",
+    "score": 3850
+  },
+  {
+    "id": "de:03241:871",
+    "name": "Hannover Allerweg",
+    "score": 3850
+  },
+  {
+    "id": "de:08222:2417",
+    "name": "Mannheim, Hauptbahnhof",
+    "score": 3845
+  },
+  {
+    "id": "de:11000:900110011",
+    "name": "S Bornholmer Str. (Berlin)",
+    "score": 3802
+  },
+  {
+    "id": "de:05162:20055",
+    "name": "Neuss Hauptbahnhof",
+    "score": 3791
+  },
+  {
+    "id": "de:11000:900171002",
+    "name": "S Friedrichsfelde Ost (Berlin)",
+    "score": 3740
+  },
+  {
+    "id": "de:02000:8002548",
+    "name": "Hamburg Dammtor",
+    "score": 3740
+  },
+  {
+    "id": "de:06412:7010",
+    "name": "Frankfurt (Main) Hauptbahnhof tief",
+    "score": 3723
+  },
+  {
+    "id": "de:11000:900160003",
+    "name": "S N\u00f6ldnerplatz (Berlin)",
+    "score": 3699
+  },
+  {
+    "id": "de:06412:510",
+    "name": "Frankfurt (Main) Konstablerwache",
+    "score": 3689
+  },
+  {
+    "id": "de:06412:11",
+    "name": "Frankfurt (Main) Taunusanlage",
+    "score": 3684
+  },
+  {
+    "id": "de:06412:1",
+    "name": "Frankfurt (Main) Hauptwache",
+    "score": 3684
+  },
+  {
+    "id": "de:06412:525",
+    "name": "Frankfurt (Main) Ostendstra\u00dfe",
+    "score": 3666
+  },
+  {
+    "id": "de:03241:2171",
+    "name": "Hannover Noltemeyerbr\u00fccke",
+    "score": 3552
+  },
+  {
+    "id": "de:03241:2161",
+    "name": "Hannover Klingerstra\u00dfe",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2151",
+    "name": "Hannover Spannhagengarten",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2141",
+    "name": "Hannover Pelikanstra\u00dfe",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2131",
+    "name": "Hannover Vier Grenzen",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2121",
+    "name": "Hannover Lortzingstra\u00dfe",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2021",
+    "name": "Hannover Lister Platz",
+    "score": 3550
+  },
+  {
+    "id": "de:03241:2001",
+    "name": "Hannover Sedanstra\u00dfe/Lister M.",
+    "score": 3550
+  },
+  {
+    "id": "de:11000:900193002",
+    "name": "S Adlershof (Berlin)",
+    "score": 3519
+  },
+  {
+    "id": "de:11000:900193001",
+    "name": "S Johannisthal (Berlin)",
+    "score": 3519
+  },
+  {
+    "id": "de:03241:1381",
+    "name": "Hannover Peiner Stra\u00dfe",
+    "score": 3461
+  },
+  {
+    "id": "de:03241:1361",
+    "name": "Hannover Fiedelerstra\u00dfe",
+    "score": 3460
+  },
+  {
+    "id": "de:03241:1351",
+    "name": "Hannover D\u00f6hrener Turm",
+    "score": 3460
+  },
+  {
+    "id": "de:03241:1331",
+    "name": "Hannover Altenbekener Damm",
+    "score": 3460
+  },
+  {
+    "id": "de:03241:1321",
+    "name": "Hannover Geibelstra\u00dfe",
+    "score": 3460
+  },
+  {
+    "id": "de:03241:1301",
+    "name": "Hannover Schl\u00e4gerstra\u00dfe",
+    "score": 3460
+  },
+  {
+    "id": "de:09162:900",
+    "name": "Leuchtenbergring",
+    "score": 3458
+  },
+  {
+    "id": "de:05111:18249",
+    "name": "D-Bilk S",
+    "score": 3317
+  },
+  {
+    "id": "de:03241:1391",
+    "name": "Hannover Bothmerstra\u00dfe",
+    "score": 3258
+  },
+  {
+    "id": "de:03241:2841",
+    "name": "Hannover Clausewitzstra\u00dfe",
+    "score": 3235
+  },
+  {
+    "id": "de:11000:900191001",
+    "name": "S Baumschulenweg (Berlin)",
+    "score": 3229
+  },
+  {
+    "id": "de:08212:90",
+    "name": "Karlsruhe Hauptbahnhof",
+    "score": 3226
+  },
+  {
+    "id": "de:02000:80952",
+    "name": "K\u00f6nigstra\u00dfe",
+    "score": 3172
+  },
+  {
+    "id": "de:02000:80951",
+    "name": "Reeperbahn",
+    "score": 3172
+  },
+  {
+    "id": "de:02000:80950",
+    "name": "Landungsbr\u00fccken",
+    "score": 3172
+  },
+  {
+    "id": "de:02000:11952",
+    "name": "Stadthausbr\u00fccke",
+    "score": 3172
+  },
+  {
+    "id": "de:02000:11950",
+    "name": "Jungfernstieg",
+    "score": 3172
+  },
+  {
+    "id": "de:02000:10952",
+    "name": "Berliner Tor",
+    "score": 3134
+  },
+  {
+    "id": "de:05124:11376",
+    "name": "Wuppertal Hbf",
+    "score": 2948
+  },
+  {
+    "id": "de:06412:912",
+    "name": "Frankfurt (Main) S\u00fcdbahnhof",
+    "score": 2845
+  },
+  {
+    "id": "de:14612:16",
+    "name": "Dresden Bahnhof Neustadt",
+    "score": 2781
+  },
+  {
+    "id": "de:11000:900100020",
+    "name": "S+U Potsdamer Platz Bhf (Berlin)",
+    "score": 2764
+  },
+  {
+    "id": "de:09162:9:3:3",
+    "name": "Laim",
+    "score": 2754
+  },
+  {
+    "id": "de:09162:31:1:1",
+    "name": "Hirschgarten",
+    "score": 2743
+  },
+  {
+    "id": "de:11000:900053301",
+    "name": "S Wannsee Bhf (Berlin)",
+    "score": 2740
+  },
+  {
+    "id": "de:08111:6333",
+    "name": "Bad Cannstatt",
+    "score": 2738
+  },
+  {
+    "id": "de:09162:31:40:82",
+    "name": "Hirschgarten",
+    "score": 2721
+  },
+  {
+    "id": "de:15002:8010159",
+    "name": "Halle(Saale)Hbf",
+    "score": 2651
+  },
+  {
+    "id": "de:11000:900130002",
+    "name": "S+U Pankow (Berlin)",
+    "score": 2559
+  },
+  {
+    "id": "de:03241:4331",
+    "name": "Hannover Bahnhof Leinhausen",
+    "score": 2533
+  },
+  {
+    "id": "de:14612:28",
+    "name": "Dresden Hauptbahnhof",
+    "score": 2531
+  },
+  {
+    "id": "de:11000:900171003",
+    "name": "S Springpfuhl (Berlin)",
+    "score": 2524
+  },
+  {
+    "id": "de:05914:2007",
+    "name": "Hagen Hbf",
+    "score": 2520
+  },
+  {
+    "id": "de:16051:8010101",
+    "name": "Erfurt Hbf",
+    "score": 2503
+  },
+  {
+    "id": "de:05116:23007",
+    "name": "MG Hbf /Europaplatz",
+    "score": 2493
+  },
+  {
+    "id": "de:12061:900260009",
+    "name": "Flughafen BER",
+    "score": 2479
+  },
+  {
+    "id": "de:03241:991",
+    "name": "Hannover Am Sauerwinkel",
+    "score": 2478
+  },
+  {
+    "id": "de:03241:981",
+    "name": "Hannover Bartold-Knaust-Stra\u00dfe",
+    "score": 2478
+  },
+  {
+    "id": "de:03241:5181",
+    "name": "Hannover Wettbergen",
+    "score": 2478
+  },
+  {
+    "id": "de:03241:5177",
+    "name": "Hannover Tresckowstra\u00dfe",
+    "score": 2478
+  },
+  {
+    "id": "de:03241:1001",
+    "name": "Hannover M\u00fchlenberger Markt",
+    "score": 2478
+  },
+  {
+    "id": "de:03241:2301",
+    "name": "Hannover Paracelsusweg",
+    "score": 2473
+  },
+  {
+    "id": "de:03241:2231",
+    "name": "Hannover In den Sieben St\u00fccken",
+    "score": 2473
+  },
+  {
+    "id": "de:14713:8010205",
+    "name": "Leipzig Hbf",
+    "score": 2467
+  },
+  {
+    "id": "de:07315:9037",
+    "name": "Mainz, Hauptbahnhof",
+    "score": 2460
+  },
+  {
+    "id": "de:05911:5194",
+    "name": "Bochum Hbf",
+    "score": 2453
+  },
+  {
+    "id": "de:05915:7756",
+    "name": "Hamm (Westf), Hauptbahnhof",
+    "score": 2394
+  },
+  {
+    "id": "de:12054:900230999",
+    "name": "S Potsdam Hauptbahnhof",
+    "score": 2393
+  },
+  {
+    "id": "de:04011:13927",
+    "name": "Bremen Hbf",
+    "score": 2385
+  },
+  {
+    "id": "de:06412:1008",
+    "name": "Frankfurt (Main) H\u00f6chst Bahnhof",
+    "score": 2365
+  },
+  {
+    "id": "de:03241:211",
+    "name": "Hannover Christuskirche",
+    "score": 2345
+  },
+  {
+    "id": "de:03241:241",
+    "name": "Hannover An der Strangriede",
+    "score": 2340
+  },
+  {
+    "id": "de:03241:221",
+    "name": "Hannover Kopernikusstra\u00dfe",
+    "score": 2340
+  },
+  {
+    "id": "de:03241:361",
+    "name": "Hannover Dragonerstra\u00dfe",
+    "score": 2336
+  },
+  {
+    "id": "de:03241:341",
+    "name": "Hannover Vahrenwalder Platz",
+    "score": 2336
+  },
+  {
+    "id": "de:03241:331",
+    "name": "Hannover Werderstra\u00dfe",
+    "score": 2336
+  },
+  {
+    "id": "de:02000:8000147",
+    "name": "Hamburg-Harburg",
+    "score": 2285
+  },
+  {
+    "id": "de:08111:6221",
+    "name": "Feuersee",
+    "score": 2281
+  },
+  {
+    "id": "de:08111:6118",
+    "name": "Hauptbahnhof (tief)",
+    "score": 2281
+  },
+  {
+    "id": "de:08111:6056",
+    "name": "Stadtmitte",
+    "score": 2281
+  },
+  {
+    "id": "de:08111:6052",
+    "name": "Schwabstra\u00dfe",
+    "score": 2281
+  },
+  {
+    "id": "de:05124:11302",
+    "name": "Wuppertal Vohwinkel Bf",
+    "score": 2278
+  },
+  {
+    "id": "de:09663:177_G",
+    "name": "W\u00fcrzburg Hbf",
+    "score": 2265
+  },
+  {
+    "id": "de:02000:84960",
+    "name": "Eidelstedt",
+    "score": 2262
+  },
+  {
+    "id": "de:06412:11511",
+    "name": "Frankfurt (Main) Flughafen Fernbahnhof",
+    "score": 2256
+  },
+  {
+    "id": "de:05162:20496",
+    "name": "Neuss Rheinpark-Center S",
+    "score": 2230
+  },
+  {
+    "id": "de:05162:20390",
+    "name": "Neuss Am Kaiser",
+    "score": 2230
+  },
+  {
+    "id": "de:05111:18785",
+    "name": "D-Friedrichstadt S",
+    "score": 2230
+  },
+  {
+    "id": "de:05111:18115",
+    "name": "D-V\u00f6lklinger Stra\u00dfe S",
+    "score": 2230
+  },
+  {
+    "id": "de:05111:18111",
+    "name": "D-Hamm S",
+    "score": 2230
+  },
+  {
+    "id": "de:06412:1204",
+    "name": "Frankfurt (Main) Westbahnhof",
+    "score": 2208
+  },
+  {
+    "id": "de:06611:200007",
+    "name": "Kassel Bahnhof Wilhelmsh\u00f6he",
+    "score": 2201
+  },
+  {
+    "id": "de:03241:161",
+    "name": "Hannover K\u00f6nigsworther Platz",
+    "score": 2193
+  },
+  {
+    "id": "de:03241:4321",
+    "name": "Hannover Herrenh\u00e4user Markt",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:4311",
+    "name": "Hannover Schaumburgstra\u00dfe",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:201",
+    "name": "Hannover Herrenh\u00e4user G\u00e4rten",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:191",
+    "name": "Hannover Appelstra\u00dfe",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:181",
+    "name": "Hannover Schneiderbg./W.-B.-M.",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:171",
+    "name": "Hannover Leibniz Universit\u00e4t",
+    "score": 2187
+  },
+  {
+    "id": "de:03241:3011",
+    "name": "Hannover Nackenberg",
+    "score": 2185
+  },
+  {
+    "id": "de:03241:3001",
+    "name": "Hannover Uhlhornstra\u00dfe",
+    "score": 2185
+  },
+  {
+    "id": "de:03241:2851",
+    "name": "Hannover Kantplatz",
+    "score": 2185
+  },
+  {
+    "id": "de:03241:371",
+    "name": "Hannover Niedersachsenring",
+    "score": 2184
+  },
+  {
+    "id": "de:03241:2511",
+    "name": "Hannover B\u00fcttnerstra\u00dfe",
+    "score": 2184
+  },
+  {
+    "id": "de:03241:4353",
+    "name": "Hannover Freudenthalstra\u00dfe",
+    "score": 2181
+  },
+  {
+    "id": "de:03241:4341",
+    "name": "Hannover Stadtfriedhof St\u00f6cken",
+    "score": 2181
+  },
+  {
+    "id": "de:06413:2601",
+    "name": "Offenbach (Main)-Offenbach Ost Ostbahnhof",
+    "score": 2172
+  },
+  {
+    "id": "de:11000:900012101",
+    "name": "S Anhalter Bahnhof (Berlin)",
+    "score": 2147
+  },
+  {
+    "id": "de:05111:18488",
+    "name": "D-Flughafen Bf",
+    "score": 2126
+  },
+  {
+    "id": "de:06435:4503",
+    "name": "Hanau Hauptbahnhof",
+    "score": 2093
+  },
+  {
+    "id": "de:05515:41000_G",
+    "name": "M\u00fcnster Hauptbahnhof",
+    "score": 2076
+  },
+  {
+    "id": "de:06413:11263",
+    "name": "Offenbach (Main)-Kaiserlei Kaiserlei",
+    "score": 2071
+  },
+  {
+    "id": "de:06412:903",
+    "name": "Frankfurt (Main) M\u00fchlberg",
+    "score": 2071
+  },
+  {
+    "id": "de:06413:11265",
+    "name": "Offenbach (Main)-Zentrum Marktplatz",
+    "score": 2052
+  },
+  {
+    "id": "de:06413:11264",
+    "name": "Offenbach (Main)-Westend Ledermuseum",
+    "score": 2052
+  },
+  {
+    "id": "de:05334:1008",
+    "name": "Aachen, Hbf",
+    "score": 2051
+  },
+  {
+    "id": "de:02000:82950",
+    "name": "Elbgaustra\u00dfe",
+    "score": 2031
+  },
+  {
+    "id": "de:02000:84953",
+    "name": "Stellingen (Arenen)",
+    "score": 2027
+  },
+  {
+    "id": "de:11000:900186001",
+    "name": "S Gr\u00fcnau (Berlin)",
+    "score": 2015
+  },
+  {
+    "id": "de:08221:1160",
+    "name": "Heidelberg, Hauptbahnhof",
+    "score": 2013
+  },
+  {
+    "id": "de:11000:900007104",
+    "name": "S Nordbahnhof (Berlin)",
+    "score": 1970
+  },
+  {
+    "id": "de:03241:1471",
+    "name": "Laatzen Eichstra\u00dfe",
+    "score": 1954
+  },
+  {
+    "id": "de:03241:1451",
+    "name": "Laatzen Birkenstra\u00dfe",
+    "score": 1954
+  },
+  {
+    "id": "de:03241:1441",
+    "name": "Hannover Am Brabrinke",
+    "score": 1954
+  },
+  {
+    "id": "de:03241:1431",
+    "name": "Hannover Wiehbergstra\u00dfe",
+    "score": 1954
+  },
+  {
+    "id": "de:12061:900260001",
+    "name": "S K\u00f6nigs Wusterhausen Bhf",
+    "score": 1949
+  },
+  {
+    "id": "de:08311:6508",
+    "name": "Freiburg Hauptbahnhof",
+    "score": 1939
+  },
+  {
+    "id": "de:05119:14022",
+    "name": "Oberhausen Hbf",
+    "score": 1938
+  },
+  {
+    "id": "de:11000:900100025",
+    "name": "S+U Brandenburger Tor (Berlin)",
+    "score": 1936
+  },
+  {
+    "id": "de:11000:900100007",
+    "name": "S Oranienburger Str. (Berlin)",
+    "score": 1936
+  },
+  {
+    "id": "de:09761:100",
+    "name": "Augsburg Hbf",
+    "score": 1928
+  },
+  {
+    "id": "de:02000:84950",
+    "name": "Sternschanze (Messe)",
+    "score": 1922
+  },
+  {
+    "id": "de:02000:54951",
+    "name": "Wilhelmsburg",
+    "score": 1915
+  },
+  {
+    "id": "de:02000:54950",
+    "name": "Veddel (BallinStadt)",
+    "score": 1915
+  },
+  {
+    "id": "de:02000:10951",
+    "name": "Hammerbrook (City S\u00fcd)",
+    "score": 1915
+  },
+  {
+    "id": "de:11000:900008101",
+    "name": "S Humboldthain (Berlin)",
+    "score": 1897
+  },
+  {
+    "id": "de:02000:41951",
+    "name": "Neugraben",
+    "score": 1894
+  },
+  {
+    "id": "de:05111:18019",
+    "name": "D-Wehrhahn S",
+    "score": 1879
+  },
+  {
+    "id": "de:06414:6907",
+    "name": "Wiesbaden Hauptbahnhof",
+    "score": 1875
+  },
+  {
+    "id": "de:05111:18285",
+    "name": "D-Derendorf S",
+    "score": 1860
+  },
+  {
+    "id": "de:05111:18012",
+    "name": "D-Zoo S",
+    "score": 1860
+  },
+  {
+    "id": "de:11000:900052201",
+    "name": "S Nikolassee (Berlin)",
+    "score": 1856
+  },
+  {
+    "id": "de:02000:60950",
+    "name": "Hasselbrook",
+    "score": 1844
+  },
+  {
+    "id": "de:12061:900260005",
+    "name": "S Sch\u00f6nefeld (bei Berlin) Bhf",
+    "score": 1835
+  },
+  {
+    "id": "de:15003:8010224",
+    "name": "Magdeburg Hbf",
+    "score": 1826
+  },
+  {
+    "id": "de:02000:80958",
+    "name": "Diebsteich",
+    "score": 1812
+  },
+  {
+    "id": "de:09162:910",
+    "name": "Berg am Laim",
+    "score": 1804
+  },
+  {
+    "id": "de:06631:11049",
+    "name": "Fulda Bahnhof",
+    "score": 1758
+  },
+  {
+    "id": "de:05117:15225",
+    "name": "M\u00fclheim Hauptbahnhof",
+    "score": 1737
+  },
+  {
+    "id": "de:11000:900191002",
+    "name": "S Pl\u00e4nterwald (Berlin)",
+    "score": 1732
+  },
+  {
+    "id": "de:02000:84952",
+    "name": "Langenfelde",
+    "score": 1732
+  },
+  {
+    "id": "ch:1:sloid:10",
+    "name": "Basel SBB",
+    "score": 1728
+  },
+  {
+    "id": "de:09161:9000",
+    "name": "Ingolstadt Hbf",
+    "score": 1716
+  },
+  {
+    "id": "de:03241:57",
+    "name": "Hannover Hauptbahnhof/Rosenstra\u00dfe",
+    "score": 1714
+  },
+  {
+    "id": "de:03241:42_G_G",
+    "name": "Hannover Hauptbahnhof/ZOB",
+    "score": 1714
+  },
+  {
+    "id": "de:03241:421",
+    "name": "Hannover Goetheplatz",
+    "score": 1714
+  },
+  {
+    "id": "de:02000:84951",
+    "name": "Holstenstra\u00dfe",
+    "score": 1676
+  },
+  {
+    "id": "de:05124:11602",
+    "name": "Wuppertal Oberbarmen Bf",
+    "score": 1675
+  },
+  {
+    "id": "de:11000:900025321",
+    "name": "S Olympiastadion (Berlin)",
+    "score": 1654
+  },
+  {
+    "id": "ch:23005:6",
+    "name": "Basel Bad Bf",
+    "score": 1638
+  },
+  {
+    "id": "de:11000:900176001",
+    "name": "S Mahlsdorf Bhf (Berlin)",
+    "score": 1637
+  },
+  {
+    "id": "de:02000:49950",
+    "name": "Harburg",
+    "score": 1622
+  },
+  {
+    "id": "de:02000:40950",
+    "name": "Harburg Rathaus",
+    "score": 1622
+  },
+  {
+    "id": "de:11000:900196001",
+    "name": "S Gr\u00fcnbergallee (Berlin)",
+    "score": 1612
+  },
+  {
+    "id": "de:11000:900195510",
+    "name": "S Altglienicke (Berlin)",
+    "score": 1612
+  },
+  {
+    "id": "de:08116:7802",
+    "name": "Plochingen",
+    "score": 1603
+  },
+  {
+    "id": "de:06412:907",
+    "name": "Frankfurt (Main) Lokalbahnhof",
+    "score": 1599
+  },
+  {
+    "id": "de:06411:4734",
+    "name": "Darmstadt Hauptbahnhof",
+    "score": 1597
+  },
+  {
+    "id": "de:08212:89",
+    "name": "KA Hauptbahnhof (Vorplatz)",
+    "score": 1591
+  },
+  {
+    "id": "de:05711:5500_G",
+    "name": "Bielefeld Hbf",
+    "score": 1588
+  },
+  {
+    "id": "de:12061:900260080_G",
+    "name": "S Wa\u00dfmannsdorf",
+    "score": 1582
+  },
+  {
+    "id": "de:02000:90950",
+    "name": "Ohlsdorf",
+    "score": 1563
+  },
+  {
+    "id": "de:02000:70952",
+    "name": "R\u00fcbenkamp (City Nord)",
+    "score": 1562
+  },
+  {
+    "id": "de:02000:70951",
+    "name": "Alte W\u00f6hr (Stadtpark)",
+    "score": 1562
+  },
+  {
+    "id": "de:02000:70950",
+    "name": "Barmbek",
+    "score": 1562
+  },
+  {
+    "id": "de:02000:60952",
+    "name": "Friedrichsberg",
+    "score": 1562
+  },
+  {
+    "id": "de:02000:60951",
+    "name": "Wandsbeker Chaussee",
+    "score": 1562
+  },
+  {
+    "id": "de:02000:10953",
+    "name": "Landwehr",
+    "score": 1562
+  },
+  {
+    "id": "de:01056:99951",
+    "name": "Pinneberg",
+    "score": 1562
+  },
+  {
+    "id": "de:08317:14506",
+    "name": "Offenburg Bahnhof",
+    "score": 1557
+  },
+  {
+    "id": "de:03241:1641",
+    "name": "Rethen Bahnhof",
+    "score": 1554
+  },
+  {
+    "id": "de:06412:11501",
+    "name": "Frankfurt (Main) Messe",
+    "score": 1545
+  },
+  {
+    "id": "de:06412:101",
+    "name": "Frankfurt (Main) Galluswarte",
+    "score": 1545
+  },
+  {
+    "id": "de:06440:6401",
+    "name": "Friedberg (Hessen) Bahnhof",
+    "score": 1541
+  },
+  {
+    "id": "de:02000:80954",
+    "name": "Bahrenfeld",
+    "score": 1538
+  },
+  {
+    "id": "de:11000:900025423",
+    "name": "S Messe S\u00fcd (Berlin)",
+    "score": 1537
+  },
+  {
+    "id": "de:02000:80955",
+    "name": "Othmarschen",
+    "score": 1532
+  },
+  {
+    "id": "de:05122:13800",
+    "name": "Solingen Hbf",
+    "score": 1527
+  },
+  {
+    "id": "de:05124:11130",
+    "name": "Wuppertal Barmen Bf",
+    "score": 1525
+  },
+  {
+    "id": "de:10041:8000323",
+    "name": "Saarbr\u00fccken Hbf",
+    "score": 1523
+  },
+  {
+    "id": "de:05111:18010",
+    "name": "D-Flingern S",
+    "score": 1522
+  },
+  {
+    "id": "de:14612:1",
+    "name": "Dresden Bahnhof Mitte",
+    "score": 1520
+  },
+  {
+    "id": "de:12054:900230003",
+    "name": "S Griebnitzsee Bhf",
+    "score": 1520
+  },
+  {
+    "id": "de:08119:7604",
+    "name": "Waiblingen",
+    "score": 1516
+  },
+  {
+    "id": "de:02000:8002553",
+    "name": "Hamburg-Altona",
+    "score": 1514
+  },
+  {
+    "id": "de:05513:5613",
+    "name": "Gelsenkirchen Hbf",
+    "score": 1508
+  },
+  {
+    "id": "de:11000:900180001",
+    "name": "S K\u00f6penick (Berlin)",
+    "score": 1507
+  },
+  {
+    "id": "de:03241:537",
+    "name": "Hannover Ahlem",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:535",
+    "name": "Hannover Gedenkst\u00e4tte Ahlem",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:531",
+    "name": "Hannover Brunnenstra\u00dfe",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:521",
+    "name": "Hannover Harenberger Stra\u00dfe",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:501",
+    "name": "Hannover Freizeitheim Linden",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:485",
+    "name": "Hannover Wunstorfer Stra\u00dfe",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:481",
+    "name": "Hannover Leinaustra\u00dfe",
+    "score": 1503
+  },
+  {
+    "id": "de:03241:469",
+    "name": "Hannover Am K\u00fcchengarten",
+    "score": 1503
+  },
+  {
+    "id": "de:03404:71612",
+    "name": "Osnabr\u00fcck Hbf",
+    "score": 1501
+  },
+  {
+    "id": "de:11000:900077155",
+    "name": "S K\u00f6llnische Heide (Berlin)",
+    "score": 1497
+  },
+  {
+    "id": "de:01056:97960",
+    "name": "Elmshorn",
+    "score": 1489
+  },
+  {
+    "id": "de:03241:461",
+    "name": "Hannover Glocksee",
+    "score": 1484
+  },
+  {
+    "id": "de:11000:900175002",
+    "name": "S Kaulsdorf (Berlin)",
+    "score": 1471
+  },
+  {
+    "id": "de:11000:900175001",
+    "name": "S+U Wuhletal (Berlin)",
+    "score": 1471
+  },
+  {
+    "id": "de:11000:900162001",
+    "name": "S Karlshorst (Berlin)",
+    "score": 1470
+  },
+  {
+    "id": "de:11000:900182002",
+    "name": "S Friedrichshagen (Berlin)",
+    "score": 1469
+  },
+  {
+    "id": "de:09162:9_G",
+    "name": "Laim",
+    "score": 1469
+  },
+  {
+    "id": "de:11000:900026105",
+    "name": "S Heerstr. (Berlin)",
+    "score": 1460
+  },
+  {
+    "id": "de:05315:11901:7:79",
+    "name": "K\u00f6ln Messe/Deutz Bf",
+    "score": 1460
+  },
+  {
+    "id": "de:05315:11901:7:80",
+    "name": "K\u00f6ln Messe/Deutz Bf",
+    "score": 1459
+  },
+  {
+    "id": "de:06531:11016",
+    "name": "Gie\u00dfen Bahnhof",
+    "score": 1458
+  },
+  {
+    "id": "de:11000:900048101",
+    "name": "S Grunewald (Berlin)",
+    "score": 1456
+  },
+  {
+    "id": "de:08116:7800_G",
+    "name": "Esslingen (N)",
+    "score": 1456
+  },
+  {
+    "id": "de:14713:8010205_G",
+    "name": "Leipzig Hbf",
+    "score": 1453
+  },
+  {
+    "id": "de:03241:1661",
+    "name": "Gleidingen",
+    "score": 1451
+  },
+  {
+    "id": "de:03241:1651",
+    "name": "Rethen Galgenbergweg",
+    "score": 1451
+  },
+  {
+    "id": "de:03241:1631",
+    "name": "Rethen/Pattenser Stra\u00dfe",
+    "score": 1451
+  },
+  {
+    "id": "de:08421:1008_G",
+    "name": "Ulm Hauptbahnhof",
+    "score": 1450
+  },
+  {
+    "id": "de:09182:43227_G",
+    "name": "Holzkirchen",
+    "score": 1447
+  },
+  {
+    "id": "de:02000:42018",
+    "name": "S Heimfeld",
+    "score": 1439
+  },
+  {
+    "id": "de:02000:41950",
+    "name": "Neuwiedenthal",
+    "score": 1439
+  },
+  {
+    "id": "de:05315:11801:7:72",
+    "name": "K\u00f6ln Hansaring",
+    "score": 1424
+  },
+  {
+    "id": "de:14713:8012202",
+    "name": "Leipzig Wilhelm-Leuschner-Platz",
+    "score": 1422
+  },
+  {
+    "id": "de:14713:8012187",
+    "name": "Leipzig MDR",
+    "score": 1422
+  },
+  {
+    "id": "de:14713:8012186",
+    "name": "Leipzig Markt",
+    "score": 1422
+  },
+  {
+    "id": "de:14713:8012184",
+    "name": "Leipzig Bayerischer Bahnhof",
+    "score": 1422
+  },
+  {
+    "id": "de:03241:551",
+    "name": "Hannover Schwarzer B\u00e4r",
+    "score": 1412
+  },
+  {
+    "id": "de:05162:20268",
+    "name": "Dormagen Bf",
+    "score": 1409
+  },
+  {
+    "id": "de:06412:1830",
+    "name": "Frankfurt (Main) Niederrad Bahnhof",
+    "score": 1407
+  },
+  {
+    "id": "de:08421:1008",
+    "name": "Ulm Hauptbahnhof",
+    "score": 1405
+  },
+  {
+    "id": "de:06412:140",
+    "name": "Frankfurt (Main) Nied Bahnhof",
+    "score": 1403
+  },
+  {
+    "id": "de:09178:3240",
+    "name": "Flughafen M\u00fcnchen",
+    "score": 1400
+  },
+  {
+    "id": "de:05315:11801:7:71",
+    "name": "K\u00f6ln Hansaring",
+    "score": 1400
+  },
+  {
+    "id": "de:12067:900310004",
+    "name": "S Erkner Bhf",
+    "score": 1398
+  },
+  {
+    "id": "de:03241:2325",
+    "name": "Hannover Oldenburger Allee",
+    "score": 1397
+  },
+  {
+    "id": "de:03241:2321",
+    "name": "Hannover Stadtfriedhof Lahe",
+    "score": 1397
+  },
+  {
+    "id": "de:09362:11090",
+    "name": "Regensburg Hbf",
+    "score": 1391
+  },
+  {
+    "id": "de:05111:18217",
+    "name": "D-Gerresheim S",
+    "score": 1390
+  },
+  {
+    "id": "de:06412:110",
+    "name": "Frankfurt (Main) Griesheim Bahnhof",
+    "score": 1388
+  },
+  {
+    "id": "de:09184:2010",
+    "name": "Unterschlei\u00dfheim",
+    "score": 1379
+  },
+  {
+    "id": "de:05111:18206",
+    "name": "D-Unterrath S",
+    "score": 1375
+  },
+  {
+    "id": "de:03241:3017",
+    "name": "Hannover Bf K.-Wiechert-Allee",
+    "score": 1364
+  },
+  {
+    "id": "de:09184:2020",
+    "name": "Lohhof",
+    "score": 1353
+  },
+  {
+    "id": "de:02000:25950",
+    "name": "Bergedorf",
+    "score": 1352
+  },
+  {
+    "id": "de:05111:18263",
+    "name": "D-Benrath S",
+    "score": 1341
+  },
+  {
+    "id": "de:08111:6002",
+    "name": "Vaihingen",
+    "score": 1340
+  },
+  {
+    "id": "de:09162:5:3:3",
+    "name": "Ostbahnhof",
+    "score": 1339
+  },
+  {
+    "id": "de:05113:9643",
+    "name": "Essen West S",
+    "score": 1324
+  },
+  {
+    "id": "de:12054:900230000",
+    "name": "S Babelsberg",
+    "score": 1322
+  },
+  {
+    "id": "de:09178:2680",
+    "name": "Freising",
+    "score": 1320
+  },
+  {
+    "id": "de:11000:900180002",
+    "name": "S Wuhlheide (Berlin)",
+    "score": 1314
+  },
+  {
+    "id": "de:11000:900030202",
+    "name": "S Stresow (Berlin)",
+    "score": 1311
+  },
+  {
+    "id": "de:11000:900025424",
+    "name": "S Pichelsberg (Berlin)",
+    "score": 1311
+  },
+  {
+    "id": "de:08111:6027",
+    "name": "\u00d6sterfeld",
+    "score": 1310
+  },
+  {
+    "id": "de:08111:6008",
+    "name": "Universit\u00e4t",
+    "score": 1310
+  },
+  {
+    "id": "de:03241:1078",
+    "name": "Hannover Freundallee",
+    "score": 1310
+  },
+  {
+    "id": "de:03241:3818",
+    "name": "Hannover Kronsberg",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:3800",
+    "name": "Hannover Zuschlagstra\u00dfe",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:3741",
+    "name": "Hannover B\u00fcnteweg/TiHo",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1811",
+    "name": "Hannover Messe/Ost(EXPO-Plaza)",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1807",
+    "name": "Hannover Stockholmer Allee",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1803",
+    "name": "Hannover Kr\u00fcgerskamp",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1795",
+    "name": "Hannover Feldbuschwende",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1791",
+    "name": "Hannover Brabeckstra\u00dfe",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1787",
+    "name": "Hannover Emslandstra\u00dfe",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1783",
+    "name": "Hannover Seelhorster Allee",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1779",
+    "name": "Hannover August-Madsack-Stra\u00dfe",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1761",
+    "name": "Hannover/Kinderkrhs. a.d. Bult",
+    "score": 1307
+  },
+  {
+    "id": "de:03241:1091",
+    "name": "Hannover Kerstingstra\u00dfe",
+    "score": 1307
+  },
+  {
+    "id": "de:12061:900260004",
+    "name": "S Eichwalde",
+    "score": 1306
+  },
+  {
+    "id": "de:12061:900260003",
+    "name": "S Zeuthen",
+    "score": 1306
+  },
+  {
+    "id": "de:12061:900260002",
+    "name": "S Wildau",
+    "score": 1306
+  },
+  {
+    "id": "de:05358:2286",
+    "name": "D\u00fcren, Bf",
+    "score": 1302
+  },
+  {
+    "id": "de:06413:2640",
+    "name": "Offenbach (Main)-Bieber Bieber Bahnhof",
+    "score": 1301
+  },
+  {
+    "id": "de:05124:11396",
+    "name": "Wuppertal Steinbeck Bf",
+    "score": 1301
+  },
+  {
+    "id": "de:05124:11151",
+    "name": "Wuppertal Zoolog. Garten Bf",
+    "score": 1301
+  },
+  {
+    "id": "de:11000:900160002",
+    "name": "S Betriebsbahnhof Rummelsburg (Berlin)",
+    "score": 1300
+  },
+  {
+    "id": "de:11000:900160001",
+    "name": "S Rummelsburg (Berlin)",
+    "score": 1300
+  },
+  {
+    "id": "de:02000:61950",
+    "name": "Tiefstack",
+    "score": 1299
+  },
+  {
+    "id": "de:02000:21953",
+    "name": "Allerm\u00f6he",
+    "score": 1299
+  },
+  {
+    "id": "de:02000:21952",
+    "name": "Nettelnburg",
+    "score": 1299
+  },
+  {
+    "id": "de:02000:21951",
+    "name": "Mittlerer Landweg",
+    "score": 1299
+  },
+  {
+    "id": "de:02000:21950",
+    "name": "Billwerder-Moorfleet",
+    "score": 1299
+  },
+  {
+    "id": "de:02000:10954",
+    "name": "Rothenburgsort",
+    "score": 1299
+  },
+  {
+    "id": "de:11000:900170004",
+    "name": "S Ahrensfelde Bhf (Berlin)",
+    "score": 1298
+  },
+  {
+    "id": "de:03241:1421",
+    "name": "Hannover Messe/Nord",
+    "score": 1298
+  },
+  {
+    "id": "de:03241:1411",
+    "name": "Hannover Am Mittelfelde",
+    "score": 1298
+  },
+  {
+    "id": "de:03241:1401",
+    "name": "Hannover Stadtfriedhof Seelh.",
+    "score": 1298
+  },
+  {
+    "id": "de:08118:7402",
+    "name": "Ludwigsburg",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:4101",
+    "name": "Hannover Nordhafen",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:4091",
+    "name": "Hannover Mecklenheidestra\u00dfe",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:4061",
+    "name": "Hannover Beneckeallee",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:4021",
+    "name": "Hannover Friedenauer Stra\u00dfe",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:4001",
+    "name": "Hannover Krepenstra\u00dfe",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:291",
+    "name": "Hannover Hainh\u00f6lzer Markt",
+    "score": 1296
+  },
+  {
+    "id": "de:03241:271",
+    "name": "Hannover Fenskestra\u00dfe",
+    "score": 1296
+  },
+  {
+    "id": "de:05916:7590",
+    "name": "Herne Wanne-Eickel Hbf",
+    "score": 1284
+  },
+  {
+    "id": "de:11000:900171001",
+    "name": "S Biesdorf (Berlin)",
+    "score": 1276
+  },
+  {
+    "id": "de:14511:30062",
+    "name": "Chemnitz, Hauptbahnhof",
+    "score": 1267
+  },
+  {
+    "id": "de:11000:900085201",
+    "name": "S Sch\u00f6nholz (Berlin)",
+    "score": 1259
+  },
+  {
+    "id": "de:15090:8010334",
+    "name": "Stendal Hbf",
+    "score": 1257
+  },
+  {
+    "id": "de:07314:2080",
+    "name": "Ludwigshafen, Hauptbahnhof",
+    "score": 1254
+  },
+  {
+    "id": "de:09162:9:3:1",
+    "name": "Laim",
+    "score": 1241
+  },
+  {
+    "id": "de:09661:99082",
+    "name": "Aschaffenburg Hbf",
+    "score": 1239
+  },
+  {
+    "id": "de:11000:900152001",
+    "name": "S Hohensch\u00f6nhausen Bhf (Berlin)",
+    "score": 1238
+  },
+  {
+    "id": "de:11000:900142001",
+    "name": "S Blankenburg (Berlin)",
+    "score": 1211
+  },
+  {
+    "id": "de:11000:900130001",
+    "name": "S Pankow-Heinersdorf (Berlin)",
+    "score": 1211
+  },
+  {
+    "id": "de:12065:900200008",
+    "name": "S Birkenwerder Bhf",
+    "score": 1205
+  },
+  {
+    "id": "de:08115:7100",
+    "name": "B\u00f6blingen",
+    "score": 1204
+  },
+  {
+    "id": "de:07312:9035",
+    "name": "Kaiserslautern, Hbf",
+    "score": 1200
+  },
+  {
+    "id": "de:08416:11000",
+    "name": "T\u00fcbingen Hauptbahnhof",
+    "score": 1192
+  },
+  {
+    "id": "de:08111:6001",
+    "name": "Rohr",
+    "score": 1192
+  },
+  {
+    "id": "de:05111:18094",
+    "name": "D-Oberbilk S U",
+    "score": 1192
+  },
+  {
+    "id": "de:05111:18006",
+    "name": "D-Volksgarten S",
+    "score": 1192
+  },
+  {
+    "id": "de:03101:178",
+    "name": "Braunschweig, Hauptbahnhof",
+    "score": 1192
+  },
+  {
+    "id": "de:05113:9582",
+    "name": "Essen Steele S",
+    "score": 1183
+  },
+  {
+    "id": "de:05116:23023",
+    "name": "MG Rheydt Hbf",
+    "score": 1174
+  },
+  {
+    "id": "de:06412:2899",
+    "name": "Frankfurt (Main) Stadion",
+    "score": 1158
+  },
+  {
+    "id": "de:03103:2015",
+    "name": "Wolfsburg, Hauptbahnhof",
+    "score": 1148
+  },
+  {
+    "id": "de:08212:6:1",
+    "name": "Karlsruhe Gottesauer Platz/BGV",
+    "score": 1143
+  },
+  {
+    "id": "de:05334:3690",
+    "name": "Herzogenrath, Bf",
+    "score": 1141
+  },
+  {
+    "id": "de:06412:2930",
+    "name": "Frankfurt (Main) Flughafen Regionalbahnhof",
+    "score": 1134
+  },
+  {
+    "id": "de:09163:9",
+    "name": "Rosenheim",
+    "score": 1132
+  },
+  {
+    "id": "de:11000:900058103",
+    "name": "S+U Yorckstr. (Berlin)",
+    "score": 1130
+  },
+  {
+    "id": "de:11000:900058102",
+    "name": "S Priesterweg (Berlin)",
+    "score": 1123
+  },
+  {
+    "id": "de:09178:2660",
+    "name": "Neufahrn",
+    "score": 1123
+  },
+  {
+    "id": "de:08115:4512_G",
+    "name": "Herrenberg",
+    "score": 1116
+  },
+  {
+    "id": "de:08111:6465",
+    "name": "Zuffenhausen",
+    "score": 1116
+  },
+  {
+    "id": "de:09461:20010",
+    "name": "Bamberg",
+    "score": 1111
+  },
+  {
+    "id": "de:12065:900200009",
+    "name": "S Hohen Neuendorf",
+    "score": 1108
+  },
+  {
+    "id": "de:06433:6999",
+    "name": "Mainz-Bischofsheim Bahnhof",
+    "score": 1106
+  },
+  {
+    "id": "de:09162:5:3:7",
+    "name": "Ostbahnhof",
+    "score": 1103
+  },
+  {
+    "id": "de:03241:1611",
+    "name": "Laatzen",
+    "score": 1103
+  },
+  {
+    "id": "de:03241:1601",
+    "name": "Laatzen Zentrum",
+    "score": 1103
+  },
+  {
+    "id": "de:02000:11943",
+    "name": "Elbbr\u00fccken",
+    "score": 1099
+  },
+  {
+    "id": "de:03241:6000",
+    "name": "Hannover Berliner Platz",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:4380",
+    "name": "Hannover St\u00f6cken",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:4363",
+    "name": "Hannover St\u00f6ckener Markt",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2941",
+    "name": "Langenhagen",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2931",
+    "name": "Langenhagen K-Schumacher-Allee",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2921",
+    "name": "Langenhagen Zentrum",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2911",
+    "name": "Langenhagen Langenforther Pl.",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2901",
+    "name": "Langenhagen Angerstra\u00dfe",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2551",
+    "name": "Hannover Wiesenau",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2541",
+    "name": "Hannover Alter Flughafen",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2531",
+    "name": "Hannover Kabelkamp",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:2521",
+    "name": "Hannover Windausstra\u00dfe",
+    "score": 1096
+  },
+  {
+    "id": "de:03241:3221",
+    "name": "Hannover Misburger Stra\u00dfe",
+    "score": 1095
+  },
+  {
+    "id": "de:03241:2881",
+    "name": "Hannover Roderbruch",
+    "score": 1095
+  },
+  {
+    "id": "de:03241:2871",
+    "name": "Hannover Roderbruchmarkt",
+    "score": 1095
+  },
+  {
+    "id": "de:03241:2461",
+    "name": "Hannover Med. Hochschule",
+    "score": 1095
+  },
+  {
+    "id": "de:06440:2402",
+    "name": "Bad Vilbel Bahnhof",
+    "score": 1094
+  },
+  {
+    "id": "de:11000:900170005",
+    "name": "S Poelchaustr. (Berlin)",
+    "score": 1092
+  },
+  {
+    "id": "de:11000:900170001",
+    "name": "S Marzahn (Berlin)",
+    "score": 1092
+  },
+  {
+    "id": "de:11000:900170003",
+    "name": "S Mehrower Allee (Berlin)",
+    "score": 1091
+  },
+  {
+    "id": "de:11000:900170002",
+    "name": "S Raoul-Wallenberg-Str. (Berlin)",
+    "score": 1091
+  },
+  {
+    "id": "de:03355:8000238",
+    "name": "L\u00fcneburg",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3471",
+    "name": "Hannover K\u00f6nigsberger Ring",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3461",
+    "name": "Hannover Anderten",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3091",
+    "name": "Hannover Ostfeldstra\u00dfe",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3081",
+    "name": "Hannover Tiergarten",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3071",
+    "name": "Hannover Gro\u00dfer Hillen",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3045",
+    "name": "Hannover Saarbr\u00fcckener Stra\u00dfe",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3033",
+    "name": "Hannover Bleekstra\u00dfe",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:3023",
+    "name": "Hannover Annastift",
+    "score": 1090
+  },
+  {
+    "id": "de:03241:2641",
+    "name": "Hannover Alte Heide",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2631",
+    "name": "Hannover Bahnstrift",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2621",
+    "name": "Hannover Tempelhofweg",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2611",
+    "name": "Hannover Zehlendorfweg",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2601",
+    "name": "Hannover Papenwinkel",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2591",
+    "name": "Hannover Vahrenheider Markt",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2581",
+    "name": "Hannover Reiterstadion",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:2571",
+    "name": "Hannover Gro\u00dfer Kolonnenweg",
+    "score": 1088
+  },
+  {
+    "id": "de:03241:4779",
+    "name": "Garbsen",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4777",
+    "name": "Auf der Horst Marshof",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4775",
+    "name": "Auf der Horst Skorpiongasse",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4773",
+    "name": "Hannover Sch\u00f6nebecker Allee",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4403",
+    "name": "Hannover Pascalstra\u00dfe",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4397",
+    "name": "Hannover J\u00e4dekamp",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4395",
+    "name": "Hannover Auf der Klappenburg",
+    "score": 1085
+  },
+  {
+    "id": "de:03241:4393",
+    "name": "Hannover Lauckerthof",
+    "score": 1085
+  },
+  {
+    "id": "de:08118:1400",
+    "name": "Bietigheim",
+    "score": 1082
+  },
+  {
+    "id": "de:03241:6689",
+    "name": "Altwarmb\u00fcchen Ernst-Grote-Str.",
+    "score": 1077
+  },
+  {
+    "id": "de:03241:6683",
+    "name": "Altwarmb\u00fcchen Opelstra\u00dfe",
+    "score": 1077
+  },
+  {
+    "id": "de:03241:6641",
+    "name": "Altwarmb\u00fcchen",
+    "score": 1077
+  },
+  {
+    "id": "de:03241:6637",
+    "name": "Altwarmb\u00fcchen Zentrum",
+    "score": 1077
+  },
+  {
+    "id": "de:02000:80956",
+    "name": "Klein Flottbek (Botanischer Garten)",
+    "score": 1077
+  },
+  {
+    "id": "de:03241:2501",
+    "name": "Hannover Misburg",
+    "score": 1076
+  },
+  {
+    "id": "de:03241:2487",
+    "name": "Hannover Kafkastra\u00dfe",
+    "score": 1076
+  },
+  {
+    "id": "de:03241:2431",
+    "name": "Hannover Am Forstkamp",
+    "score": 1076
+  },
+  {
+    "id": "de:03241:2425",
+    "name": "Hannover Schierholzstra\u00dfe",
+    "score": 1076
+  },
+  {
+    "id": "de:03241:2311",
+    "name": "Hannover Pappelwiese",
+    "score": 1076
+  },
+  {
+    "id": "de:08111:6157",
+    "name": "Feuerbach",
+    "score": 1074
+  },
+  {
+    "id": "de:03241:2211",
+    "name": "Hannover Stadtfriedh. Bothfeld",
+    "score": 1072
+  },
+  {
+    "id": "de:03241:2201",
+    "name": "Hannover Kurze-Kamp-Stra\u00dfe",
+    "score": 1072
+  },
+  {
+    "id": "de:03241:2191",
+    "name": "Hannover Bothfeld",
+    "score": 1072
+  },
+  {
+    "id": "de:03241:2181",
+    "name": "Hannover Bothfelder Kirchweg",
+    "score": 1072
+  },
+  {
+    "id": "de:03241:5323",
+    "name": "Hemmingen",
+    "score": 1070
+  },
+  {
+    "id": "de:03241:5291",
+    "name": "Hemmingen Berliner Stra\u00dfe",
+    "score": 1070
+  },
+  {
+    "id": "de:03241:5281",
+    "name": "Hemmingen Zentrum",
+    "score": 1070
+  },
+  {
+    "id": "de:03241:5279",
+    "name": "Hemmingen Saarstra\u00dfe",
+    "score": 1070
+  },
+  {
+    "id": "de:03241:5271",
+    "name": "Hannover Stadtfriedh. Ricklingen",
+    "score": 1070
+  },
+  {
+    "id": "de:03241:5261",
+    "name": "Hannover Unter den Birken",
+    "score": 1070
+  },
+  {
+    "id": "de:05158:19083",
+    "name": "ME-Stadtwald S",
+    "score": 1069
+  },
+  {
+    "id": "de:09178:2650",
+    "name": "Eching",
+    "score": 1067
+  },
+  {
+    "id": "de:03241:711",
+    "name": "Hannover Hermann-Ehlers-Allee",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:701",
+    "name": "Hannover Safariweg",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:691",
+    "name": "Hannover Riechersstra\u00dfe",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:671",
+    "name": "Hannover Am Soltekampe",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:661",
+    "name": "Hannover K\u00f6rtingsdorfer Weg",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:651",
+    "name": "Hannover Bauweg",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:641",
+    "name": "Hannover Am Lindener Hafen",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:631",
+    "name": "Hannover Bernhard-Caspar-Stra\u00dfe",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:571",
+    "name": "Hannover Lindener Marktplatz",
+    "score": 1066
+  },
+  {
+    "id": "de:03241:5001",
+    "name": "Empelde",
+    "score": 1066
+  },
+  {
+    "id": "de:08215:1223:1",
+    "name": "Ettlingen Erbprinz / Schloss",
+    "score": 1064
+  },
+  {
+    "id": "de:08212:74:1",
+    "name": "Karlsruhe Augartenstra\u00dfe",
+    "score": 1058
+  },
+  {
+    "id": "de:13003:1489_G",
+    "name": "Rostock Hauptbahnhof",
+    "score": 1056
+  },
+  {
+    "id": "de:09174:1920",
+    "name": "Karlsfeld",
+    "score": 1055
+  },
+  {
+    "id": "de:09162:1910",
+    "name": "Allach",
+    "score": 1055
+  },
+  {
+    "id": "de:09162:1900",
+    "name": "Obermenzing",
+    "score": 1055
+  },
+  {
+    "id": "de:07314:2019",
+    "name": "Ludwigshafen, Mitte",
+    "score": 1053
+  },
+  {
+    "id": "de:08212:1210",
+    "name": "R\u00fcppurr Battstra\u00dfe",
+    "score": 1051
+  },
+  {
+    "id": "de:08212:1209",
+    "name": "R\u00fcppurr Tulpenstra\u00dfe",
+    "score": 1051
+  },
+  {
+    "id": "de:08212:1208",
+    "name": "R\u00fcppurr Ostendorfplatz",
+    "score": 1051
+  },
+  {
+    "id": "de:08212:1207",
+    "name": "Karlsruhe Schloss R\u00fcppurr",
+    "score": 1051
+  },
+  {
+    "id": "de:03241:2830",
+    "name": "Hannover Congress Centrum",
+    "score": 1050
+  },
+  {
+    "id": "de:03241:2821",
+    "name": "Hannover Zoo",
+    "score": 1050
+  },
+  {
+    "id": "de:03241:261",
+    "name": "Hannover Haltenhoffstra\u00dfe",
+    "score": 1044
+  },
+  {
+    "id": "de:08212:1114:1",
+    "name": "Neureut Adolf-Ehrmann-Bad",
+    "score": 1037
+  },
+  {
+    "id": "de:08212:1111:1",
+    "name": "Neureut B\u00e4renweg",
+    "score": 1037
+  },
+  {
+    "id": "de:08212:1106:1",
+    "name": "Karlsruhe Haus Bethlehem",
+    "score": 1037
+  },
+  {
+    "id": "de:11000:900096101",
+    "name": "S+U Wittenau (Berlin)",
+    "score": 1032
+  },
+  {
+    "id": "de:11000:900094101",
+    "name": "S Waidmannslust (Berlin)",
+    "score": 1032
+  },
+  {
+    "id": "de:11000:900084101",
+    "name": "S Wilhelmsruh (Berlin)",
+    "score": 1032
+  },
+  {
+    "id": "de:14612:267",
+    "name": "Dresden S-Bf. Industriegel\u00e4nde",
+    "score": 1025
+  },
+  {
+    "id": "de:07131:080107",
+    "name": "Remagen Bf",
+    "score": 1025
+  },
+  {
+    "id": "de:05114:21002",
+    "name": "Krefeld Hbf",
+    "score": 1024
+  },
+  {
+    "id": "de:09162:5:3:2",
+    "name": "Ostbahnhof",
+    "score": 1017
+  },
+  {
+    "id": "de:09162:1100",
+    "name": "St.-Martin-Stra\u00dfe",
+    "score": 1016
+  },
+  {
+    "id": "de:06433:4912",
+    "name": "R\u00fcsselsheim Bahnhof",
+    "score": 1013
+  },
+  {
+    "id": "de:09162:10:4:5",
+    "name": "Pasing",
+    "score": 1012
+  },
+  {
+    "id": "de:05111:18517",
+    "name": "D-Flughafen Terminal S",
+    "score": 1005
+  },
+  {
+    "id": "de:15082:8010050",
+    "name": "Bitterfeld",
+    "score": 1002
+  },
+  {
+    "id": "de:12065:900200005",
+    "name": "S Oranienburg Bhf",
+    "score": 1002
+  },
+  {
+    "id": "de:06414:6906",
+    "name": "Wiesbaden-Biebrich Bahnhof Wiesbaden Ost",
+    "score": 1002
+  },
+  {
+    "id": "de:05315:19201:7:76",
+    "name": "K\u00f6ln M\u00fclheim Bf M\u00fclheim",
+    "score": 1002
+  },
+  {
+    "id": "ch:1:sloid:3000",
+    "name": "Z\u00fcrich HB",
+    "score": 1001
+  },
+  {
+    "id": "de:09162:5:3:11",
+    "name": "Ostbahnhof",
+    "score": 996
+  },
+  {
+    "id": "de:06438:4646",
+    "name": "R\u00f6dermark-Ober-Roden Bahnhof",
+    "score": 995
+  },
+  {
+    "id": "de:05758:1380",
+    "name": "Herford, Bahnhof/ZOB",
+    "score": 985
+  },
+  {
+    "id": "de:08119:7600",
+    "name": "Backnang",
+    "score": 984
+  },
+  {
+    "id": "de:08231:50",
+    "name": "Pforzheim Hauptbahnhof",
+    "score": 982
+  },
+  {
+    "id": "de:05158:19191",
+    "name": "ME-Neanderthal S",
+    "score": 982
+  },
+  {
+    "id": "de:05158:19054",
+    "name": "Erkrath Nord Bf",
+    "score": 982
+  },
+  {
+    "id": "de:05158:19020",
+    "name": "ME-Zentrum S",
+    "score": 982
+  },
+  {
+    "id": "de:14627:4180_G",
+    "name": "Coswig Bahnhof",
+    "score": 976
+  },
+  {
+    "id": "de:09761:100_G",
+    "name": "Augsburg Hbf",
+    "score": 976
+  },
+  {
+    "id": "de:09181:502",
+    "name": "Geltendorf",
+    "score": 971
+  },
+  {
+    "id": "de:01003:57819",
+    "name": "L\u00fcbeck Hbf",
+    "score": 971
+  },
+  {
+    "id": "de:11000:900057104",
+    "name": "S Julius-Leber-Br\u00fccke (Berlin)",
+    "score": 968
+  },
+  {
+    "id": "de:11000:900057102",
+    "name": "S+U Yorckstr. (Gro\u00dfg\u00f6rschenstr.) (Berlin)",
+    "score": 968
+  },
+  {
+    "id": "de:09261:64",
+    "name": "Landshut (Bay) Hauptbahnhof",
+    "score": 967
+  },
+  {
+    "id": "de:11000:900060101",
+    "name": "S Friedenau (Berlin)",
+    "score": 965
+  },
+  {
+    "id": "de:08116:4257",
+    "name": "Wendlingen (N)",
+    "score": 964
+  },
+  {
+    "id": "de:05562:3581",
+    "name": "Recklinghausen Hbf",
+    "score": 961
+  },
+  {
+    "id": "de:15003:8010226",
+    "name": "Magdeburg-Neustadt",
+    "score": 957
+  },
+  {
+    "id": "de:11000:900066102",
+    "name": "S Botanischer Garten (Berlin)",
+    "score": 955
+  },
+  {
+    "id": "de:11000:900063101",
+    "name": "S Feuerbachstr. (Berlin)",
+    "score": 955
+  },
+  {
+    "id": "de:11000:900062202",
+    "name": "S+U Rathaus Steglitz (Berlin)",
+    "score": 955
+  },
+  {
+    "id": "de:11000:900152002",
+    "name": "S Gehrenseestr. (Berlin)",
+    "score": 953
+  },
+  {
+    "id": "de:11000:900151001",
+    "name": "S Wartenberg (Berlin)",
+    "score": 953
+  },
+  {
+    "id": "de:05566:60846",
+    "name": "Rheine, Bahnhof",
+    "score": 948
+  },
+  {
+    "id": "de:11000:900092201",
+    "name": "S Frohnau (Berlin)",
+    "score": 947
+  },
+  {
+    "id": "de:06439:6101",
+    "name": "Niedernhausen Bahnhof",
+    "score": 947
+  },
+  {
+    "id": "de:11000:900093201",
+    "name": "S Hermsdorf (Berlin)",
+    "score": 945
+  },
+  {
+    "id": "de:07316:3144",
+    "name": "Neustadt, Hauptbahnhof",
+    "score": 943
+  },
+  {
+    "id": "de:05978:63583",
+    "name": "Schwerte, Bahnhof",
+    "score": 941
+  },
+  {
+    "id": "de:06414:6903",
+    "name": "Wiesbaden-Mainz-Kastel Bahnhof",
+    "score": 936
+  },
+  {
+    "id": "de:06438:2705",
+    "name": "Langen (Hessen) Bahnhof",
+    "score": 935
+  },
+  {
+    "id": "de:11000:900183002",
+    "name": "S Wilhelmshagen (Berlin)",
+    "score": 934
+  },
+  {
+    "id": "de:11000:900183001",
+    "name": "S Rahnsdorf (Berlin)",
+    "score": 934
+  },
+  {
+    "id": "de:03241:255",
+    "name": "Hannover Bahnhof Nordstadt",
+    "score": 932
+  },
+  {
+    "id": "de:05970:10097",
+    "name": "Siegen Hbf",
+    "score": 927
+  },
+  {
+    "id": "de:03360:92160",
+    "name": "Uelzen",
+    "score": 926
+  },
+  {
+    "id": "de:09162:800",
+    "name": "Riem",
+    "score": 924
+  },
+  {
+    "id": "de:06412:1217",
+    "name": "Frankfurt (Main) R\u00f6delheim Bahnhof",
+    "score": 924
+  },
+  {
+    "id": "de:02000:71953",
+    "name": "Poppenb\u00fcttel",
+    "score": 923
+  },
+  {
+    "id": "de:02000:71952",
+    "name": "Wellingsb\u00fcttel",
+    "score": 923
+  },
+  {
+    "id": "de:02000:71951",
+    "name": "Hoheneichen",
+    "score": 923
+  },
+  {
+    "id": "de:02000:71950",
+    "name": "Kornweg (Klein Borstel)",
+    "score": 923
+  },
+  {
+    "id": "de:12053:900360000",
+    "name": "Frankfurt (Oder), Bahnhof",
+    "score": 918
+  },
+  {
+    "id": "de:08215:1856",
+    "name": "Bruchsal",
+    "score": 918
+  },
+  {
+    "id": "de:05334:1086",
+    "name": "Aachen, West Bf",
+    "score": 918
+  },
+  {
+    "id": "de:09184:2120",
+    "name": "Heimstetten",
+    "score": 916
+  },
+  {
+    "id": "de:09175:3960",
+    "name": "Poing",
+    "score": 916
+  },
+  {
+    "id": "de:09175:3950",
+    "name": "Grub",
+    "score": 916
+  },
+  {
+    "id": "de:08119:6500",
+    "name": "Fellbach",
+    "score": 912
+  },
+  {
+    "id": "de:05913:196",
+    "name": "Dortmund Dorstfeld",
+    "score": 912
+  },
+  {
+    "id": "de:09184:2110",
+    "name": "Feldkirchen",
+    "score": 911
+  },
+  {
+    "id": "de:08335:6588",
+    "name": "Singen (Htw) Bahnhof",
+    "score": 910
+  },
+  {
+    "id": "de:08111:6295",
+    "name": "Nordbahnhof",
+    "score": 909
+  },
+  {
+    "id": "de:08212:801",
+    "name": "Karlsruhe-Durlach",
+    "score": 906
+  },
+  {
+    "id": "de:07137:030039",
+    "name": "Andernach Bahnhof",
+    "score": 906
+  },
+  {
+    "id": "de:09172:42293",
+    "name": "Freilassing",
+    "score": 901
+  },
+  {
+    "id": "de:09175:3970:2:4",
+    "name": "Markt Schwaben",
+    "score": 897
+  },
+  {
+    "id": "de:03254:9922",
+    "name": "Hildesheim Hauptbahnhof",
+    "score": 897
+  },
+  {
+    "id": "de:05334:5766",
+    "name": "Stolberg, Hbf",
+    "score": 894
+  },
+  {
+    "id": "de:01004:66023",
+    "name": "Neum\u00fcnster",
+    "score": 893
+  },
+  {
+    "id": "de:14524:41032",
+    "name": "Zwickau, Hauptbahnhof",
+    "score": 889
+  },
+  {
+    "id": "de:05162:20280",
+    "name": "Dormagen Chempark",
+    "score": 885
+  },
+  {
+    "id": "de:09162:10:6:6",
+    "name": "Pasing",
+    "score": 879
+  },
+  {
+    "id": "de:09179:6180",
+    "name": "Eichenau",
+    "score": 878
+  },
+  {
+    "id": "de:08212:41:2",
+    "name": "Karlsruhe Yorckstra\u00dfe",
+    "score": 877
+  },
+  {
+    "id": "de:09162:1710",
+    "name": "Aubing",
+    "score": 876
+  },
+  {
+    "id": "de:03241:6631",
+    "name": "Langenhagen Bahnhof Mitte",
+    "score": 876
+  },
+  {
+    "id": "de:09162:1700",
+    "name": "Leienfelsstra\u00dfe",
+    "score": 873
+  }
+]

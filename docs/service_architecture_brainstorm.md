@@ -233,12 +233,23 @@ class JourneyEvaluator:
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| `GraphService` | ✅ Done | 1,118 nodes (needs dedup to ~350) |
-| `TravelService` | ✅ Done | GTFS lookup |
-| `LinkerService` | ✅ Done | Train number matching |
-| `StationResolver` | 🔄 TODO | Fuzzy name → EVA |
-| `JourneyService` | 🔄 TODO | Orchestrator |
-| `JourneyEvaluator` | 🔄 TODO | AI ranking + insights |
+| `GraphService` | ✅ Done | Uses `top_stations.json` (~1000 nodes), pathfinding works |
+| `LinkerService` | 🔄 Partial | Structure exists, live enrichment is `pass` |
+| `SimulationService` | ✅ Done | Deterministic hash-based delays |
+| `connections.py` | 🔄 Partial | Path finding works, uses mock Train data |
+| `StationResolver` | ❌ TODO | Currently inline in `_find_node_by_name` |
+| `JourneyService` | ❌ TODO | Logic is in `connections.py` but incomplete |
+
+### What's Working
+- Graph loads from `top_stations.json` (not just "Hbf" filter)
+- `nx.shortest_path()` finds routes between stations
+- `LinkerService.find_trip_id()` queries GTFS by train number
+- `SimulationService.get_delay()` returns deterministic delays
+
+### What's Missing
+1. **Live data enrichment** - `LinkerService.get_trip_details()` has `pass` for today's trains
+2. **Real train lookup** - `connections.py` uses mock `ICE 100+i` instead of actual GTFS trips
+3. **Segment → Trip mapping** - No logic to find which train covers a path segment
 
 ---
 
