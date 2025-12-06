@@ -10,4 +10,5 @@ dependencies = [
     "httpx>=0.27.0",
     "xmltodict>=0.13.0",
     "python-dotenv>=1.0.0",
+    "boto3>=1.42.4",
 ]
