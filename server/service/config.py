@@ -23,6 +23,12 @@ API_KEY = os.getenv("TROY_API_KEY")
 # CLIENT_ID = os.getenv("LARS_CLIENT_ID")
 # API_KEY = os.getenv("LARS_API_KEY")
 
+# AWS Bedrock Configuration
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
+AWS_SECRET = os.getenv("AWS_SECRET")
+AWS_REGION = "eu-central-1"
+BEDROCK_MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0"
+
 # Data directory for saving responses
 DATA_DIR = Path(__file__).parent.parent / "data"
 

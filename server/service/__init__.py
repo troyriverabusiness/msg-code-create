@@ -4,6 +4,9 @@ from . import station_service
 from . import plan_service
 from . import full_changes_service
 from . import recent_changes_service
+from . import bedrock_service
+from . import session_manager
+from . import chat
 
 __all__ = [
     "example_service",
@@ -12,4 +15,7 @@ __all__ = [
     "plan_service",
     "full_changes_service",
     "recent_changes_service",
+    "bedrock_service",
+    "session_manager",
+    "chat",
 ]

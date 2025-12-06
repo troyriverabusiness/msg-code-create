@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from routes.example import router as example_router
-from routes import message
+from routes import chat
 
 app = FastAPI()
 
 # Register routes
 app.include_router(example_router)
-app.include_router(message.router)
+app.include_router(chat.router)
 
 
 if __name__ == "__main__":
