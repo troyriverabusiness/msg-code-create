@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 from typing import List, Dict, Optional
-from ..models import RouteOption, PlatformInfo, StationInfo, Leg, Train, Station
+from ..models import RouteOption, PlatformInfo, StationInfo, Leg, Train, Station, Stop
 
 DB_PATH = Path(__file__).parent.parent / "data" / "travel.db"
 
@@ -209,7 +209,7 @@ class TravelService:
         for row in cursor:
             # Get intermediate stops (path)
             path_cursor = self.conn.execute("""
-                SELECT s.stop_name, s.stop_id 
+                SELECT s.stop_name, s.stop_id, st.arrival_time, st.departure_time
                 FROM stop_times st
                 JOIN stations s ON st.stop_id = s.stop_id
                 WHERE st.trip_id = ? 
@@ -218,7 +218,26 @@ class TravelService:
                 ORDER BY st.stop_sequence
             """, (row['trip_id'], row['trip_id'], row['start_id'], row['trip_id'], row['end_id']))
             
-            path_stations = [Station(name=r['stop_name'], eva=r['stop_id']) for r in path_cursor]
+            path_stations = []
+            for r in path_cursor:
+                # Simulate platform deterministically based on stop_id
+                # e.g. take last digits or hash
+                try:
+                    # Simple deterministic platform: (int(stop_id) % 20) + 1
+                    # EVA IDs are usually numeric strings like "8000105"
+                    p_num = (int(r['stop_id']) % 20) + 1
+                    platform = str(p_num)
+                except:
+                    platform = "1"
+
+                path_stations.append(
+                    Stop(
+                        station=Station(name=r['stop_name'], eva=r['stop_id']),
+                        arrivalTime=r['arrival_time'],
+                        departureTime=r['departure_time'],
+                        platform=platform
+                    )
+                )
 
             train = Train(
                 name=row['route_short_name'],

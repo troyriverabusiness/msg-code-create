@@ -38,16 +38,38 @@
                         "arrivalTime": "09:45:00",
                         "path": [
                             {
-                                "name": "Darmstadt Hbf",
-                                "eva": "8000068"
+                                "station": {
+                                    "name": "Berlin-Spandau",
+                                    "eva": "8010404"
+                                },
+                                "arrivalTime": "08:15:00",
+                                "departureTime": "08:17:00",
+                                "platform": "5"
                             },
                             {
-                                "name": "Bensheim",
-                                "eva": "8000036"
+                                "station": {
+                                    "name": "Wittenberge",
+                                    "eva": "8010382"
+                                },
+                                "arrivalTime": "08:50:00",
+                                "departureTime": "08:52:00",
+                                "platform": "2"
                             },
                             {
-                                "name": "Weinheim(Bergstr)Hbf",
-                                "eva": "8000191"
+                                "station": {
+                                    "name": "Ludwigslust",
+                                    "eva": "8010217"
+                                },
+                                "arrivalTime": "09:10:00",
+                                "departureTime": "09:12:00"
+                            },
+                            {
+                                "station": {
+                                    "name": "Büchen",
+                                    "eva": "8010069"
+                                },
+                                "arrivalTime": "09:30:00",
+                                "departureTime": "09:32:00"
                             }
                         ],
                         "platform": 13,
@@ -58,7 +80,8 @@
                         ]
                     },
                     "departureTime": "08:00:00",
-                    "arrivalTime": "09:45:00"
+                    "arrivalTime": "09:45:00",
+                    "delayInMinutes": 0
                 }
             ]
         },
@@ -98,12 +121,23 @@
                         },
                         "departureTime": "10:00:00",
                         "arrivalTime": "10:45:00",
-                        "path": [],
+                        "path": [
+                            {
+                                "station": {
+                                    "name": "Frankfurt(M) Flughafen Fernbf",
+                                    "eva": "8000105"
+                                },
+                                "arrivalTime": "10:15:00",
+                                "departureTime": "10:17:00",
+                                "platform": "Fern 6"
+                            }
+                        ],
                         "platform": 7,
                         "wagons": []
                     },
                     "departureTime": "10:00:00",
-                    "arrivalTime": "10:45:00"
+                    "arrivalTime": "10:45:00",
+                    "delayInMinutes": 5
                 },
                 {
                     "origin": {
@@ -127,12 +161,40 @@
                         },
                         "departureTime": "11:00:00",
                         "arrivalTime": "14:00:00",
-                        "path": [],
+                        "path": [
+                            {
+                                "station": {
+                                    "name": "Stuttgart Hbf",
+                                    "eva": "8000096"
+                                },
+                                "arrivalTime": "11:40:00",
+                                "departureTime": "11:45:00",
+                                "platform": "9"
+                            },
+                            {
+                                "station": {
+                                    "name": "Ulm Hbf",
+                                    "eva": "8000170"
+                                },
+                                "arrivalTime": "12:30:00",
+                                "departureTime": "12:32:00",
+                                "platform": "1"
+                            },
+                            {
+                                "station": {
+                                    "name": "Augsburg Hbf",
+                                    "eva": "8000013"
+                                },
+                                "arrivalTime": "13:15:00",
+                                "departureTime": "13:17:00"
+                            }
+                        ],
                         "platform": 4,
                         "wagons": []
                     },
                     "departureTime": "11:00:00",
-                    "arrivalTime": "14:00:00"
+                    "arrivalTime": "14:00:00",
+                    "delayInMinutes": 0
                 }
             ]
         }

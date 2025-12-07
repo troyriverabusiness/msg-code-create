@@ -5,6 +5,7 @@ Import models from here for use across routes and services.
 """
 from .journey import Journey
 from .leg import Leg
+from .stop import Stop
 from .station import Station
 from .station_change import StationChange
 from .train import Train

@@ -129,10 +129,14 @@
                         </div>
                         <div class="timeline-content">
                           <div class="stop-header">
-                            <div class="stop-station">{{ stop.name }}</div>
-                            <!-- Platform not yet in Station model for path -->
+                            <div class="stop-station">{{ stop.station.name }}</div>
+                            <div class="stop-platform" v-if="stop.platform">Pl. {{ stop.platform }}</div>
                           </div>
-                          <!-- Arrival/Departure times not yet in simplified Station model in path -->
+                          <div class="stop-times">
+                            <span class="stop-time">{{ formatTime(stop.arrivalTime) }}</span>
+                            <span class="stop-separator" v-if="stop.arrivalTime && stop.departureTime">-</span>
+                            <span class="stop-time">{{ formatTime(stop.departureTime) }}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -148,8 +152,11 @@
                       <div class="transfer-details">
                         <div class="transfer-station">Umstieg in {{ train.endLocation.name }}</div>
                         <div class="transfer-info">
-                           <!-- Calculate transfer time if possible, or just show text -->
-                           Transfer
+                           <span class="transfer-time" :class="getTransferClass(train.arrivalTime, journey.trains[index + 1].departureTime)">
+                             {{ getTransferDuration(train.arrivalTime, journey.trains[index + 1].departureTime) }}
+                           </span>
+                           <span class="transfer-separator">•</span>
+                           <span class="transfer-distance">Change trains</span>
                         </div>
                       </div>
                     </div>
@@ -242,6 +249,42 @@ function mapWagonsToCoaches(wagonLoads) {
     toilet: 'available',
     powerOutlets: 80
   }))
+}
+
+function getTransferDuration(arrivalStr, departureStr) {
+  if (!arrivalStr || !departureStr) return ''
+  
+  // Parse HH:MM:SS
+  const getDate = (timeStr) => {
+    const d = new Date()
+    const [h, m, s] = timeStr.split(':').map(Number)
+    d.setHours(h, m, s || 0)
+    return d
+  }
+
+  let arr = getDate(arrivalStr)
+  let dep = getDate(departureStr)
+
+  // Handle midnight crossing (if dep is earlier than arr, assume next day)
+  if (dep < arr) {
+    dep.setDate(dep.getDate() + 1)
+  }
+
+  const diffMs = dep - arr
+  const diffMins = Math.floor(diffMs / 60000)
+  
+  return `${diffMins} min`
+}
+
+function getTransferClass(arrivalStr, departureStr) {
+  if (!arrivalStr || !departureStr) return ''
+  
+  const durationStr = getTransferDuration(arrivalStr, departureStr)
+  const minutes = parseInt(durationStr)
+  
+  if (minutes < 5) return 'transfer-critical'
+  if (minutes < 10) return 'transfer-tight'
+  return 'transfer-comfortable'
 }
 </script>
 

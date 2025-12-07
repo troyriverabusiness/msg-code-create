@@ -128,3 +128,37 @@ Iterate through `journey.legs`.
 
 ## 3. API Endpoints
 The endpoint `/connections` (or wherever you fetch journeys) now returns this new structure. No URL changes.
+
+### 3. Path Structure Update (Intermediate Stops)
+
+The `path` field in the `Train` object has changed from a list of simple `Station` objects to a list of `Stop` objects to include timing information.
+
+**Old Structure:**
+```json
+"path": [
+  { "name": "Station A", "eva": "123" },
+  { "name": "Station B", "eva": "456" }
+]
+```
+
+**New Structure:**
+```json
+"path": [
+  {
+    "station": { "name": "Station A", "eva": "123" },
+    "arrivalTime": "10:15:00",
+    "departureTime": "10:17:00",
+    "platform": "5"
+  },
+  {
+    "station": { "name": "Station B", "eva": "456" },
+    "arrivalTime": "10:45:00",
+    "departureTime": "10:47:00"
+  }
+]
+```
+
+**Frontend Action:**
+- Update loops over `train.path` to access `stop.station.name` instead of `stop.name`.
+- You can now display `stop.arrivalTime` and `stop.departureTime`.
+- You can also display `stop.platform`.

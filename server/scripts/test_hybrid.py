@@ -27,6 +27,9 @@ def test_hybrid_flow():
         print(f" - Legs: {len(journey.legs)}")
         for leg in journey.legs:
             print(f"   - {leg.train.name}: {leg.origin.name} -> {leg.destination.name} (Delay: {leg.delayInMinutes} min, Path: {len(leg.train.path)} stops)")
+            if leg.train.path:
+                first_stop = leg.train.path[0]
+                print(f"     First stop: {first_stop.station.name} (Arr: {first_stop.arrivalTime}, Dep: {first_stop.departureTime}, Pl: {first_stop.platform})")
             
     except Exception as e:
         print(f"CRASHED: {e}")
