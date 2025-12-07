@@ -1,7 +1,8 @@
 <template>
-  <v-card class="coach-sequence-card">
-    <v-card-title>Wagenreihung</v-card-title>
-    <v-card-text>
+  <div>
+    <v-card class="coach-sequence-card">
+      <v-card-title>Wagenreihung</v-card-title>
+      <v-card-text>
       <!-- Platform sectors display -->
       <div class="platform-display">
         <div class="platform-track-label">
@@ -27,6 +28,7 @@
           :key="coach.number"
           class="coach-item"
           :class="{ 'coach-disabled': !coach.available || coach.load >= 100 }"
+          @click="openSeatSelection(coach)"
         >
           <div class="coach-header">
             <span class="coach-number">{{ coach.number }}</span>
@@ -78,15 +80,22 @@
       </div>
     </v-card-text>
   </v-card>
+
+  <!-- Seat Selection Modal -->
+  <SeatSelection ref="seatSelectionRef" />
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import NoseBadge from '@/components/NoseBadge.vue'
+import SeatSelection from '@/components/SeatSelection.vue'
 import regio1 from '@/assets/regio1.png'
 import regio2 from '@/assets/regio2.png'
 import ice1 from '@/assets/ice1.png'
 import ice2 from '@/assets/ice2.png'
+
+const seatSelectionRef = ref(null)
 
 const props = defineProps({
   coaches: {
@@ -124,6 +133,12 @@ const getRightNoseImage = () => {
   if (props.trainType.startsWith('RE')) return regio2
   if (props.trainType.startsWith('ICE') || props.trainType.startsWith('IC')) return ice2
   return null
+}
+
+const openSeatSelection = (coach) => {
+  if (coach.available && coach.load < 100) {
+    seatSelectionRef.value?.openCoachSeats(coach)
+  }
 }
 
 </script>
