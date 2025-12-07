@@ -10,6 +10,7 @@
 | [System Overview](./architecture/system-overview.md) | High-level architecture, components, pipeline | All |
 | [Graph Traversal Service](./architecture/graph-traversal-service.md) | Deep dive on route discovery algorithm | Developers |
 | [Data Flow](./architecture/data-flow.md) | Complete request lifecycle | Developers |
+| [Data Sources](./architecture/data-sources.md) | Databases, APIs, and data files | Developers |
 | [Architecture Decisions](./architecture/architecture-decisions.md) | ADRs and rationale | Maintainers |
 | **API** | | |
 | [API Reference](./api/api-reference.md) | Endpoints and contracts | Frontend, Integration |

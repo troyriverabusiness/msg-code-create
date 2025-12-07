@@ -46,7 +46,33 @@ uv run server/main.py
 uv run -m scripts.chat_cli
 ```
 
+### 5. Run with Docker Compose (Recommended)
 
+Run the full stack (Client + Server) in containers:
+
+```bash
+# Start the application (rebuilds images if needed)
+docker compose up --build
+
+# Run in background
+docker compose up -d
+```
+
+**Common Commands:**
+
+```bash
+# Restart the server (e.g., after code changes)
+docker compose restart server
+
+# View server logs
+docker compose logs -f server
+
+# Apply changes to compose.yaml (e.g., volume mounts)
+docker compose up -d server
+```
+
+> Frontend: http://localhost:3000
+> Backend API: http://localhost:8000/docs
 ## API Endpoints
 
 ### Base URL

@@ -96,3 +96,24 @@ class SimulationService:
             "Signal failure at Frankfurt Hbf",
             "Construction work on line RB82"
         ]
+
+    def get_load(self, train_number: str) -> list[int]:
+        """
+        Get simulated wagon load percentages (0-100).
+        Returns a list of integers representing load for each wagon.
+        """
+        # Deterministic simulation based on hash
+        h = hash(train_number)
+        random.seed(h)
+        
+        # Determine number of wagons (5-12)
+        num_wagons = (h % 8) + 5
+        
+        loads = []
+        for _ in range(num_wagons):
+            # Generate load with some variance
+            # Base load 30-80%
+            base = random.randint(30, 80)
+            loads.append(base)
+            
+        return loads

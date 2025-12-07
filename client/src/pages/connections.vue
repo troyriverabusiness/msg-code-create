@@ -248,7 +248,9 @@ function formatDuration(minutes) {
 
 // Helper to map the simple backend [load_int, load_int] to the frontend's expected structure
 function mapWagonsToCoaches(wagonLoads) {
-  return wagonLoads.map((load, idx) => ({
+  console.log('Mapping wagons:', wagonLoads);
+  if (!wagonLoads) return [];
+  const coaches = wagonLoads.map((load, idx) => ({
     number: (idx + 1).toString(),
     type: idx === 0 ? '1st Class' : '2nd Class', // Mock type
     available: true,
@@ -260,7 +262,9 @@ function mapWagonsToCoaches(wagonLoads) {
     wifi: 'good',
     toilet: 'available',
     powerOutlets: 80
-  }))
+  }));
+  console.log('Mapped coaches:', coaches);
+  return coaches;
 }
 
 function getTransferDuration(arrivalStr, departureStr) {

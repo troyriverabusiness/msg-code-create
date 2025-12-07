@@ -183,11 +183,14 @@ JourneyService stitches legs together and validates transfers:
 
 | Source | Type | Content | Usage |
 |--------|------|---------|-------|
-| GTFS | Static | Schedules, stops, routes | TravelService queries |
+| GTFS (SQLite) | Static | Schedules, stops, routes | TravelService queries |
 | NeTEx | Static | Accessibility, platforms | Station info enrichment |
 | DB Timetables API | Live | Real-time delays, platforms | LinkerService (today only) |
+| AWS Bedrock | Live | AI/LLM responses | Chat and journey insights |
 | top_stations.json | Computed | Top 600 stations by connectivity | GraphService nodes |
 | graph_cache.json | Computed | NetworkX graph as JSON | GraphService pathfinding |
+
+**See:** [Data Sources](./data-sources.md) for complete details on databases, APIs, and configuration
 
 ---
 

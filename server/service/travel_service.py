@@ -248,7 +248,7 @@ class TravelService:
                 arrivalTime=row['end_time'],
                 path=path_stations, 
                 platform=0, 
-                wagons=[]
+                wagons=self.simulation.get_load(row['trip_short_name'] or "")
             )
             
             # Get delay
