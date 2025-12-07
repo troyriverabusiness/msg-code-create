@@ -1,6 +1,6 @@
 import boto3
 import requests
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 from botocore.exceptions import ClientError, BotoCoreError
 from .config import DEFAULT_SYSTEM_PROMPT
 from .config import BEDROCK_MODEL_ID
@@ -39,23 +39,26 @@ class BedrockService:
         message: str,
         conversation_history: Optional[List[Dict[str, str]]] = None,
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
-        tool_config: Optional[Dict] = None,
-    ) -> Dict[str, Any]:
+    ) -> str:
         messages = []
 
         # Optional unpacking
         if conversation_history:
             for msg in conversation_history:
-                content = [{"text": msg["content"]}]
-                # TODO: Handle tool results in history if needed
-                messages.append({"role": msg["role"], "content": content})
+                messages.append(
+                    {"role": msg["role"], "content": [{"text": msg["content"]}]}
+                )
 
         messages.append({"role": "user", "content": [{"text": message}]})
 
         # Use HTTP method if no boto3 client but we have a token
         if not self.client and self.bearer_token:
-            # HTTP method update is skipped for now as it's complex to replicate tool logic manually
-            raise NotImplementedError("Tool use not supported via HTTP yet")
+            return self.send_message_http(
+                bearer_token=self.bearer_token,
+                message=message,
+                conversation_history=conversation_history,
+                system_prompt=system_prompt,
+            )
 
         if not self.client:
             raise RuntimeError(
@@ -63,39 +66,35 @@ class BedrockService:
             )
 
         try:
-            kwargs = {
-                "modelId": self.model_id,
-                "messages": messages,
-                "system": [{"text": system_prompt}],
-                "inferenceConfig": {
+            # Debug: Verify system prompt is being sent
+            print(f"DEBUG BOTO3: System prompt length: {len(system_prompt)} chars")
+            print(f"DEBUG BOTO3: System prompt starts with: {system_prompt[:150]}...")
+            print(f"DEBUG BOTO3: Model ID: {self.model_id}")
+            print(f"DEBUG BOTO3: Number of messages: {len(messages)}")
+            
+            # Verify system_prompt is not empty
+            if not system_prompt or len(system_prompt.strip()) == 0:
+                raise ValueError("System prompt is empty! This should not happen.")
+            
+            system_payload = [{"text": system_prompt}]
+            print(f"DEBUG BOTO3: System payload: {system_payload}")
+            
+            response = self.client.converse(
+                modelId=BEDROCK_MODEL_ID,
+                messages=messages,
+                system=system_payload,
+                inferenceConfig={
                     "maxTokens": 2048,
                     "temperature": 0.7,  # Lower temperature for more deterministic, instruction-following behavior
                 },
-            }
+            )
             
-            if tool_config:
-                kwargs["toolConfig"] = tool_config
-
-            response = self.client.converse(**kwargs)
+            print(f"DEBUG BOTO3: Response received successfully")
 
             output_message = response["output"]["message"]
-            content = output_message["content"]
-            
-            text = ""
-            tool_requests = []
-            
-            for block in content:
-                if "text" in block:
-                    text += block["text"]
-                elif "toolUse" in block:
-                    tool_requests.append(block["toolUse"])
-            
-            return {
-                "text": text,
-                "stop_reason": response["stopReason"],
-                "tool_requests": tool_requests,
-                "raw_response": response # For debugging/history
-            }
+            assistant_text = output_message["content"][0]["text"]
+
+            return assistant_text
 
         except ClientError as e:
             error_code = e.response.get("Error", {}).get("Code", "Unknown")
