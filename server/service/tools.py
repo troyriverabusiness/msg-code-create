@@ -51,7 +51,7 @@ GET_TRIPS_TOOL = {
                         "description": "Minimum transfer time in minutes at the via station (default: 0)"
                     }
                 },
-                "required": ["origin", "destination"]
+                "required": []
             }
         }
     }
@@ -67,9 +67,15 @@ def execute_tool(name: str, args: Dict[str, Any]) -> Any:
             args.get("destination")
         )
     elif name == "get_trips":
+        origin = args.get("origin")
+        destination = args.get("destination")
+        
+        if not origin or not destination:
+            return "Please provide both origin and destination to search for trips."
+            
         routes = travel_service.find_routes(
-            args.get("origin"),
-            args.get("destination"),
+            origin,
+            destination,
             args.get("time"),
             args.get("via"),
             args.get("min_transfer_time")

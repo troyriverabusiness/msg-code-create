@@ -257,9 +257,9 @@ const search = reactive({
 
 onMounted(() => {
   if (store.prePlanParams) {
-    search.origin = store.prePlanParams.origin
-    search.destination = store.prePlanParams.destination
-    search.time = store.prePlanParams.time
+    if (store.prePlanParams.origin) search.origin = store.prePlanParams.origin
+    if (store.prePlanParams.destination) search.destination = store.prePlanParams.destination
+    if (store.prePlanParams.time) search.time = store.prePlanParams.time
     
     // Handle via array - take first element if exists, as UI only supports one via currently
     if (store.prePlanParams.via && store.prePlanParams.via.length > 0) {

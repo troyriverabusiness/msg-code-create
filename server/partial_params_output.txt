@@ -1,0 +1,14 @@
+Response Status: 200
+Response Body: {
+  "session_id": "96c322df-dad2-47b6-bcca-fb54cf5e050e",
+  "message": "I apologize for the confusion. You're right, I should have asked for more information before attempting to use the tool. Let me start over by asking you some clarifying questions to understand your travel requirements better.\n\nWhat are your origin and destination stations for this trip? For example, are you planning to travel from Munich to Frankfurt, or do you have different cities in mind?",
+  "search_params": {
+    "via": [
+      "Cologne"
+    ],
+    "min_transfer_time": 180
+  }
+}
+SUCCESS: search_params found!
+{'via': ['Cologne'], 'min_transfer_time': 180}
+SUCCESS: Partial params present.
