@@ -25,18 +25,27 @@ class TravelService:
         elif "Hauptbahnhof" in name:
             search_terms.append(name.replace("Hauptbahnhof", "Hbf"))
             
-        # Also try "Frankfurt (Main) Hbf" -> "Frankfurt(Main)Hbf" (remove spaces)
-        # But DB seems to have spaces "Frankfurt (Main) Hauptbahnhof"
-        
         row = None
         for term in search_terms:
+            # Try exact/contiguous match first
             cursor = self.conn.execute(
-                "SELECT stop_id, parent_station FROM stations WHERE stop_name LIKE ? LIMIT 1", 
+                "SELECT stop_id, parent_station, stop_name FROM stations WHERE stop_name LIKE ? LIMIT 1", 
                 (f"%{term}%",)
             )
             row = cursor.fetchone()
             if row:
                 break
+                
+            # If term contains space, try replacing with wildcard % to handle "Frankfurt (Main) Hbf"
+            if " " in term:
+                wildcard_term = term.replace(" ", "%")
+                cursor = self.conn.execute(
+                    "SELECT stop_id, parent_station, stop_name FROM stations WHERE stop_name LIKE ? LIMIT 1", 
+                    (f"%{wildcard_term}%",)
+                )
+                row = cursor.fetchone()
+                if row:
+                    break
                 
         if not row:
             # Fallback: Try fuzzy search without "Hbf" part if it failed? 

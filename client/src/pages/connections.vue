@@ -239,7 +239,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useBackendCalls } from '@/stores/backendCalls'
 import CoachSequence from '@/components/CoachSequence.vue'
 
@@ -253,6 +253,28 @@ const search = reactive({
   via: null,
   minDuration: 0,
   time: '08:00'
+})
+
+onMounted(() => {
+  if (store.prePlanParams) {
+    search.origin = store.prePlanParams.origin
+    search.destination = store.prePlanParams.destination
+    search.time = store.prePlanParams.time
+    
+    // Handle via array - take first element if exists, as UI only supports one via currently
+    if (store.prePlanParams.via && store.prePlanParams.via.length > 0) {
+      search.via = store.prePlanParams.via[0]
+    }
+    
+    if (store.prePlanParams.min_transfer_time) {
+      search.minDuration = store.prePlanParams.min_transfer_time
+    }
+    
+    // If we have connections in store, show them
+    if (store.connections.length > 0) {
+      hasSearched.value = true
+    }
+  }
 })
 
 const originSearch = ref('')

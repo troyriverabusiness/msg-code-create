@@ -40,7 +40,6 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
 
       prePlan.value = response.data.message
       prePlanParams.value = response.data.search_params
-      console.log("DEBUG: fetchPrePlanForPrompt response", response.data)
       return response.data
     } catch (e) {
       const detail = e.response?.data?.detail

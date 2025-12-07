@@ -112,6 +112,8 @@ If you find yourself wanting to:
 - Provide any travel information → Ask a question instead
 
 Your response should ALWAYS end with a question mark. If your response doesn't contain a clarifying question, it is wrong.
+
+EXCEPTION: If you have ALL the necessary information (origin, destination, date, time), YOU MUST CALL the 'get_trips' tool immediately. DO NOT ask for confirmation. DO NOT say "Is this correct?". JUST CALL THE TOOL.
 """
 
 

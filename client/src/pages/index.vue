@@ -26,10 +26,9 @@
                     color="#EC0016"
                     variant="flat"
                     class="ml-auto"
-                    :disabled="!prePlanParams"
                     @click="fetchConnections()"
                   >
-                    {{ prePlanParams ? 'Plane meinen Trip ->' : 'Bitte Details ergänzen...' }}
+                    Plane meinen Trip ->
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -219,9 +218,9 @@
   const prePlanParams = computed(() => backendCallsStore.prePlanParams)
 
   async function fetchConnections () {
-    loading.value = true
     const params = backendCallsStore.prePlanParams
     if (params) {
+      loading.value = true
       await backendCallsStore.fetchConnections(
         params.origin,
         params.destination,
@@ -229,22 +228,17 @@
         params.via,
         params.min_transfer_time
       )
-    } else {
-      await backendCallsStore.fetchConnections()
+      loading.value = false
     }
-    loading.value = false
   }
 
   async function send () {
     loading.value = true
     showPrePlan.value = true
-    console.log("DEBUG: Sending prompt:", prompt.value.text)
     await backendCallsStore.fetchPrePlanForPrompt(prompt.value.text)
-    console.log("DEBUG: Returned from fetchPrePlanForPrompt. Params:", backendCallsStore.prePlanParams)
     
     // Auto-redirect if we have params
     if (backendCallsStore.prePlanParams) {
-      console.log("DEBUG: Auto-redirect triggering")
       prePlan.value = "Verbindung gefunden! Leite weiter..."
       setTimeout(async () => {
          await fetchConnections()
