@@ -143,8 +143,99 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import CoachSequence from '@/components/CoachSequence.vue'
+import { useBackendCalls } from '@/stores/backendCalls'
+
+const backendCallsStore = useBackendCalls()
+
+// Transform connections from store to the format expected by the template
+const items = computed(() => {
+  return backendCallsStore.connections.map(connection => {
+    const firstLeg = connection.legs[0]
+    const lastLeg = connection.legs[connection.legs.length - 1]
+    
+    // Build segments from legs
+    const segments = connection.legs.map((leg, index) => ({
+      line: leg.train.name,
+      stops: [
+        {
+          station: leg.origin.name,
+          platform: String(leg.train.platform),
+          arrival: formatTime(leg.arrivalTime),
+          departure: formatTime(leg.departureTime),
+          delay: 0
+        },
+        {
+          station: leg.destination.name,
+          platform: String(leg.train.platform),
+          arrival: formatTime(leg.arrivalTime),
+          departure: '-',
+          delay: 0
+        }
+      ],
+      coaches: leg.train.wagons.map((wagon, i) => {
+        const load = Math.floor(Math.random() * 100) + 1;
+        return {
+          number: String(wagon),
+          type: i === 0 ? '1st Class' : '2nd Class',
+          available: load < 100,
+          isQuiet: Math.random() > 0.7,
+          isFamily: Math.random() > 0.8,
+          isBarrierefrei: Math.random() > 0.6,
+          hasBikes: Math.random() > 0.7,
+          load: load,
+          wifi: ['good', 'medium', 'poor'][Math.floor(Math.random() * 3)],
+          toilet: ['available', 'blocked', 'unavailable'][Math.floor(Math.random() * 3)],
+          powerOutlets: Math.floor(Math.random() * 50) + 50
+        };
+      }),
+      transfer: index < connection.legs.length - 1 ? {
+        station: leg.destination.name,
+        minutes: calculateTransferTime(leg.arrivalTime, connection.legs[index + 1].departureTime),
+        platformChange: `Gl. ${leg.train.platform} → Gl. ${connection.legs[index + 1].train.platform}`
+      } : null
+    }))
+
+    return {
+      id: connection.id,
+      name: firstLeg.train.name,
+      line: firstLeg.train.name,
+      route: `${connection.startStation.name} - ${connection.endStation.name}`,
+      destination: connection.endStation.name,
+      start_time: formatTime(firstLeg.departureTime),
+      end_time: formatTime(lastLeg.arrivalTime),
+      duration: formatDuration(connection.totalTime),
+      scheduled_time: formatTime(firstLeg.departureTime),
+      actual_time: formatTime(firstLeg.departureTime),
+      transfers: connection.transfers,
+      segments: segments,
+      stops: [],
+      coaches: segments[0]?.coaches || []
+    }
+  })
+})
+
+// Helper function to format time from "HH:MM:SS" to "HH:MM"
+const formatTime = (timeStr) => {
+  if (!timeStr) return ''
+  return timeStr.substring(0, 5)
+}
+
+// Helper function to format duration in minutes to "Xh XXmin"
+const formatDuration = (minutes) => {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  return `${hours}h ${mins}min`
+}
+
+// Helper function to calculate transfer time between two time strings
+const calculateTransferTime = (arrivalTime, departureTime) => {
+  if (!arrivalTime || !departureTime) return 0
+  const [arrH, arrM] = arrivalTime.split(':').map(Number)
+  const [depH, depM] = departureTime.split(':').map(Number)
+  return (depH * 60 + depM) - (arrH * 60 + arrM)
+}
 
 const getDelay = (item) => {
   if (!item.scheduled_time || !item.actual_time) return 0
@@ -214,6 +305,8 @@ const getCoachRecommendation = (coaches) => {
   return suggestion
 }
 
+// Old hardcoded items removed - now using computed property from store
+/*
 const items = ref([
   {
     name: 'RE 54',
@@ -383,6 +476,7 @@ const items = ref([
       ]
   }
 ])
+*/
 
     const mockTrainRouteOption = {
       

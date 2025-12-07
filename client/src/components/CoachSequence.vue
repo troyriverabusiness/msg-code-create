@@ -6,7 +6,7 @@
       <div class="platform-display">
         <div class="platform-track-label">
           <span class="track-number">Gl. 14</span>
-          <span class="direction-label">Abfahrtsrichtung →</span>
+          <span class="direction-label">Fahrtrichtung →</span>
         </div>
         <div class="platform-sectors">
           <div class="sector" v-for="sector in ['F', 'E', 'D', 'C', 'B', 'A']" :key="sector">
