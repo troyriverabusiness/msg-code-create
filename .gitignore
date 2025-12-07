@@ -214,3 +214,5 @@ datachaos/
 server/data/*.db
 
 .claude/
+
+analysis/pdf_images/

@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BingoCard: typeof import('./src/components/BingoCard.vue')['default']
     CoachSequence: typeof import('./src/components/CoachSequence.vue')['default']
     DateTimePicker: typeof import('./src/components/DateTimePicker.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']

@@ -235,6 +235,23 @@
         No connections found.
       </v-sheet>
     </v-row>
+
+    <!-- Bingo FAB & Dialog -->
+    <v-btn
+      icon="mdi-grid"
+      color="primary"
+      position="fixed"
+      location="bottom right"
+      class="ma-4"
+      size="large"
+      elevation="4"
+      @click="bingoDialog = true"
+      style="z-index: 1000;"
+    ></v-btn>
+
+    <v-dialog v-model="bingoDialog" max-width="600">
+      <BingoCard />
+    </v-dialog>
   </v-container>
 </template>
 
@@ -242,10 +259,12 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useBackendCalls } from '@/stores/backendCalls'
 import CoachSequence from '@/components/CoachSequence.vue'
+import BingoCard from '@/components/BingoCard.vue'
 
 
 const store = useBackendCalls()
 const hasSearched = ref(false)
+const bingoDialog = ref(false)
 
 const search = reactive({
   origin: 'Frankfurt (Main) Hbf',
