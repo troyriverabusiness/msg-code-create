@@ -41,10 +41,9 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
       prePlan.value = response.data.message
       prePlanParams.value = response.data.search_params
       return response.data
-    } catch (e) {
-      const detail = e.response?.data?.detail
-      const errorMessage = typeof detail === 'object' ? JSON.stringify(detail) : (detail || e.message)
-      prePlan.value = 'Error fetching prePlan: ' + errorMessage
+    } catch (error) {
+      const errorDetail = error.response?.data?.detail || error.message || 'Unbekannter Fehler'
+      prePlan.value = 'Error fetching prePlan: ' + errorDetail
       return null
     }
   }

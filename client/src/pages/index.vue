@@ -5,10 +5,8 @@
         <v-col cols="12" md="10" lg="8">
           <div class="db-card">
             <h1 class="db-title">Reiseauskunft</h1>
-          <v-row v-if="showPrePlan" justify="center">
-            <v-col cols="12" md="10" lg="8">
+          <div v-if="showPrePlan">
               <v-card class="db-preplan-card" outlined color="#F5F5F7">
-                <v-card-title class="db-preplan-title" style="color: #444;">Pre-Plan</v-card-title>
                 <v-progress-linear
                   v-if="loading"
                   indeterminate
@@ -17,10 +15,18 @@
                   class="mb-2"
                 />
                 
-                <v-card-text v-if="!loading && prePlan" class="db-preplan-text" style="color: #444;">
+                <v-alert
+                  v-if="!loading && isError"
+                  type="error"
+                  variant="tonal"
+                  class="ma-3"
+                  :text="errorMessage"
+                />
+                
+                <v-card-text v-if="!loading && prePlan && !isError" class="db-preplan-text" style="color: #444;">
                   {{ prePlan }}
                 </v-card-text>
-                <v-card-actions v-if="!loading && prePlan">
+                <v-card-actions v-if="!loading && prePlan && !isError">
                   <v-btn
                     to="/connections"
                     color="#EC0016"
@@ -28,22 +34,22 @@
                     class="ml-auto"
                     @click="fetchConnections()"
                   >
-                    Plane meinen Trip ->
+                    Reise planen →
                   </v-btn>
                 </v-card-actions>
               </v-card>
-            </v-col>
-          </v-row>
+          </div>
             <div class="db-search-box">
               <v-text-field
                 v-model="prompt.text"
                 append-inner-icon="mdi-send"
-                label="Verbindung suchen… Start, Ziel oder Bahnhof eingeben"
+                label="Erzählen Sie mir von Ihrer Reise... Wo möchten Sie hin, wann möchten Sie losfahren, und was ist Ihnen wichtig?"
                 variant="outlined"
                 hide-details
                 density="comfortable"
                 class="db-input"
                 @click:append-inner="send"
+                @keydown.enter="send"
               />
             </div>
 
@@ -211,11 +217,14 @@
     destSuggestions.value = await backendCallsStore.searchStations(val)
   }, 300)
 
-  const prePlan = computed({
-    get: () => backendCallsStore.prePlan,
-    set: (val) => { backendCallsStore.prePlan = val }
-  })
+  const prePlan = computed(() => backendCallsStore.prePlan)
   const prePlanParams = computed(() => backendCallsStore.prePlanParams)
+  const isError = computed(() => prePlan.value && prePlan.value.startsWith('Error fetching prePlan:'))
+  const errorMessage = computed(() => {
+    if (!isError.value) return ''
+    const errorText = prePlan.value.replace('Error fetching prePlan: ', '')
+    return `Verbindung zum Server fehlgeschlagen. Bitte versuchen Sie es erneut.${errorText ? ` (${errorText})` : ''}`
+  })
 
   async function fetchConnections () {
     const params = backendCallsStore.prePlanParams
@@ -375,23 +384,40 @@
 }
 
 .db-preplan-card {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: #F5F5F7;
   border: none;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(44,44,44,0.07);
-  padding: 1.5rem 2rem;
+  padding: 0;
 }
+
+.db-preplan-card :deep(.v-card-title) {
+  padding: 1.25rem 1.5rem 0.75rem 1.5rem;
+}
+
+.db-preplan-card :deep(.v-card-text) {
+  padding: 1.25rem 1.5rem 0rem 1.5rem;
+}
+
+.db-preplan-card :deep(.v-card-actions) {
+  padding: 0.5rem 1.5rem 1.25rem 1.5rem;
+}
+
 .db-preplan-title {
   color: #EC0016;
   font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  padding: 0;
 }
+
 .db-preplan-text {
   color: #282D37;
   font-size: 1.05rem;
   font-family: inherit;
   white-space: pre-line;
+  margin: 0;
+  padding: 0;
 }
 </style>
