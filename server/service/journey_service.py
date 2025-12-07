@@ -205,8 +205,8 @@ class JourneyService:
             
             bedrock = BedrockService(aws_access_key=AWS_ACCESS_KEY, aws_secret_key=AWS_SECRET, region=AWS_REGION)
             
-            # We use send_message which returns a dict
-            response = bedrock.send_message(message=prompt, system_prompt="You are a helpful travel assistant.")
+            # We use send_journey_prompt which returns a dict
+            response = bedrock.send_journey_prompt(message=prompt, system_prompt="You are a helpful travel assistant.")
             
             return response["text"]
             
