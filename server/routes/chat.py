@@ -40,8 +40,14 @@ async def chat_endpoint(
     request: ChatRequest,
     x_session_id: Optional[str] = Header(None, alias="X-Session-Id"),
 ):
-    message, session_id = chat.chat(request.message, x_session_id)
-    return ChatResponse(session_id=session_id, message=message)
+    print(f"DEBUG: Chat endpoint called with message: {request.message}")
+    try:
+        message, session_id = chat.chat(request.message, x_session_id)
+        print(f"DEBUG: Chat response: {message}, session_id: {session_id}")
+        return ChatResponse(session_id=session_id, message=message)
+    except Exception as e:
+        print(f"DEBUG: Chat endpoint failed: {e}")
+        raise e
     # """
     # Chat endpoint with LangGraph agent.
 

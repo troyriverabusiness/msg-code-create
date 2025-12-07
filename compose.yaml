@@ -5,6 +5,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    volumes:
+      - ./client:/app
+      - /app/node_modules
 
   server:
     build:

@@ -63,5 +63,11 @@ export default defineConfig({
   server: {
     port: 3000,
     watch: { usePolling: true },
+    proxy: {
+      '/api': {
+        target: 'http://server:8000',
+        changeOrigin: true,
+      },
+    },
   }
 })

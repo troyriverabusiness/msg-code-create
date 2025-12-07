@@ -37,6 +37,8 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
         
         response_data = None # Initialize response_data outside loop
 
+        print(f"DEBUG: Starting chat loop for message: {message}")
+
         # 2. Handle Tool Use Loop (Max 3 turns)
         for turn_count in range(3):
             history_for_llm = session_manager.get_history(session.session_id) # Get fresh history
