@@ -3,6 +3,7 @@ import requests
 from typing import List, Dict, Optional, Any
 from botocore.exceptions import ClientError, BotoCoreError
 from .config import DEFAULT_SYSTEM_PROMPT
+from .config import BEDROCK_MODEL_ID
 
 
 class BedrockService:
@@ -14,7 +15,7 @@ class BedrockService:
         bearer_token: Optional[str] = None,
     ):
         self.region = region
-        self.model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+        self.model_id = BEDROCK_MODEL_ID
         self.bearer_token = bearer_token
         self.client = None
 
@@ -42,6 +43,7 @@ class BedrockService:
     ) -> Dict[str, Any]:
         messages = []
 
+        # Optional unpacking
         if conversation_history:
             for msg in conversation_history:
                 content = [{"text": msg["content"]}]
@@ -67,7 +69,7 @@ class BedrockService:
                 "system": [{"text": system_prompt}],
                 "inferenceConfig": {
                     "maxTokens": 2048,
-                    "temperature": 0.7,
+                    "temperature": 0.7,  # Lower temperature for more deterministic, instruction-following behavior
                 },
             }
             
@@ -138,11 +140,17 @@ class BedrockService:
             "system": [{"text": system_prompt}],
             "inferenceConfig": {
                 "maxTokens": 2048,
-                "temperature": 0.7,
+                "temperature": 0.1,  # Lower temperature for more deterministic, instruction-following behavior
             },
         }
 
-        url = f"https://bedrock-runtime.{self.region}.amazonaws.com/model/{target_model}/invoke"
+        url = f"https://bedrock-runtime.{self.region}.amazonaws.com/model/{target_model}/converse"
+
+        # Debug: Verify system prompt is being sent via HTTP
+        print(f"DEBUG HTTP: System prompt length: {len(system_prompt)} chars")
+        print(f"DEBUG HTTP: System prompt starts with: {system_prompt[:150]}...")
+        print(f"DEBUG HTTP: URL: {url}")
+        print(f"DEBUG HTTP: Payload system field: {payload.get('system')}")
 
         try:
             response = requests.post(url, headers=headers, json=payload)

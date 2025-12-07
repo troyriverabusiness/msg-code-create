@@ -16,40 +16,40 @@
 
         <v-card-text class="seat-selection-content">
           <!-- Seat Info -->
-          <div class="seat-info-bar">
-            <div class="info-item">
+          <div class="d-flex flex-wrap ga-6 mb-6">
+            <div class="d-flex align-center ga-2">
               <span class="info-dot available"></span>
-              <span>Verfügbar</span>
+              <span class="text-body-2">Verfügbar</span>
             </div>
-            <div class="info-item">
+            <div class="d-flex align-center ga-2">
               <span class="info-dot reserved"></span>
-              <span>Reserviert</span>
+              <span class="text-body-2">Reserviert</span>
             </div>
-            <div class="info-item">
+            <div class="d-flex align-center ga-2">
               <span class="info-dot occupied"></span>
-              <span>Besetzt</span>
+              <span class="text-body-2">Besetzt</span>
             </div>
-            <div class="info-item">
+            <div class="d-flex align-center ga-2">
               <span class="info-dot disabled"></span>
-              <span>Nicht verfügbar</span>
+              <span class="text-body-2">Nicht verfügbar</span>
             </div>
           </div>
 
           <!-- Seat Map -->
-          <div class="seat-map-container">
+          <div class="d-flex flex-column align-center ga-6 my-6">
             <!-- Coach Front -->
             <div class="coach-front">VORNE</div>
 
             <!-- Seat Rows -->
-            <div class="seat-rows">
-              <div v-for="row in seatRows" :key="row" class="seat-row">
-                <div class="row-number">{{ row }}</div>
-                <div class="seats-group">
+            <div class="d-flex flex-column ga-3">
+              <div v-for="row in seatRows" :key="row" class="d-flex align-center ga-4">
+                <div class="row-number text-center font-weight-bold" style="min-width: 2rem;">{{ row }}</div>
+                <div class="d-flex align-center ga-4">
                   <!-- Left side (A, B) or Luggage Block -->
                   <div v-if="hasLuggage(row) && getLuggageSide(row) === 'left'" class="luggage-block">
                     <v-icon size="small" color="#999">mdi-briefcase</v-icon>
                   </div>
-                  <div v-else class="seats-side">
+                  <div v-else class="d-flex ga-2">
                     <div
                       v-for="seat in getRowSeats(row, 'left')"
                       :key="seat.id"
@@ -69,7 +69,7 @@
                   <div v-if="hasLuggage(row) && getLuggageSide(row) === 'right'" class="luggage-block">
                     <v-icon size="small" color="#999">mdi-briefcase</v-icon>
                   </div>
-                  <div v-else class="seats-side">
+                  <div v-else class="d-flex ga-2">
                     <div
                       v-for="seat in getRowSeats(row, 'right')"
                       :key="seat.id"
@@ -90,9 +90,9 @@
           </div>
 
           <!-- Selected Seats Display -->
-          <div v-if="selectedSeats.length > 0" class="selected-seats-info">
+          <div v-if="selectedSeats.length > 0" class="mt-6 pa-4 bg-grey-lighten-4 rounded border-s-lg border-error">
             <strong>Ausgewählte Sitze:</strong>
-            <div class="selected-seat-list">
+            <div class="d-flex flex-wrap ga-2 mt-2">
               <v-chip
                 v-for="seat in selectedSeats"
                 :key="seat.id"
@@ -207,8 +207,6 @@ function hasLuggage(row) {
 }
 
 function generateRandomLuggageSides() {
-  // For each luggage row, randomly decide if it's left (A,B) or right (C,D)
-  // Make sure not all are on the same side
   const sides = {}
   const rows = luggageRows.value
   let leftCount = 0
@@ -216,7 +214,6 @@ function generateRandomLuggageSides() {
   
   rows.forEach((row, index) => {
     let side
-    // Ensure they're not all on one side
     if (index < Math.ceil(rows.length / 2)) {
       side = 'left'
       leftCount++
@@ -224,7 +221,6 @@ function generateRandomLuggageSides() {
       side = 'right'
       rightCount++
     }
-    // Add some randomness while maintaining balance
     if (Math.random() > 0.6 && leftCount !== rightCount) {
       side = side === 'left' ? 'right' : 'left'
     }
@@ -259,20 +255,17 @@ function deselectSeat(seat) {
 }
 
 function confirmSeats() {
-  console.log('Selected seats:', selectedSeats.value)
   showSeatDialog.value = false
 }
 
 function openCoachSeats(coach) {
   selectedCoach.value = coach
   selectedSeats.value = []
-  // Generate new random luggage configuration for each coach
   luggageRows.value = generateRandomLuggageRows()
   luggageSides.value = generateRandomLuggageSides()
   showSeatDialog.value = true
 }
 
-// Export for use in parent component
 defineExpose({
   openCoachSeats,
   showSeatDialog
@@ -303,21 +296,6 @@ defineExpose({
   overflow-y: auto;
 }
 
-.seat-info-bar {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: #282D37;
-}
-
 .info-dot {
   width: 16px;
   height: 16px;
@@ -345,14 +323,6 @@ defineExpose({
   border: 2px solid #999;
 }
 
-.seat-map-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
 .coach-front,
 .coach-back {
   background: #003366;
@@ -362,37 +332,6 @@ defineExpose({
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 1px;
-}
-
-.seat-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-left: -2.8rem;
-}
-
-.seat-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.row-number {
-  min-width: 2rem;
-  text-align: center;
-  font-weight: 700;
-  color: #282D37;
-}
-
-.seats-group {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.seats-side {
-  display: flex;
-  gap: 0.5rem;
 }
 
 .aisle {
@@ -461,25 +400,6 @@ defineExpose({
   box-shadow: 0 0 12px rgba(236, 0, 22, 0.6);
   transform: scale(1.15);
   border-color: #EC0016;
-}
-
-.selected-seats-info {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f5f5f5;
-  border-radius: 8px;
-  border-left: 4px solid #EC0016;
-}
-
-.selected-seat-list {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.seat-actions {
-  padding: 1rem 1.5rem;
 }
 
 .luggage-block {

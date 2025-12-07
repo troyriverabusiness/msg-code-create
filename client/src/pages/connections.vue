@@ -1,192 +1,194 @@
 <template>
   <v-container>
-    <!-- Search Form -->
-    <v-card class="mb-4 pa-4" elevation="2">
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="search.origin"
-            label="Start Station"
-            prepend-inner-icon="mdi-train"
-            variant="outlined"
-            hide-details
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="search.destination"
-            label="Destination"
-            prepend-inner-icon="mdi-flag-checkered"
-            variant="outlined"
-            hide-details
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="2">
-          <v-text-field
-            v-model="search.time"
-            label="Time (HH:MM)"
-            type="time"
-            variant="outlined"
-            hide-details
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="2" class="d-flex align-center">
-          <v-btn
-            color="primary"
-            block
-            height="56"
-            :loading="store.loading"
-            @click="doSearch"
-          >
-            Search
-          </v-btn>
+    <v-row class="ma-1">
+      <!-- Search Form -->
+      <v-card class="mb-4 pa-4" elevation="2">
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-text-field
+              v-model="search.origin"
+              label="Start Station"
+              prepend-inner-icon="mdi-train"
+              variant="outlined"
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-text-field
+              v-model="search.destination"
+              label="Destination"
+              prepend-inner-icon="mdi-flag-checkered"
+              variant="outlined"
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-text-field
+              v-model="search.time"
+              label="Time (HH:MM)"
+              type="time"
+              variant="outlined"
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="2" class="d-flex align-center">
+            <v-btn
+              color="primary"
+              block
+              height="56"
+              :loading="store.loading"
+              @click="doSearch"
+            >
+              Search
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+
+      <!-- Error Alert -->
+      <v-alert
+        v-if="store.error"
+        type="error"
+        title="Error"
+        class="mb-4"
+        closable
+      >
+        {{ store.error }}
+      </v-alert>
+
+      <!-- Results List -->
+      <v-row v-if="store.connections.length > 0">
+        <v-col cols="12">
+          <v-expansion-panels>
+            <v-expansion-panel v-for="journey in store.connections" :key="journey.id">
+              <template #title>
+                <v-row no-gutters align="center" class="w-100">
+                  <!-- Line / Badge -->
+                  <v-col cols="2" sm="1" class="text-left pl-2">
+                    <div class="line-badge-wrapper">
+                      <div class="line-badge">
+                        {{ getJourneyLabel(journey) }}
+                      </div>
+                      <!-- Optional: Secondary badge if multiple trains? kept simple for now -->
+                    </div>
+                    <div class="transfers-badge" v-if="journey.transfers > 0">
+                      {{ journey.transfers }} Transfer(s)
+                    </div>
+                  </v-col>
+                  
+                  <!-- Route Info -->
+                  <v-col cols="7" sm="8">
+                    <div class="route-text">
+                      {{ formatTime(journey.trains[0].departureTime) }} • {{ journey.startStation.name }}
+                    </div>
+                    <div class="destination-text">
+                      → {{ journey.endStation.name }}
+                    </div>
+                    <div class="caption text-grey">
+                       Duration: {{ formatDuration(journey.totalTime) }}
+                    </div>
+                    <div class="journey-info">
+                      {{ formatTime(journey.trains[0].departureTime) }} → {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
+                    </div>
+
+                  </v-col>
+                  
+                  <!-- Times -->
+                  <v-col cols="3" class="text-right pr-2">
+                    <div class="time-scheduled">
+                      {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
+                    </div>
+                    <!-- Realtime data not yet in Journey model, hiding actual time for now -->
+                    <!-- <div class="time-actual" :class="{ 'time-delayed': getDelay(journey) > 0 }">
+                      {{ journey.actual_time }}
+                    </div> -->
+                  </v-col>
+                </v-row>
+              </template>
+              
+              <v-expansion-panel-text>
+                <div class="panel-content">
+                  <!-- Iterate over Trains as Segments -->
+                  <div v-for="(train, index) in journey.trains" :key="index">
+                    
+                    <!-- Train/Leg Header -->
+                    <div class="stops-section">
+                      <h4 class="stops-title">
+                        {{ train.name }} ({{ train.trainNumber }})
+                        <span class="text-caption text-grey ml-2">
+                          {{ train.startLocation.name }} → {{ train.endLocation.name }}
+                        </span>
+                      </h4>
+
+                      <!-- Intermediate Stops (Path) -->
+                      <!-- The backend 'train.path' is a list of Stations. -->
+                      <div class="stops-timeline" v-if="train.path && train.path.length > 0">
+                        <div v-for="(stop, stopIndex) in train.path" :key="stopIndex" class="timeline-stop">
+                          <div class="timeline-marker">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-line" v-if="stopIndex < train.path.length - 1"></div>
+                          </div>
+                          <div class="timeline-content">
+                            <div class="stop-header">
+                              <div class="stop-station">{{ stop.station.name }}</div>
+                              <div class="stop-platform" v-if="stop.platform">Pl. {{ stop.platform }}</div>
+                            </div>
+                            <div class="stop-times">
+                              <span class="stop-time">{{ formatTime(stop.arrivalTime) }}</span>
+                              <span class="stop-separator" v-if="stop.arrivalTime && stop.departureTime">-</span>
+                              <span class="stop-time">{{ formatTime(stop.departureTime) }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else class="text-grey text-caption font-italic">
+                        (Intermediate stops data not available)
+                      </div>
+                    </div>
+
+                    <!-- Transfer Information (only between segments) -->
+                    <div class="transfer-section" v-if="index < journey.trains.length - 1">
+                      <div class="transfer-indicator">
+                        <div class="transfer-icon">🔄</div>
+                        <div class="transfer-details">
+                          <div class="transfer-station">Umstieg in {{ train.endLocation.name }}</div>
+                          <div class="transfer-info">
+                             <span class="transfer-time" :class="getTransferClass(train.arrivalTime, journey.trains[index + 1].departureTime)">
+                               {{ getTransferDuration(train.arrivalTime, journey.trains[index + 1].departureTime) }}
+                             </span>
+                             <span class="transfer-separator">•</span>
+                             <span class="transfer-distance">Change trains</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Coach Sequence -->
+                    <!-- 
+                         Backend 'wagons' is List[int] (load percentages). 
+                         Frontend 'CoachSequence' expects complex objects.
+                         We will construct dummy coach objects from the load data to visualize it.
+                    -->
+                    <CoachSequence 
+                      v-if="train.wagons && train.wagons.length > 0"
+                      :coaches="mapWagonsToCoaches(train.wagons)" 
+                      :train-type="train.name"
+                    />
+                  </div>
+
+                  <!-- AI Coach Recommendation (Global for the journey or per leg? Frontend had it per segment mostly) -->
+                   <!-- TODO: Implement Recommendation based on aggregated load -->
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-col>
       </v-row>
-    </v-card>
-
-    <!-- Error Alert -->
-    <v-alert
-      v-if="store.error"
-      type="error"
-      title="Error"
-      class="mb-4"
-      closable
-    >
-      {{ store.error }}
-    </v-alert>
-
-    <!-- Results List -->
-    <v-row v-if="store.connections.length > 0">
-      <v-col cols="12">
-        <v-expansion-panels>
-          <v-expansion-panel v-for="journey in store.connections" :key="journey.id">
-            <template #title>
-              <v-row no-gutters align="center" class="w-100">
-                <!-- Line / Badge -->
-                <v-col cols="2" sm="1" class="text-left pl-2">
-                  <div class="line-badge-wrapper">
-                    <div class="line-badge">
-                      {{ getJourneyLabel(journey) }}
-                    </div>
-                    <!-- Optional: Secondary badge if multiple trains? kept simple for now -->
-                  </div>
-                  <div class="transfers-badge" v-if="journey.transfers > 0">
-                    {{ journey.transfers }} Transfer(s)
-                  </div>
-                </v-col>
-                
-                <!-- Route Info -->
-                <v-col cols="7" sm="8">
-                  <div class="route-text">
-                    {{ formatTime(journey.trains[0].departureTime) }} • {{ journey.startStation.name }}
-                  </div>
-                  <div class="destination-text">
-                    → {{ journey.endStation.name }}
-                  </div>
-                  <div class="caption text-grey">
-                     Duration: {{ formatDuration(journey.totalTime) }}
-                  </div>
-                  <div class="journey-info">
-                    {{ formatTime(journey.trains[0].departureTime) }} → {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
-                  </div>
-
-                </v-col>
-                
-                <!-- Times -->
-                <v-col cols="3" class="text-right pr-2">
-                  <div class="time-scheduled">
-                    {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
-                  </div>
-                  <!-- Realtime data not yet in Journey model, hiding actual time for now -->
-                  <!-- <div class="time-actual" :class="{ 'time-delayed': getDelay(journey) > 0 }">
-                    {{ journey.actual_time }}
-                  </div> -->
-                </v-col>
-              </v-row>
-            </template>
-            
-            <v-expansion-panel-text>
-              <div class="panel-content">
-                <!-- Iterate over Trains as Segments -->
-                <div v-for="(train, index) in journey.trains" :key="index">
-                  
-                  <!-- Train/Leg Header -->
-                  <div class="stops-section">
-                    <h4 class="stops-title">
-                      {{ train.name }} ({{ train.trainNumber }})
-                      <span class="text-caption text-grey ml-2">
-                        {{ train.startLocation.name }} → {{ train.endLocation.name }}
-                      </span>
-                    </h4>
-
-                    <!-- Intermediate Stops (Path) -->
-                    <!-- The backend 'train.path' is a list of Stations. -->
-                    <div class="stops-timeline" v-if="train.path && train.path.length > 0">
-                      <div v-for="(stop, stopIndex) in train.path" :key="stopIndex" class="timeline-stop">
-                        <div class="timeline-marker">
-                          <div class="timeline-dot"></div>
-                          <div class="timeline-line" v-if="stopIndex < train.path.length - 1"></div>
-                        </div>
-                        <div class="timeline-content">
-                          <div class="stop-header">
-                            <div class="stop-station">{{ stop.station.name }}</div>
-                            <div class="stop-platform" v-if="stop.platform">Pl. {{ stop.platform }}</div>
-                          </div>
-                          <div class="stop-times">
-                            <span class="stop-time">{{ formatTime(stop.arrivalTime) }}</span>
-                            <span class="stop-separator" v-if="stop.arrivalTime && stop.departureTime">-</span>
-                            <span class="stop-time">{{ formatTime(stop.departureTime) }}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else class="text-grey text-caption font-italic">
-                      (Intermediate stops data not available)
-                    </div>
-                  </div>
-
-                  <!-- Transfer Information (only between segments) -->
-                  <div class="transfer-section" v-if="index < journey.trains.length - 1">
-                    <div class="transfer-indicator">
-                      <div class="transfer-icon">🔄</div>
-                      <div class="transfer-details">
-                        <div class="transfer-station">Umstieg in {{ train.endLocation.name }}</div>
-                        <div class="transfer-info">
-                           <span class="transfer-time" :class="getTransferClass(train.arrivalTime, journey.trains[index + 1].departureTime)">
-                             {{ getTransferDuration(train.arrivalTime, journey.trains[index + 1].departureTime) }}
-                           </span>
-                           <span class="transfer-separator">•</span>
-                           <span class="transfer-distance">Change trains</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Coach Sequence -->
-                  <!-- 
-                       Backend 'wagons' is List[int] (load percentages). 
-                       Frontend 'CoachSequence' expects complex objects.
-                       We will construct dummy coach objects from the load data to visualize it.
-                  -->
-                  <CoachSequence 
-                    v-if="train.wagons && train.wagons.length > 0"
-                    :coaches="mapWagonsToCoaches(train.wagons)" 
-                    :train-type="train.name"
-                  />
-                </div>
-
-                <!-- AI Coach Recommendation (Global for the journey or per leg? Frontend had it per segment mostly) -->
-                 <!-- TODO: Implement Recommendation based on aggregated load -->
-              </div>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
+      
+      <v-sheet v-else-if="!store.loading && hasSearched" class="pa-4 text-center text-grey">
+        No connections found.
+      </v-sheet>
     </v-row>
-    
-    <v-sheet v-else-if="!store.loading && hasSearched" class="pa-4 text-center text-grey">
-      No connections found.
-    </v-sheet>
   </v-container>
 </template>
 
