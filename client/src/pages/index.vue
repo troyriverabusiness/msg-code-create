@@ -5,8 +5,7 @@
         <v-col cols="12" md="10" lg="8">
           <div class="db-card">
             <h1 class="db-title">Reiseauskunft</h1>
-          <v-row v-if="showPrePlan" justify="center">
-            <v-col cols="12" md="10" lg="8">
+          <div v-if="showPrePlan">
               <v-card class="db-preplan-card" outlined color="#F5F5F7">
                 <v-card-title class="db-preplan-title" style="color: #444;">Pre-Plan</v-card-title>
                 <v-progress-linear
@@ -32,8 +31,7 @@
                   </v-btn>
                 </v-card-actions>
               </v-card>
-            </v-col>
-          </v-row>
+          </div>
             <div class="db-search-box">
               <v-text-field
                 v-model="prompt.text"
@@ -289,23 +287,40 @@
 }
 
 .db-preplan-card {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: #F5F5F7;
   border: none;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(44,44,44,0.07);
-  padding: 1.5rem 2rem;
+  padding: 0;
 }
+
+.db-preplan-card :deep(.v-card-title) {
+  padding: 1.25rem 1.5rem 0.75rem 1.5rem;
+}
+
+.db-preplan-card :deep(.v-card-text) {
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
+.db-preplan-card :deep(.v-card-actions) {
+  padding: 0.5rem 1.5rem 1.25rem 1.5rem;
+}
+
 .db-preplan-title {
   color: #EC0016;
   font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  padding: 0;
 }
+
 .db-preplan-text {
   color: #282D37;
   font-size: 1.05rem;
   font-family: inherit;
   white-space: pre-line;
+  margin: 0;
+  padding: 0;
 }
 </style>
