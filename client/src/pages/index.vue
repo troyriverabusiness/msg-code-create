@@ -313,7 +313,7 @@
 }
 
 .db-preplan-card :deep(.v-card-text) {
-  padding: 0 1.5rem 1rem 1.5rem;
+  padding: 1.25rem 1.5rem 0rem 1.5rem;
 }
 
 .db-preplan-card :deep(.v-card-actions) {
