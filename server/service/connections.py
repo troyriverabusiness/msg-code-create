@@ -14,6 +14,6 @@ def get_connections(request: ConnectionsRequest) -> ConnectionsResponse:
     else:
         time_str = datetime.now().strftime("%H:%M:%S")
     
-    journeys = journey_service.find_routes(origin, destination, time_str)
+    journeys = journey_service.find_routes(origin, destination, time_str, request.via, request.min_transfer_time)
     
     return ConnectionsResponse(journeys=journeys)

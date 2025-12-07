@@ -2,11 +2,13 @@ from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from server.data_access.DB.timetable_service import TimetableService
 from server.service.simulation import SimulationService
+from server.service.travel_service import TravelService
 
 router = APIRouter(prefix="/api/v1", tags=["travel"])
 
 timetable_service = TimetableService()
 simulation_service = SimulationService()
+travel_service = TravelService()
 
 STATION_EVA_MAP = {
     "München Hbf": "8000261",
@@ -46,6 +48,12 @@ async def get_live_station_data(station_name: str):
                 break
 
     if not eva_no:
+        # Try to find via DB if not in hardcoded map
+        # This is a fallback for the live board if user enters a station not in the map
+        # For now, we keep the map logic but could extend it later.
+        pass
+
+    if not eva_no:
         raise HTTPException(
             status_code=404,
             detail=f"Station '{station_name}' not found. Available: {', '.join(STATION_EVA_MAP.keys())}",
@@ -58,5 +66,8 @@ async def get_live_station_data(station_name: str):
 
 
 @router.get("/stations")
-async def list_stations():
+async def list_stations(q: str = None):
+    if q:
+        results = travel_service.search_stations(q)
+        return {"stations": results}
     return {"stations": list(STATION_EVA_MAP.keys())}

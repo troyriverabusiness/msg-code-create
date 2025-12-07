@@ -26,9 +26,10 @@
                     color="#EC0016"
                     variant="flat"
                     class="ml-auto"
+                    :disabled="!prePlanParams"
                     @click="fetchConnections()"
                   >
-                    Plane meinen Trip ->
+                    {{ prePlanParams ? 'Plane meinen Trip ->' : 'Bitte Details ergänzen...' }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -56,12 +57,18 @@
                 <v-expansion-panel-text>
                   <v-row class="mb-4">
                     <v-col cols="12" sm="5">
-                      <v-combobox
+                      <v-autocomplete
                         v-model="prompt.manualInput.start"
+                        v-model:search="startSearch"
+                        :items="startSuggestions"
                         label="Von"
                         variant="outlined"
                         density="comfortable"
                         hide-details
+                        hide-no-data
+                        hide-selected
+                        :return-object="false"
+                        @update:search="fetchStartSuggestions"
                       />
                     </v-col>
                     <v-col class="d-flex align-center justify-center" cols="12" sm="2">
@@ -70,12 +77,18 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" sm="5">
-                      <v-combobox
+                      <v-autocomplete
                         v-model="prompt.manualInput.destination"
+                        v-model:search="destSearch"
+                        :items="destSuggestions"
                         label="Nach"
                         variant="outlined"
                         density="comfortable"
                         hide-details
+                        hide-no-data
+                        hide-selected
+                        :return-object="false"
+                        @update:search="fetchDestSuggestions"
                       />
                     </v-col>
                   </v-row>
@@ -125,7 +138,7 @@
                         color="#EC0016"
                         size="large"
                         class="db-search-btn"
-                        @click="send"
+                        @click="searchManual"
                       >
                         <v-icon icon="mdi-magnify" class="mr-2" />
                         Verbindungen suchen
@@ -144,9 +157,11 @@
 
 <script setup>
   import { ref, computed } from 'vue'
+  import { useRouter } from 'vue-router'
   import { useBackendCalls } from '@/stores/backendCalls'
   import DateTimePicker from '@/components/DateTimePicker.vue'
 
+  const router = useRouter()
   const backendCallsStore = useBackendCalls()
 
   const verkehrsmittel = ref(['ICE', 'IC', 'RE', 'RB', 'S-Bahn', 'U-Bahn', 'Tram', 'Bus'])
@@ -155,7 +170,7 @@
   const showPrePlan = ref(false)
   const loading = ref(false)
 
-   const prompt = ref({
+  const prompt = ref({
     text: null,
     manualInput: {
       start: null,
@@ -167,19 +182,97 @@
     },
   })
 
-  const prePlan = computed(() => backendCallsStore.prePlan)
+  const startSearch = ref('')
+  const destSearch = ref('')
+  const startSuggestions = ref([])
+  const destSuggestions = ref([])
+
+  let searchTimeout = null
+
+  function debounce(fn, delay) {
+    return (...args) => {
+      clearTimeout(searchTimeout)
+      searchTimeout = setTimeout(() => fn(...args), delay)
+    }
+  }
+
+  const fetchStartSuggestions = debounce(async (val) => {
+    if (!val || val.length < 2) {
+      startSuggestions.value = []
+      return
+    }
+    startSuggestions.value = await backendCallsStore.searchStations(val)
+  }, 300)
+
+  const fetchDestSuggestions = debounce(async (val) => {
+    if (!val || val.length < 2) {
+      destSuggestions.value = []
+      return
+    }
+    destSuggestions.value = await backendCallsStore.searchStations(val)
+  }, 300)
+
+  const prePlan = computed({
+    get: () => backendCallsStore.prePlan,
+    set: (val) => { backendCallsStore.prePlan = val }
+  })
+  const prePlanParams = computed(() => backendCallsStore.prePlanParams)
 
   async function fetchConnections () {
     loading.value = true
-    await backendCallsStore.fetchConnections()
+    const params = backendCallsStore.prePlanParams
+    if (params) {
+      await backendCallsStore.fetchConnections(
+        params.origin,
+        params.destination,
+        params.time,
+        params.via,
+        params.min_transfer_time
+      )
+    } else {
+      await backendCallsStore.fetchConnections()
+    }
     loading.value = false
   }
 
   async function send () {
     loading.value = true
     showPrePlan.value = true
+    console.log("DEBUG: Sending prompt:", prompt.value.text)
     await backendCallsStore.fetchPrePlanForPrompt(prompt.value.text)
+    console.log("DEBUG: Returned from fetchPrePlanForPrompt. Params:", backendCallsStore.prePlanParams)
+    
+    // Auto-redirect if we have params
+    if (backendCallsStore.prePlanParams) {
+      console.log("DEBUG: Auto-redirect triggering")
+      prePlan.value = "Verbindung gefunden! Leite weiter..."
+      setTimeout(async () => {
+         await fetchConnections()
+         router.push('/connections')
+      }, 1500)
+    }
+    
     loading.value = false
+  }
+
+  async function searchManual () {
+    loading.value = true
+    try {
+      let formattedDate = null
+      if (prompt.value.manualInput.departureDate) {
+        // DateTimePicker returns "yyyy-MM-dd HH:mm", convert to ISO "yyyy-MM-ddTHH:mm:00"
+        formattedDate = prompt.value.manualInput.departureDate.replace(' ', 'T') + ':00'
+      }
+
+      await backendCallsStore.fetchConnections(
+        prompt.value.manualInput.start,
+        prompt.value.manualInput.destination,
+        formattedDate
+      )
+      router.push('/connections')
+    } finally {
+      loading.value = false
+    }
   }
 
 </script>

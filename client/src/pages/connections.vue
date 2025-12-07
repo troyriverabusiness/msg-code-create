@@ -4,23 +4,60 @@
       <!-- Search Form -->
       <v-card class="mb-4 pa-4" elevation="2">
         <v-row>
-          <v-col cols="12" md="4">
-            <v-text-field
+          <v-col cols="12" md="3">
+            <v-autocomplete
               v-model="search.origin"
+              v-model:search="originSearch"
+              :items="originSuggestions"
               label="Start Station"
               prepend-inner-icon="mdi-train"
               variant="outlined"
               hide-details
+              hide-no-data
+              hide-selected
+              :return-object="false"
+              @update:search="fetchOriginSuggestions"
+            ></v-autocomplete>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-autocomplete
+              v-model="search.via"
+              v-model:search="viaSearch"
+              :items="viaSuggestions"
+              label="Via (Optional)"
+              prepend-inner-icon="mdi-map-marker-path"
+              variant="outlined"
+              hide-details
+              hide-no-data
+              hide-selected
+              :return-object="false"
+              @update:search="fetchViaSuggestions"
+            ></v-autocomplete>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-text-field
+              v-model.number="search.minDuration"
+              label="Min. Duration (min)"
+              type="number"
+              variant="outlined"
+              hide-details
+              min="0"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" md="4">
-            <v-text-field
+          <v-col cols="12" md="3">
+            <v-autocomplete
               v-model="search.destination"
+              v-model:search="destSearch"
+              :items="destSuggestions"
               label="Destination"
               prepend-inner-icon="mdi-flag-checkered"
               variant="outlined"
               hide-details
-            ></v-text-field>
+              hide-no-data
+              hide-selected
+              :return-object="false"
+              @update:search="fetchDestSuggestions"
+            ></v-autocomplete>
           </v-col>
           <v-col cols="12" md="2">
             <v-text-field
@@ -31,7 +68,7 @@
               hide-details
             ></v-text-field>
           </v-col>
-          <v-col cols="12" md="2" class="d-flex align-center">
+          <v-col cols="12" md="1" class="d-flex align-center">
             <v-btn
               color="primary"
               block
@@ -39,7 +76,7 @@
               :loading="store.loading"
               @click="doSearch"
             >
-              Search
+              <v-icon>mdi-magnify</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -64,7 +101,7 @@
               <template #title>
                 <v-row no-gutters align="center" class="w-100">
                   <!-- Line / Badge -->
-                  <v-col cols="2" sm="1" class="text-left pl-2">
+                  <v-col cols="3" sm="2" class="text-left pl-2">
                     <div class="line-badge-wrapper">
                       <div class="line-badge">
                         {{ getJourneyLabel(journey) }}
@@ -77,7 +114,7 @@
                   </v-col>
                   
                   <!-- Route Info -->
-                  <v-col cols="7" sm="8">
+                  <v-col cols="6" sm="7">
                     <div class="route-text">
                       {{ formatTime(journey.legs[0].departureTime) }} • {{ journey.startStation.name }}
                     </div>
@@ -163,6 +200,9 @@
                         <div class="transfer-icon">🔄</div>
                         <div class="transfer-details">
                           <div class="transfer-station">Umstieg in {{ leg.destination.name }}</div>
+                          <div class="transfer-platforms text-caption text-grey mb-1" v-if="leg.arrivalPlatform && journey.legs[index + 1].departurePlatform">
+                            Ankunft Gl. {{ leg.arrivalPlatform }} ({{ formatTime(leg.arrivalTime) }}) • Abfahrt Gl. {{ journey.legs[index + 1].departurePlatform }} ({{ formatTime(journey.legs[index + 1].departureTime) }})
+                          </div>
                           <div class="transfer-info">
                              <span class="transfer-time" :class="getTransferClass(leg.arrivalTime, journey.legs[index + 1].departureTime)">
                                {{ getTransferDuration(leg.arrivalTime, journey.legs[index + 1].departureTime) }}
@@ -210,8 +250,50 @@ const hasSearched = ref(false)
 const search = reactive({
   origin: 'Frankfurt (Main) Hbf',
   destination: 'München Hbf',
+  via: null,
+  minDuration: 0,
   time: '08:00'
 })
+
+const originSearch = ref('')
+const destSearch = ref('')
+const viaSearch = ref('')
+const originSuggestions = ref([])
+const destSuggestions = ref([])
+const viaSuggestions = ref([])
+
+let searchTimeout = null
+
+function debounce(fn, delay) {
+  return (...args) => {
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(() => fn(...args), delay)
+  }
+}
+
+const fetchOriginSuggestions = debounce(async (val) => {
+  if (!val || val.length < 2) {
+    originSuggestions.value = []
+    return
+  }
+  originSuggestions.value = await store.searchStations(val)
+}, 300)
+
+const fetchDestSuggestions = debounce(async (val) => {
+  if (!val || val.length < 2) {
+    destSuggestions.value = []
+    return
+  }
+  destSuggestions.value = await store.searchStations(val)
+}, 300)
+
+const fetchViaSuggestions = debounce(async (val) => {
+  if (!val || val.length < 2) {
+    viaSuggestions.value = []
+    return
+  }
+  viaSuggestions.value = await store.searchStations(val)
+}, 300)
 
 async function doSearch() {
   hasSearched.value = true
@@ -222,14 +304,15 @@ async function doSearch() {
     isoDate = `${today}T${search.time}:00`
   }
   
-  await store.fetchConnections(search.origin, search.destination, isoDate)
+  console.log('Fetching connections with:', { origin: search.origin, destination: search.destination, time: isoDate, via: search.via, minDuration: search.minDuration })
+  await store.fetchConnections(search.origin, search.destination, isoDate, search.via, search.minDuration)
 }
 
 function getJourneyLabel(journey) {
   if (!journey.legs || journey.legs.length === 0) return '??'
-  // Return first train name e.g. "ICE"
+  // Return train name e.g. "ICE 123"
   const train = journey.legs[0].train;
-  return train.name ? train.name.split(' ')[0] : (train.trainCategory || 'Bahn')
+  return train.name || (train.trainCategory || 'Bahn')
 }
 
 function formatTime(isoString) {
@@ -250,19 +333,29 @@ function formatDuration(minutes) {
 function mapWagonsToCoaches(wagonLoads) {
   console.log('Mapping wagons:', wagonLoads);
   if (!wagonLoads) return [];
-  const coaches = wagonLoads.map((load, idx) => ({
-    number: (idx + 1).toString(),
-    type: idx === 0 ? '1st Class' : '2nd Class', // Mock type
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: idx === 0, // Mock
-    hasBikes: idx === wagonLoads.length - 1, // Mock
-    load: load,
-    wifi: 'good',
-    toilet: 'available',
-    powerOutlets: 80
-  }));
+  
+  const coaches = wagonLoads.map((load, idx) => {
+    // Randomize amenities
+    const isQuiet = Math.random() > 0.7;
+    const isFamily = Math.random() > 0.8;
+    const isBarrierefrei = idx === 0 || Math.random() > 0.9;
+    const hasBikes = idx === wagonLoads.length - 1 || Math.random() > 0.8;
+    const type = idx === 0 ? '1st Class' : '2nd Class';
+    
+    return {
+      number: (idx + 1).toString(),
+      type: type,
+      available: true,
+      isQuiet: isQuiet,
+      isFamily: isFamily,
+      isBarrierefrei: isBarrierefrei,
+      hasBikes: hasBikes,
+      load: load,
+      wifi: 'good',
+      toilet: Math.random() > 0.1 ? 'available' : 'blocked',
+      powerOutlets: Math.floor(Math.random() * 40) + 60 // 60-100%
+    };
+  });
   console.log('Mapped coaches:', coaches);
   return coaches;
 }

@@ -1,0 +1,9 @@
+/Users/larsboes/Library/Python/3.9/lib/python/site-packages/boto3/compat.py:89: PythonDeprecationWarning: Boto3 will no longer support Python 3.9 starting April 29, 2026. To continue receiving service updates, bug fixes, and security updates please upgrade to Python 3.10 or later. More information can be found here: https://aws.amazon.com/blogs/developer/python-support-policy-updates-for-aws-sdks-and-tools/
+  warnings.warn(warning, PythonDeprecationWarning)
+Loading graph from cache...
+Graph loaded: 600 nodes, 2473 edges.
+Testing prompt: 'München Hbf nach Frankfurt Hbf über Stuttgart Hbf mit 180 Minuten Aufenthalt, morgen um 08:00 Uhr'
+DEBUG: Starting chat loop for message: München Hbf nach Frankfurt Hbf über Stuttgart Hbf mit 180 Minuten Aufenthalt, morgen um 08:00 Uhr
+
+Response:
+("Hello, I am eu.anthropic.claude-3-5-sonnet-20240620-v1:0 \n\nThank you for providing those details about your trip from Munich to Frankfurt via Stuttgart. I have most of the information needed, but I'd like to clarify one point to ensure I understand your requirements correctly.\n\nYou mentioned departing tomorrow at 08:00. To confirm, do you mean you want to depart from München Hauptbahnhof at 08:00, or is that the time you'd like to arrive in Stuttgart Hauptbahnhof for your stopover?", 'dfb5d1ff-4fd3-4c07-a0da-d8e59df21090')

@@ -10,9 +10,14 @@ class JourneyService:
         self.travel_service = TravelService()
         self.graph_service = GraphService()
 
-    def find_routes(self, origin: str, destination: str, time: str) -> List[Journey]:
+    def find_routes(self, origin: str, destination: str, time: str, via: str = None, min_transfer_time: int = 0) -> List[Journey]:
         journeys = []
         
+        # If via is provided, use TravelService's via logic directly
+        if via:
+            # Note: TravelService expects a list of via stations
+            return self.travel_service.find_routes(origin, destination, time, via=[via], min_transfer_time=min_transfer_time)
+
         # 1. Try Direct Connection
         direct_legs = self.travel_service.find_segment(origin, destination, time)
         for leg in direct_legs:
@@ -133,7 +138,12 @@ class JourneyService:
             # 1. Prepare Journey Data for Prompt
             legs_info = []
             for leg in journey.legs:
-                legs_info.append(f"- {leg.train.name} from {leg.origin.name} to {leg.destination.name} (Delay: {leg.delayInMinutes} min)")
+                hist_delay = self.travel_service.get_historical_delay(leg.train.trainNumber)
+                delay_info = f"(Current Delay: {leg.delayInMinutes} min)"
+                if hist_delay is not None:
+                    delay_info += f" [Historical Avg: {hist_delay:.1f} min]"
+                
+                legs_info.append(f"- {leg.train.name} from {leg.origin.name} to {leg.destination.name} {delay_info}")
             
             legs_str = "\n".join(legs_info)
             

@@ -33,14 +33,23 @@ FIND_INTERMEDIATE_STATIONS_TOOL = {
 GET_TRIPS_TOOL = {
     "toolSpec": {
         "name": "get_trips",
-        "description": "Finds concrete train connections between two stations at a specific time.",
+        "description": "Finds concrete train connections between two stations at a specific time. Can handle intermediate stops (via).",
         "inputSchema": {
             "json": {
                 "type": "object",
                 "properties": {
                     "origin": {"type": "string"},
                     "destination": {"type": "string"},
-                    "time": {"type": "string", "description": "Departure time (HH:MM)"}
+                    "time": {"type": "string", "description": "Departure time (HH:MM)"},
+                    "via": {
+                        "type": "array", 
+                        "items": {"type": "string"},
+                        "description": "List of stations to stop at (e.g. ['Cologne'])"
+                    },
+                    "min_transfer_time": {
+                        "type": "integer", 
+                        "description": "Minimum transfer time in minutes at the via station (default: 0)"
+                    }
                 },
                 "required": ["origin", "destination"]
             }
@@ -61,7 +70,9 @@ def execute_tool(name: str, args: Dict[str, Any]) -> Any:
         routes = travel_service.find_routes(
             args.get("origin"),
             args.get("destination"),
-            args.get("time")
+            args.get("time"),
+            args.get("via"),
+            args.get("min_transfer_time")
         )
         # Convert RouteOption objects to dicts
         return [r.model_dump() for r in routes]

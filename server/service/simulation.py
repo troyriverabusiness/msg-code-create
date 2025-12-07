@@ -91,6 +91,43 @@ class SimulationService:
             
         return 0
 
+    def get_historical_delay(self, train_number: str, station_name: str = None, hour: int = None) -> Optional[float]:
+        """
+        Get historical average delay if available. Returns None if no data found.
+        """
+        try:
+            # Use absolute path relative to this file
+            db_path = Path(__file__).parent.parent / "data" / "travel.db"
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            
+            # Clean train number (remove letters)
+            import re
+            clean_number = re.search(r'\d+', str(train_number))
+            clean_number = clean_number.group(0) if clean_number else train_number
+            
+            # If station/hour not provided, just get global average for this train
+            if not station_name or hour is None:
+                cursor.execute("""
+                    SELECT avg(avg_delay) FROM delay_patterns 
+                    WHERE train_number = ?
+                """, (clean_number,))
+            else:
+                cursor.execute("""
+                    SELECT avg_delay FROM delay_patterns 
+                    WHERE train_number = ? AND station_name = ? AND hour_of_day = ?
+                """, (clean_number, station_name, hour))
+            
+            row = cursor.fetchone()
+            conn.close()
+            
+            if row and row[0] is not None:
+                return float(row[0])
+        except Exception as e:
+            print(f"Simulation DB Error: {e}")
+            
+        return None
+
     def get_messages(self) -> list[str]:
         return [
             "Signal failure at Frankfurt Hbf",

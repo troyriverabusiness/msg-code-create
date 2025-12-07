@@ -6,6 +6,7 @@ const SESSION_STORAGE_KEY = 'chat_session_id'
 
 export const useBackendCalls = defineStore('BackendCalls', () => {
   const prePlan = ref(null)
+  const prePlanParams = ref(null)
   const connections = ref([])
   const loading = ref(false)
   const error = ref(null)
@@ -23,7 +24,7 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
   async function fetchPrePlanForPrompt(prompt) {
     try {
       const headers = { 'Content-Type': 'application/json' }
-      
+
       if (sessionId.value) {
         headers['X-Session-Id'] = sessionId.value
       }
@@ -32,48 +33,62 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
         headers
       })
       console.log("AAA", response.data);
-      
+
       if (response.data.session_id) {
         setSessionId(response.data.session_id)
       }
 
       prePlan.value = response.data.message
+      prePlanParams.value = response.data.search_params
+      console.log("DEBUG: fetchPrePlanForPrompt response", response.data)
       return response.data
     } catch (e) {
-      prePlan.value = 'Error fetching prePlan: ' + (e.response?.data?.detail || e.message)
+      const detail = e.response?.data?.detail
+      const errorMessage = typeof detail === 'object' ? JSON.stringify(detail) : (detail || e.message)
+      prePlan.value = 'Error fetching prePlan: ' + errorMessage
       return null
     }
   }
 
-  async function fetchConnections(origin, destination, date = null) {
+  async function searchStations(query) {
+    if (!query || query.length < 2) return []
+    try {
+      const response = await fetch(`/api/v1/stations?q=${encodeURIComponent(query)}`)
+      if (!response.ok) throw new Error('Failed to fetch stations')
+      const data = await response.json()
+      return data.stations || []
+    } catch (e) {
+      console.error("Station search failed:", e)
+      return []
+    }
+  }
+
+  async function fetchConnections(origin, destination, date, via = null, minTransferTime = 0) {
     loading.value = true
     error.value = null
+    connections.value = []
+
     try {
-      // Map frontend 'origin'/'destination' to backend 'start'/'end'
-      const requestBody = {
+      const params = {
         start: origin,
         end: destination,
-        trip_plan: "", // Optional context
         departure_time: date
       }
-
-      const response = await fetch('/api/v1/connections', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestBody)
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+      if (via) {
+        params.via = via
+        if (minTransferTime > 0) {
+          params.min_transfer_time = minTransferTime
+        }
       }
 
-      const data = await response.json()
-      connections.value = data.journeys || []
+      // Use axios for consistency with other calls (though searchStations uses fetch)
+      // Note: axios params serialization handles simple objects well.
+      const response = await axios.get('/api/v1/connections', { params })
+
+      connections.value = response.data.journeys || []
     } catch (e) {
       console.error("Failed to fetch connections:", e)
-      error.value = e.message
+      error.value = e.response?.data?.detail || e.message || "Failed to fetch connections"
       connections.value = []
     } finally {
       loading.value = false
@@ -82,12 +97,14 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
 
   return {
     prePlan,
+    prePlanParams,
     connections,
     loading,
     error,
     sessionId,
     fetchPrePlanForPrompt,
     fetchConnections,
+    searchStations,
     setSessionId // Expose setSessionId if needed by other components, though typically not directly.
   }
 })

@@ -24,6 +24,7 @@ class ChatResponse(BaseModel):
 
     session_id: str
     message: str
+    search_params: Optional[dict] = None
 
 
 class ErrorResponse(BaseModel):
@@ -42,9 +43,9 @@ async def chat_endpoint(
 ):
     print(f"DEBUG: Chat endpoint called with message: {request.message}")
     try:
-        message, session_id = chat.chat(request.message, x_session_id)
+        message, session_id, search_params = chat.chat(request.message, x_session_id)
         print(f"DEBUG: Chat response: {message}, session_id: {session_id}")
-        return ChatResponse(session_id=session_id, message=message)
+        return ChatResponse(session_id=session_id, message=message, search_params=search_params)
     except Exception as e:
         print(f"DEBUG: Chat endpoint failed: {e}")
         raise e

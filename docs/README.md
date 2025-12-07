@@ -9,6 +9,8 @@
 | **Architecture** | | |
 | [System Overview](./architecture/system-overview.md) | High-level architecture, components, pipeline | All |
 | [Graph Traversal Service](./architecture/graph-traversal-service.md) | Deep dive on route discovery algorithm | Developers |
+| [AI Agent System](./architecture/ai-agent-system.md) | Chat, Bedrock, tools, session management | Developers |
+| [Simulation Service](./architecture/simulation-service.md) | Delay calculation and propagation | Developers |
 | [Data Flow](./architecture/data-flow.md) | Complete request lifecycle | Developers |
 | [Data Sources](./architecture/data-sources.md) | Databases, APIs, and data files | Developers |
 | [Architecture Decisions](./architecture/architecture-decisions.md) | ADRs and rationale | Maintainers |

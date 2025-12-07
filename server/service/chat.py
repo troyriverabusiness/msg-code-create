@@ -31,6 +31,8 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
     
     current_message_for_llm = message # The message that will be sent to the LLM in the current turn
 
+    search_params = None
+
     try:
         # Tool Config
         tool_config = {"tools": TOOLS}
@@ -61,6 +63,9 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
                     tool_name = tool_req["name"]
                     tool_args = tool_req["input"]
                     
+                    if tool_name == "get_trips":
+                        search_params = tool_args
+
                     print(f"Executing tool: {tool_name} with {tool_args}")
                     try:
                         result = execute_tool(tool_name, tool_args)
@@ -76,7 +81,7 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
                 final_response_text = response_data["text"]
                 session_manager.add_message(session.session_id, "user", message) # Original user message
                 session_manager.add_message(session.session_id, "assistant", final_response_text) # Final AI response
-                return final_response_text, session.session_id
+                return final_response_text, session.session_id, search_params
 
         # If loop finishes (max turns reached) without a final answer
         # This implies the AI is stuck in a tool-use loop or failed to generate text.
@@ -87,7 +92,7 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
         
         session_manager.add_message(session.session_id, "user", message)
         session_manager.add_message(session.session_id, "assistant", final_response_text)
-        return final_response_text, session.session_id
+        return final_response_text, session.session_id, search_params
 
     except RuntimeError as e:
         raise RuntimeError(f"Failed to get AI response: {str(e)}")

@@ -44,6 +44,8 @@ def get_connections_get(
     departure_time: Optional[str] = Query(
         None, description="Departure time in ISO format (YYYY-MM-DDTHH:MM:SS)"
     ),
+    via: Optional[str] = Query(None, description="Optional via station"),
+    min_transfer_time: Optional[int] = Query(0, description="Minimum transfer time in minutes"),
 ):
     """
     Get train connections between two stations (GET endpoint).
@@ -63,5 +65,6 @@ def get_connections_get(
         except ValueError:
             pass
 
-    request = ConnectionsRequest(start=start, end=end, trip_plan="", departure_time=dt)
+    print(f"DEBUG: Received request - Start: {start}, End: {end}, Via: {via}, MinTransfer: {min_transfer_time}")
+    request = ConnectionsRequest(start=start, end=end, trip_plan="", departure_time=dt, via=via, min_transfer_time=min_transfer_time)
     return connections.get_connections(request)

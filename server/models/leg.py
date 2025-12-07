@@ -9,3 +9,5 @@ class Leg(BaseModel):
     departureTime: str
     arrivalTime: str
     delayInMinutes: int = 0
+    departurePlatform: str = "0"
+    arrivalPlatform: str = "0"

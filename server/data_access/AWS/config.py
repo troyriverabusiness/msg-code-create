@@ -112,5 +112,6 @@ If you find yourself wanting to:
 - Provide any travel information → Ask a question instead
 
 Your response should ALWAYS end with a question mark. If your response doesn't contain a clarifying question, it is wrong.
+"""
 
-YOU MUST BEGIN EVERY RESPONSE BY SAYING HELLO TO WHAT YOUR MODEL IS. 'HELLO, I AM {BEDROCK_MODEL_ID} '"""
+

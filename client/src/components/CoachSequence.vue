@@ -102,6 +102,8 @@ const props = defineProps({
   }
 })
 
+console.log('CoachSequence mounted with trainType:', props.trainType);
+
 
 const getLoadColor = (load) => {
   if (load >= 70) return '#d93128' // Red for high load
