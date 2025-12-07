@@ -149,16 +149,13 @@
 
   const backendCallsStore = useBackendCalls()
 
-
   const verkehrsmittel = ref(['ICE', 'IC', 'RE', 'RB', 'S-Bahn', 'U-Bahn', 'Tram', 'Bus'])
   const umstiegszeiten = ref(['5 Minuten', '10 Minuten', '15 Minuten', '20 Minuten', '30 Minuten'])
 
   const showPrePlan = ref(false)
   const loading = ref(false)
 
-  const prePlan = computed(() => backendCallsStore.prePlan)
-
-  const prompt = ref({
+   const prompt = ref({
     text: null,
     manualInput: {
       start: null,
@@ -170,30 +167,24 @@
     },
   })
 
+  const prePlan = computed(() => backendCallsStore.prePlan)
+
   async function fetchConnections () {
     loading.value = true
     await backendCallsStore.fetchConnections()
     loading.value = false
-
-    console.log('Fetching connections based on pre-plan')
   }
 
   async function send () {
     loading.value = true
     showPrePlan.value = true
-
     await backendCallsStore.fetchPrePlanForPrompt(prompt.value.text)
-
     loading.value = false
-
-    console.log('Sending prompt to backend')
-    console.log(prompt.value)
   }
 
 </script>
 
 <style scoped>
-/* DB-inspired styling with characteristic red (#EC0016) and clean layout */
 .db-page {
   min-height: 100vh;
   background: #F0F3F5 url('@/assets/ice_bild.png') no-repeat center top;

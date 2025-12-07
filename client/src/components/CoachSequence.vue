@@ -3,7 +3,6 @@
     <v-card class="coach-sequence-card">
       <v-card-title>Wagenreihung</v-card-title>
       <v-card-text>
-      <!-- Platform sectors display -->
       <div class="platform-display">
         <div class="platform-track-label">
           <span class="track-number">Gl. 14</span>
@@ -17,10 +16,8 @@
       </div>
       
       <div class="coaches-container">
-        <!-- left nose shape -->
         <div class="loco-nose">
           <img v-if="getLeftNoseImage()" :src="getLeftNoseImage()" alt="Left Nose" class="nose-image" />
-          <NoseBadge v-else :label="coaches && coaches.length ? coaches[0].number : ''" :width="'100px'" :height="'100%'" :preserve="'none'" :showLabel="false" bg="#f9f9f9" stroke="rgb(217,48,40)" />
         </div>
 
         <div
@@ -41,7 +38,6 @@
             <span v-if="coach.hasBikes" class="amenity-badge bikes" title="Bikes allowed">🚲</span>
           </div>
           
-          <!-- Service Info -->
           <div class="coach-services">
             <div class="service-row" v-if="coach.wifi">
               <span class="service-icon">📶</span>
@@ -72,23 +68,19 @@
           </div>
         </div>
 
-        <!-- right nose shape -->
         <div class="loco-nose">
           <img v-if="getRightNoseImage()" :src="getRightNoseImage()" alt="Right Nose" class="nose-image" />
-          <NoseBadge v-else :label="coaches && coaches.length ? coaches[coaches.length-1].number : ''" :width="'100px'" :height="'100%'" :preserve="'none'" :showLabel="false" bg="#f9f9f9" stroke="rgb(217,48,40)" :flip="true" />
         </div>
       </div>
     </v-card-text>
   </v-card>
 
-  <!-- Seat Selection Modal -->
   <SeatSelection ref="seatSelectionRef" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import NoseBadge from '@/components/NoseBadge.vue'
 import SeatSelection from '@/components/SeatSelection.vue'
 import regio1 from '@/assets/regio1.png'
 import regio2 from '@/assets/regio2.png'
