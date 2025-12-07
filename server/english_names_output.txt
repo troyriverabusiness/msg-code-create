@@ -1,0 +1,4 @@
+Testing connections with params: {'start': 'Frankfurt HBF', 'end': 'Hamburg HBF', 'via': 'Cologne', 'min_transfer_time': 180, 'departure_time': '2025-12-08T08:00:35.843226'}
+Response Status: 200
+SUCCESS: Found 3 journeys.
+First journey via: Connection via Cologne

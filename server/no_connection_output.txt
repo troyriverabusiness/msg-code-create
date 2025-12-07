@@ -1,0 +1,674 @@
+Testing connections with params: {'start': 'Frankfurt HBF', 'end': 'Hamburg HBF', 'via': 'Köln', 'min_transfer_time': 180, 'departure_time': '2025-12-08T08:00:53.105976'}
+Response Status: 200
+Response Body: {
+  "journeys": [
+    {
+      "id": "000904-000108",
+      "startStation": {
+        "name": "Frankfurt (Main) Hauptbahnhof",
+        "eva": "de:06412:10:20:1"
+      },
+      "endStation": {
+        "name": "Hamburg Hbf",
+        "eva": "de:02000:10950"
+      },
+      "legs": [
+        {
+          "origin": {
+            "name": "Frankfurt (Main) Hauptbahnhof",
+            "eva": "de:06412:10:20:1"
+          },
+          "destination": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "train": {
+            "trainNumber": "000904",
+            "name": "ICE 49",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "Frankfurt (Main) Hauptbahnhof",
+              "eva": "de:06412:10:20:1"
+            },
+            "endLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "departureTime": "10:31:00",
+            "arrivalTime": "12:00:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "Frankfurt (Main) Flughafen Fernbahnhof",
+                  "eva": "de:06412:11511:1:1"
+                },
+                "arrivalTime": "10:48:00",
+                "departureTime": "10:50:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Limburg (Lahn) S\u00fcd (ICE)",
+                  "eva": "de:06533:11504:3:3"
+                },
+                "arrivalTime": "11:08:00",
+                "departureTime": "11:09:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Montabaur Bf",
+                  "eva": "de:07143:040004"
+                },
+                "arrivalTime": "11:19:00",
+                "departureTime": "11:20:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Siegburg Bf",
+                  "eva": "de:05382:55101:7:73"
+                },
+                "arrivalTime": "11:39:00",
+                "departureTime": "11:40:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "K\u00f6ln Messe/Deutz Bf",
+                  "eva": "de:05315:11901:7:75"
+                },
+                "arrivalTime": "11:55:00",
+                "departureTime": "11:57:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              34,
+              55,
+              34,
+              52,
+              67,
+              54,
+              80,
+              37,
+              65,
+              77
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "10:31:00",
+          "arrivalTime": "12:00:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        },
+        {
+          "origin": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "destination": {
+            "name": "Hamburg Hbf",
+            "eva": "de:02000:10950"
+          },
+          "train": {
+            "trainNumber": "000108",
+            "name": "ICE 43",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "endLocation": {
+              "name": "Hamburg Hbf",
+              "eva": "de:02000:10950"
+            },
+            "departureTime": "15:11:00",
+            "arrivalTime": "19:15:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "D\u00fcsseldorf Hbf",
+                  "eva": "de:05111:18235:94:17"
+                },
+                "arrivalTime": "15:32:00",
+                "departureTime": "15:34:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Duisburg Hbf",
+                  "eva": "de:05112:16032:95:12"
+                },
+                "arrivalTime": "15:45:00",
+                "departureTime": "15:47:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Essen Hbf",
+                  "eva": "de:05113:9289:91:6"
+                },
+                "arrivalTime": "15:58:00",
+                "departureTime": "16:00:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bochum Hbf",
+                  "eva": "de:05911:5194:92:5"
+                },
+                "arrivalTime": "16:09:00",
+                "departureTime": "16:10:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Dortmund Hbf",
+                  "eva": "de:05913:131:90:8"
+                },
+                "arrivalTime": "16:21:00",
+                "departureTime": "16:25:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "M\u00fcnster Hauptbahnhof",
+                  "eva": "de:05515:41000:93:12"
+                },
+                "arrivalTime": "16:54:00",
+                "departureTime": "16:56:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Osnabr\u00fcck Hbf",
+                  "eva": "de:03404:71612::3"
+                },
+                "arrivalTime": "17:21:00",
+                "departureTime": "17:23:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bremen Hbf",
+                  "eva": "de:04011:13927::10"
+                },
+                "arrivalTime": "18:14:00",
+                "departureTime": "18:17:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Hamburg-Harburg",
+                  "eva": "de:02000:8000147"
+                },
+                "arrivalTime": "19:02:00",
+                "departureTime": "19:04:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              70,
+              39,
+              45,
+              66,
+              51,
+              75,
+              46,
+              35,
+              71
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "15:11:00",
+          "arrivalTime": "19:15:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        }
+      ],
+      "transfers": 1,
+      "totalTime": 524,
+      "description": "Connection via K\u00f6ln",
+      "aiInsight": "This journey appears to be a reliable connection overall, with the first leg historically showing minimal delays (2.3 min avg). However, passengers should be aware that the second leg from K\u00f6ln to Hamburg has a significant historical average delay of 38.5 minutes, though the ample transfer time of 191 minutes in K\u00f6ln mitigates any risk of missing the connection."
+    },
+    {
+      "id": "000016-000108",
+      "startStation": {
+        "name": "Frankfurt (Main) Hauptbahnhof",
+        "eva": "de:06412:10:20:26"
+      },
+      "endStation": {
+        "name": "Hamburg Hbf",
+        "eva": "de:02000:10950"
+      },
+      "legs": [
+        {
+          "origin": {
+            "name": "Frankfurt (Main) Hauptbahnhof",
+            "eva": "de:06412:10:20:26"
+          },
+          "destination": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "train": {
+            "trainNumber": "000016",
+            "name": "ICE 79",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "Frankfurt (Main) Hauptbahnhof",
+              "eva": "de:06412:10:20:26"
+            },
+            "endLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "departureTime": "10:25:00",
+            "arrivalTime": "11:33:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "Frankfurt (Main) Flughafen Fernbahnhof",
+                  "eva": "de:06412:11511:1:2"
+                },
+                "arrivalTime": "10:38:00",
+                "departureTime": "10:41:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              74,
+              60,
+              47,
+              79,
+              34,
+              30
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "10:25:00",
+          "arrivalTime": "11:33:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        },
+        {
+          "origin": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "destination": {
+            "name": "Hamburg Hbf",
+            "eva": "de:02000:10950"
+          },
+          "train": {
+            "trainNumber": "000108",
+            "name": "ICE 43",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "endLocation": {
+              "name": "Hamburg Hbf",
+              "eva": "de:02000:10950"
+            },
+            "departureTime": "15:11:00",
+            "arrivalTime": "19:15:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "D\u00fcsseldorf Hbf",
+                  "eva": "de:05111:18235:94:17"
+                },
+                "arrivalTime": "15:32:00",
+                "departureTime": "15:34:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Duisburg Hbf",
+                  "eva": "de:05112:16032:95:12"
+                },
+                "arrivalTime": "15:45:00",
+                "departureTime": "15:47:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Essen Hbf",
+                  "eva": "de:05113:9289:91:6"
+                },
+                "arrivalTime": "15:58:00",
+                "departureTime": "16:00:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bochum Hbf",
+                  "eva": "de:05911:5194:92:5"
+                },
+                "arrivalTime": "16:09:00",
+                "departureTime": "16:10:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Dortmund Hbf",
+                  "eva": "de:05913:131:90:8"
+                },
+                "arrivalTime": "16:21:00",
+                "departureTime": "16:25:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "M\u00fcnster Hauptbahnhof",
+                  "eva": "de:05515:41000:93:12"
+                },
+                "arrivalTime": "16:54:00",
+                "departureTime": "16:56:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Osnabr\u00fcck Hbf",
+                  "eva": "de:03404:71612::3"
+                },
+                "arrivalTime": "17:21:00",
+                "departureTime": "17:23:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bremen Hbf",
+                  "eva": "de:04011:13927::10"
+                },
+                "arrivalTime": "18:14:00",
+                "departureTime": "18:17:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Hamburg-Harburg",
+                  "eva": "de:02000:8000147"
+                },
+                "arrivalTime": "19:02:00",
+                "departureTime": "19:04:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              70,
+              39,
+              45,
+              66,
+              51,
+              75,
+              46,
+              35,
+              71
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "15:11:00",
+          "arrivalTime": "19:15:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        }
+      ],
+      "transfers": 1,
+      "totalTime": 530,
+      "description": "Connection via K\u00f6ln",
+      "aiInsight": "This journey appears to be a reliable connection overall, with the first leg historically experiencing minimal delays (4.9 min avg). However, passengers should be aware that the second leg from K\u00f6ln to Hamburg has a significant historical average delay of 38.5 minutes, though the ample transfer time of 218 minutes in K\u00f6ln mitigates any risk of missing the connection."
+    },
+    {
+      "id": "001610-000108",
+      "startStation": {
+        "name": "Frankfurt (Main) Hauptbahnhof",
+        "eva": "de:06412:10:20:1"
+      },
+      "endStation": {
+        "name": "Hamburg Hbf",
+        "eva": "de:02000:10950"
+      },
+      "legs": [
+        {
+          "origin": {
+            "name": "Frankfurt (Main) Hauptbahnhof",
+            "eva": "de:06412:10:20:1"
+          },
+          "destination": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "train": {
+            "trainNumber": "001610",
+            "name": "ICE 49",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "Frankfurt (Main) Hauptbahnhof",
+              "eva": "de:06412:10:20:1"
+            },
+            "endLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "departureTime": "10:11:00",
+            "arrivalTime": "11:33:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "Frankfurt (Main) Flughafen Fernbahnhof",
+                  "eva": "de:06412:11511:1:1"
+                },
+                "arrivalTime": "10:23:00",
+                "departureTime": "10:26:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Limburg (Lahn) S\u00fcd (ICE)",
+                  "eva": "de:06533:11504:3:3"
+                },
+                "arrivalTime": "10:45:00",
+                "departureTime": "10:46:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Montabaur Bf",
+                  "eva": "de:07143:040004"
+                },
+                "arrivalTime": "10:56:00",
+                "departureTime": "10:57:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Siegburg Bf",
+                  "eva": "de:05382:55101:7:73"
+                },
+                "arrivalTime": "11:17:00",
+                "departureTime": "11:18:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              40,
+              70,
+              64,
+              70,
+              73,
+              76
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "10:11:00",
+          "arrivalTime": "11:33:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        },
+        {
+          "origin": {
+            "name": "K\u00f6ln Hbf",
+            "eva": "de:05315:11201"
+          },
+          "destination": {
+            "name": "Hamburg Hbf",
+            "eva": "de:02000:10950"
+          },
+          "train": {
+            "trainNumber": "000108",
+            "name": "ICE 43",
+            "trainId": null,
+            "trainCategory": null,
+            "startLocation": {
+              "name": "K\u00f6ln Hbf",
+              "eva": "de:05315:11201"
+            },
+            "endLocation": {
+              "name": "Hamburg Hbf",
+              "eva": "de:02000:10950"
+            },
+            "departureTime": "15:11:00",
+            "arrivalTime": "19:15:00",
+            "actualDepartureTime": null,
+            "actualArrivalTime": null,
+            "path": [
+              {
+                "station": {
+                  "name": "D\u00fcsseldorf Hbf",
+                  "eva": "de:05111:18235:94:17"
+                },
+                "arrivalTime": "15:32:00",
+                "departureTime": "15:34:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Duisburg Hbf",
+                  "eva": "de:05112:16032:95:12"
+                },
+                "arrivalTime": "15:45:00",
+                "departureTime": "15:47:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Essen Hbf",
+                  "eva": "de:05113:9289:91:6"
+                },
+                "arrivalTime": "15:58:00",
+                "departureTime": "16:00:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bochum Hbf",
+                  "eva": "de:05911:5194:92:5"
+                },
+                "arrivalTime": "16:09:00",
+                "departureTime": "16:10:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Dortmund Hbf",
+                  "eva": "de:05913:131:90:8"
+                },
+                "arrivalTime": "16:21:00",
+                "departureTime": "16:25:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "M\u00fcnster Hauptbahnhof",
+                  "eva": "de:05515:41000:93:12"
+                },
+                "arrivalTime": "16:54:00",
+                "departureTime": "16:56:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Osnabr\u00fcck Hbf",
+                  "eva": "de:03404:71612::3"
+                },
+                "arrivalTime": "17:21:00",
+                "departureTime": "17:23:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Bremen Hbf",
+                  "eva": "de:04011:13927::10"
+                },
+                "arrivalTime": "18:14:00",
+                "departureTime": "18:17:00",
+                "platform": "1"
+              },
+              {
+                "station": {
+                  "name": "Hamburg-Harburg",
+                  "eva": "de:02000:8000147"
+                },
+                "arrivalTime": "19:02:00",
+                "departureTime": "19:04:00",
+                "platform": "1"
+              }
+            ],
+            "platform": 1,
+            "wagons": [
+              70,
+              39,
+              45,
+              66,
+              51,
+              75,
+              46,
+              35,
+              71
+            ],
+            "delayMinutes": 0
+          },
+          "departureTime": "15:11:00",
+          "arrivalTime": "19:15:00",
+          "delayInMinutes": 0,
+          "departurePlatform": "1",
+          "arrivalPlatform": "1"
+        }
+      ],
+      "transfers": 1,
+      "totalTime": 544,
+      "description": "Connection via K\u00f6ln",
+      "aiInsight": "This journey has a reliable connection with a low risk of missing the transfer at K\u00f6ln Hbf, given the ample 218-minute layover and historically moderate delays (21.1 minutes for the incoming train). However, passengers should be aware that the second leg (ICE 43) has a higher average delay of 38.5 minutes, which could impact arrival time in Hamburg."
+    }
+  ]
+}
+SUCCESS: Found 3 journeys.

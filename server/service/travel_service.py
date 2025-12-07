@@ -17,13 +17,45 @@ class TravelService:
     def get_all_station_ids(self, name: str) -> List[str]:
         # Normalize name for better matching
         # 1. Try exact/like match first
-        # 2. Try swapping Hbf <-> Hauptbahnhof
+        # 2. Try swapping Hbf <-> Hauptbahnhof (case insensitive)
         
         search_terms = [name]
-        if "Hbf" in name:
-            search_terms.append(name.replace("Hbf", "Hauptbahnhof"))
-        elif "Hauptbahnhof" in name:
-            search_terms.append(name.replace("Hauptbahnhof", "Hbf"))
+        
+        # Handle HBF/Hbf -> Hauptbahnhof
+        if "hbf" in name.lower():
+            # Case insensitive replacement
+            import re
+            normalized = re.sub(r'hbf', 'Hauptbahnhof', name, flags=re.IGNORECASE)
+            search_terms.append(normalized)
+            
+        # Handle Hauptbahnhof -> Hbf
+        elif "hauptbahnhof" in name.lower():
+             import re
+             normalized = re.sub(r'hauptbahnhof', 'Hbf', name, flags=re.IGNORECASE)
+             search_terms.append(normalized)
+             
+        # Common English -> German mappings
+        city_mapping = {
+            "cologne": "Köln",
+            "munich": "München",
+            "nuremberg": "Nürnberg",
+            "vienna": "Wien",
+            "zurich": "Zürich",
+            "frankfort": "Frankfurt", # Common typo
+            "hanover": "Hannover"
+        }
+        
+        lower_name = name.lower()
+        for eng, ger in city_mapping.items():
+            if eng in lower_name:
+                # Replace English city name with German one
+                # e.g. "Cologne Hbf" -> "Köln Hbf"
+                import re
+                mapped = re.sub(eng, ger, name, flags=re.IGNORECASE)
+                search_terms.append(mapped)
+                # Also add the German name directly if input was just the city
+                if lower_name == eng:
+                    search_terms.append(ger)
             
         row = None
         for term in search_terms:
