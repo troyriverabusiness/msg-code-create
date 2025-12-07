@@ -1,0 +1,15 @@
+Response Status: 200
+Response Body: {
+  "session_id": "9af50b42-2b2d-4b9e-b616-4c7850e48244",
+  "message": "I apologize for the confusion. It seems I made an assumption without clarifying all the necessary details. Let me ask you some questions to better understand your travel requirements:\n\n1. Could you confirm the exact stations you'd like to travel between? For example, are you looking to travel from Frankfurt Hauptbahnhof to Munich Hauptbahnhof?\n\n2. You mentioned wanting a relaxed trip. How long would you like for your stopover in Cologne? For instance, would you prefer 2 hours, 3 hours, or even longer?\n\n3. Do you have a specific date and time in mind for your journey? For example, are you planning to travel tomorrow morning or next week in the afternoon?\n\n4. Are there any other specific requirements or preferences you have for this trip that I should know about?",
+  "search_params": {
+    "origin": "Frankfurt",
+    "destination": "Munich",
+    "via": [
+      "Cologne"
+    ],
+    "min_transfer_time": 180
+  }
+}
+SUCCESS: search_params found!
+{'origin': 'Frankfurt', 'destination': 'Munich', 'via': ['Cologne'], 'min_transfer_time': 180}
