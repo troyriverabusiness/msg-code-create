@@ -43,7 +43,7 @@
               <v-text-field
                 v-model="prompt.text"
                 append-inner-icon="mdi-send"
-                label="Verbindung suchen… Start, Ziel oder Bahnhof eingeben"
+                label="Erzählen Sie mir von Ihrer Reise... Wo möchten Sie hin, wann möchten Sie losfahren, und was ist Ihnen wichtig?"
                 variant="outlined"
                 hide-details
                 density="comfortable"
