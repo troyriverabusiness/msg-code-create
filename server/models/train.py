@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Union
 from datetime import datetime
 from .station import Station
 
@@ -25,14 +25,15 @@ class Train(BaseModel):
     """
 
     trainNumber: str
+    name: str = ""
     trainId: Optional[str] = None
     trainCategory: Optional[str] = None
     startLocation: Station
     endLocation: Station
-    departureTime: Optional[datetime] = None
-    arrivalTime: Optional[datetime] = None
-    actualDepartureTime: Optional[datetime] = None
-    actualArrivalTime: Optional[datetime] = None
+    departureTime: Optional[Union[str, datetime]] = None
+    arrivalTime: Optional[Union[str, datetime]] = None
+    actualDepartureTime: Optional[Union[str, datetime]] = None
+    actualArrivalTime: Optional[Union[str, datetime]] = None
     path: List[Station] = []
     platform: Optional[int] = None
     wagons: List[int] = []

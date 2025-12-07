@@ -207,6 +207,19 @@ class TravelService:
         
         legs = []
         for row in cursor:
+            # Get intermediate stops (path)
+            path_cursor = self.conn.execute("""
+                SELECT s.stop_name, s.stop_id 
+                FROM stop_times st
+                JOIN stations s ON st.stop_id = s.stop_id
+                WHERE st.trip_id = ? 
+                  AND st.stop_sequence > (SELECT stop_sequence FROM stop_times WHERE trip_id = ? AND stop_id = ?)
+                  AND st.stop_sequence < (SELECT stop_sequence FROM stop_times WHERE trip_id = ? AND stop_id = ?)
+                ORDER BY st.stop_sequence
+            """, (row['trip_id'], row['trip_id'], row['start_id'], row['trip_id'], row['end_id']))
+            
+            path_stations = [Station(name=r['stop_name'], eva=r['stop_id']) for r in path_cursor]
+
             train = Train(
                 name=row['route_short_name'],
                 trainNumber=row['trip_short_name'] or "",
@@ -214,7 +227,7 @@ class TravelService:
                 endLocation=Station(name=row['end_station'], eva=row['end_id']),
                 departureTime=row['start_time'],
                 arrivalTime=row['end_time'],
-                path=[], 
+                path=path_stations, 
                 platform=0, 
                 wagons=[]
             )

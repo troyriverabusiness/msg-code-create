@@ -36,7 +36,20 @@
                         },
                         "departureTime": "08:00:00",
                         "arrivalTime": "09:45:00",
-                        "path": [],
+                        "path": [
+                            {
+                                "name": "Darmstadt Hbf",
+                                "eva": "8000068"
+                            },
+                            {
+                                "name": "Bensheim",
+                                "eva": "8000036"
+                            },
+                            {
+                                "name": "Weinheim(Bergstr)Hbf",
+                                "eva": "8000191"
+                            }
+                        ],
                         "platform": 13,
                         "wagons": [
                             1,
