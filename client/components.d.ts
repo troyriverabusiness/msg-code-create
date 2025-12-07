@@ -17,5 +17,6 @@ declare module 'vue' {
     NoseBadge: typeof import('./src/components/NoseBadge.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SeatSelection: typeof import('./src/components/SeatSelection.vue')['default']
   }
 }
