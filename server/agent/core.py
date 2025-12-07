@@ -220,7 +220,7 @@ def get_agent_executor():
     if AWS_ACCESS_KEY and AWS_SECRET:
         print("Using AWS Long-Term Credentials")
         llm = ChatBedrock(
-            model_id=MODEL_ID,
+            model_id="meta.llama3-2-1b-instruct-v1:0",
             region_name=region,
             aws_access_key_id=AWS_ACCESS_KEY,
             aws_secret_access_key=AWS_SECRET,
@@ -233,19 +233,21 @@ def get_agent_executor():
         llm = BedrockBearerTokenLLM(
             bearer_token=bearer_token,
             region=region,
-            model_id=MODEL_ID
+            model_id="meta.llama3-2-1b-instruct-v1:0"
         )
 
     tools = [get_live_departures, get_train_details]
 
     # System prompt to guide the agent
-    system_prompt = (
-        "You are a helpful DB Travel Assistant. You have access to live train data and detailed schedule information.\n"
-        "Use 'get_live_departures' to check station boards for real-time delays and platform changes.\n"
-        "Use 'get_train_details' to find stops and accessibility info for a specific train (e.g. ICE 690).\n"
-        "If a user asks about a connection, check the live status first, then get details if needed.\n"
-        "Always be concise, friendly, and helpful. If you don't know, say so."
-    )
+    # system_prompt = (
+    #     "You are a helpful DB Travel Assistant. You have access to live train data and detailed schedule information.\n"
+    #     "Use 'get_live_departures' to check station boards for real-time delays and platform changes.\n"
+    #     "Use 'get_train_details' to find stops and accessibility info for a specific train (e.g. ICE 690).\n"
+    #     "If a user asks about a connection, check the live status first, then get details if needed.\n"
+    #     "Always be concise, friendly, and helpful. If you don't know, say so."
+    # )
+    
+    system_prompt = "ALWAYS Respond with 'MSG IS THE BEST FIRMA"
 
     # LangGraph's create_react_agent returns a CompiledGraph
     agent = create_react_agent(llm, tools, prompt=system_prompt)

@@ -3,6 +3,7 @@ import requests
 from typing import List, Dict, Optional
 from botocore.exceptions import ClientError, BotoCoreError
 from .config import DEFAULT_SYSTEM_PROMPT
+from .config import BEDROCK_MODEL_ID
 
 
 class BedrockService:
@@ -14,7 +15,7 @@ class BedrockService:
         bearer_token: Optional[str] = None,
     ):
         self.region = region
-        self.model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+        self.model_id = BEDROCK_MODEL_ID
         self.bearer_token = bearer_token
         self.client = None
 
@@ -41,6 +42,7 @@ class BedrockService:
     ) -> str:
         messages = []
 
+        # Optional unpacking
         if conversation_history:
             for msg in conversation_history:
                 messages.append(
@@ -78,12 +80,12 @@ class BedrockService:
             print(f"DEBUG BOTO3: System payload: {system_payload}")
             
             response = self.client.converse(
-                modelId=self.model_id,
+                modelId=BEDROCK_MODEL_ID,
                 messages=messages,
                 system=system_payload,
                 inferenceConfig={
                     "maxTokens": 2048,
-                    "temperature": 0.1,  # Lower temperature for more deterministic, instruction-following behavior
+                    "temperature": 0.7,  # Lower temperature for more deterministic, instruction-following behavior
                 },
             )
             

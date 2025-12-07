@@ -10,6 +10,7 @@ services:
     build:
       context: server
       dockerfile: Dockerfile
+      no_cache: true
     ports:
       - 8000:8000
     restart: unless-stopped

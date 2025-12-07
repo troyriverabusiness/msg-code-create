@@ -5,6 +5,7 @@ from server.data_access.AWS.config import (
     AWS_SECRET,
     AWS_REGION,
     AWS_SHORT_TERM_KEY,
+    DEFAULT_SYSTEM_PROMPT,
 )
 from .session_manager import session_manager
 
@@ -26,7 +27,7 @@ def chat(message: str, session_id: Optional[str] = None) -> tuple[str, str]:
 
     try:
         response = bedrock_service.send_message(
-            message=message, conversation_history=history
+            message=message, conversation_history=history, system_prompt=DEFAULT_SYSTEM_PROMPT
         )
 
         session_manager.add_message(session.session_id, "user", message)
