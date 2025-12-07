@@ -1,0 +1,38 @@
+/app/server/.venv/lib/python3.9/site-packages/boto3/compat.py:89: PythonDeprecationWarning: Boto3 will no longer support Python 3.9 starting April 29, 2026. To continue receiving service updates, bug fixes, and security updates please upgrade to Python 3.10 or later. More information can be found here: https://aws.amazon.com/blogs/developer/python-support-policy-updates-for-aws-sdks-and-tools/
+  warnings.warn(warning, PythonDeprecationWarning)
+Loading graph from cache...
+Graph loaded: 600 nodes, 2473 edges.
+Warning: SIRI file datachaos/message.txt not found. Using random simulation.
+Warning: SIRI file datachaos/message.txt not found. Using random simulation.
+Loading graph from cache...
+Graph loaded: 600 nodes, 2473 edges.
+Searching for routes: Frankfurt (Main) Hbf -> Hamburg Hbf via Köln Hbf at 2025-12-07T08:00:00 with min_transfer 180m
+Generating AI insights for top 3 journeys...
+DEBUG: Train 000526 (Clean: 000526) -> Hist Delay: 46.931094589444555
+DEBUG: Train 000614 (Clean: 000614) -> Hist Delay: 44.55141597283743
+DEBUG: Train 000526 (Clean: 000526) -> Hist Delay: 46.931094589444555
+DEBUG: Train 000614 (Clean: 000614) -> Hist Delay: 44.55141597283743
+DEBUG: Train 000318 (Clean: 000318) -> Hist Delay: 10.035815334091195
+DEBUG: Train 000614 (Clean: 000614) -> Hist Delay: 44.55141597283743
+Found 3 routes.
+Route 1:
+  ICE 41 (Frankfurt (Main) Hauptbahnhof -> Köln Hbf)
+    Dep: 21:08:00, Arr: 22:16:00
+  ICE 42 (Köln Hbf -> Hamburg Hbf)
+    Dep: 10:11:00, Arr: 14:15:00
+  Total Duration: 1027 min
+  AI Insight: This journey appears to have a reliable connection, with both legs historically experiencing average delays under 47 minutes. However, caution is advised for the transfer at Köln Hbf, as the incoming train's average delay of 46.9 minutes could potentially impact the extremely long 715-minute layover, though the risk of missing the connection is minimal given the extensive transfer time.
+Route 2:
+  ICE 41 (Frankfurt (Main) Hauptbahnhof -> Köln Hbf)
+    Dep: 20:58:00, Arr: 22:09:00
+  ICE 42 (Köln Hbf -> Hamburg Hbf)
+    Dep: 10:11:00, Arr: 14:15:00
+  Total Duration: 1037 min
+  AI Insight: This journey appears to have a reliable connection, with both legs historically experiencing average delays under 50 minutes. However, caution is advised for the transfer at Köln Hbf, as the incoming train's average delay of 46.9 minutes could potentially impact the extensive 722-minute layover, though the risk of missing the connection remains low given the ample transfer time.
+Route 3:
+  ICE 79 (Frankfurt (Main) Hauptbahnhof -> Köln Hbf)
+    Dep: 20:06:00, Arr: 21:27:00
+  ICE 42 (Köln Hbf -> Hamburg Hbf)
+    Dep: 10:11:00, Arr: 14:15:00
+  Total Duration: 1089 min
+  AI Insight: This journey appears to be a reliable connection overall, with a generous 764-minute transfer time in Köln Hbf easily accommodating the average 10-minute delay on the first leg. However, travelers should be aware that the second leg from Köln to Hamburg historically experiences significant delays, averaging 44.6 minutes, which could impact arrival time at the final destination.

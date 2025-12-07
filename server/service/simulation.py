@@ -101,10 +101,15 @@ class SimulationService:
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
             
-            # Clean train number (remove letters)
+            # Clean train number (remove letters and leading zeros)
             import re
             clean_number = re.search(r'\d+', str(train_number))
             clean_number = clean_number.group(0) if clean_number else train_number
+            # Remove leading zeros by converting to int then str
+            try:
+                clean_number = str(int(clean_number))
+            except:
+                pass
             
             # If station/hour not provided, just get global average for this train
             if not station_name or hour is None:

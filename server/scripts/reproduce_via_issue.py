@@ -6,10 +6,10 @@ from datetime import datetime
 # Add parent directory to path to import server modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from server.service.travel_service import TravelService
+from server.service.journey_service import JourneyService
 
 async def reproduce():
-    service = TravelService()
+    service = JourneyService()
     
     origin = "Frankfurt (Main) Hbf"
     via = "Köln Hbf"
@@ -20,13 +20,13 @@ async def reproduce():
     print(f"Searching for routes: {origin} -> {destination} via {via} at {time_str} with min_transfer {min_transfer_time}m")
     
     try:
-        # Call _find_routes_with_via directly to test logic
-        routes = service._find_routes_with_via(
-            start=origin,
-            end=destination,
-            via=via,
+        # Call find_routes via JourneyService
+        routes = service.find_routes(
+            origin=origin,
+            destination=destination,
+            via=[via],
             time=time_str,
-            min_transfer=min_transfer_time
+            min_transfer_time=min_transfer_time
         )
         
         print(f"Found {len(routes)} routes.")
@@ -36,6 +36,7 @@ async def reproduce():
                 print(f"  {leg.train.name} ({leg.origin.name} -> {leg.destination.name})")
                 print(f"    Dep: {leg.departureTime}, Arr: {leg.arrivalTime}")
             print(f"  Total Duration: {route.totalTime} min")
+            print(f"  AI Insight: {route.aiInsight}")
             
     except Exception as e:
         print(f"Error: {e}")

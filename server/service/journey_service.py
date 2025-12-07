@@ -14,61 +14,62 @@ class JourneyService:
         journeys = []
         
         # If via is provided, use TravelService's via logic directly
+        # If via is provided, use TravelService's via logic directly
         if via and len(via) > 0:
             # Note: TravelService expects a list of via stations
-            return self.travel_service.find_routes(origin, destination, time, via=via, min_transfer_time=min_transfer_time)
-
-        # 1. Try Direct Connection
-        direct_legs = self.travel_service.find_segment(origin, destination, time)
-        for leg in direct_legs:
-            journeys.append(self._create_journey([leg]))
+            journeys = self.travel_service.find_routes(origin, destination, time, via=via, min_transfer_time=min_transfer_time)
+        else:
+            # 1. Try Direct Connection
+            direct_legs = self.travel_service.find_segment(origin, destination, time)
+            for leg in direct_legs:
+                journeys.append(self._create_journey([leg]))
+                
+            # 2. Try 1-Transfer Connections
+            # Get intermediate candidates
+            candidates = self.graph_service.find_intermediate_stations(origin, destination)
             
-        # 2. Try 1-Transfer Connections
-        # Get intermediate candidates
-        candidates = self.graph_service.find_intermediate_stations(origin, destination)
-        
-        # Limit candidates to avoid explosion
-        candidates = candidates[:3] 
-        
-        for transfer_station in candidates:
-            # Leg 1: Origin -> Transfer
-            leg1_options = self.travel_service.find_segment(origin, transfer_station, time)
+            # Limit candidates to avoid explosion
+            candidates = candidates[:3] 
             
-            for l1 in leg1_options:
-                # Calculate arrival at transfer + buffer (e.g. 5 mins)
-                try:
-                    arrival_dt = self._parse_time(l1.arrivalTime)
-                    min_departure_dt = arrival_dt + timedelta(minutes=5)
-                    min_departure_str = min_departure_dt.strftime("%H:%M:%S")
-                    
-                    # Leg 2: Transfer -> Destination
-                    leg2_options = self.travel_service.find_segment(transfer_station, destination, min_departure_str)
-                    
-                    for l2 in leg2_options:
-                        # Create Journey
-                        # TODO: Propagate delays.
-                        # If l1 has delay, l1.arrivalTime increases.
-                        # min_departure_dt must be calculated from REAL arrival time.
+            for transfer_station in candidates:
+                # Leg 1: Origin -> Transfer
+                leg1_options = self.travel_service.find_segment(origin, transfer_station, time)
+                
+                for l1 in leg1_options:
+                    # Calculate arrival at transfer + buffer (e.g. 5 mins)
+                    try:
+                        arrival_dt = self._parse_time(l1.arrivalTime)
+                        min_departure_dt = arrival_dt + timedelta(minutes=5)
+                        min_departure_str = min_departure_dt.strftime("%H:%M:%S")
                         
-                        # Update legs with delay info
-                        # We already have delay from TravelService (populated in find_segment)
-                        # But we might want to refresh it or just use it.
-                        # Since find_segment calls simulation, l1.delayInMinutes and l2.delayInMinutes should be set.
+                        # Leg 2: Transfer -> Destination
+                        leg2_options = self.travel_service.find_segment(transfer_station, destination, min_departure_str)
                         
-                        delay1 = l1.delayInMinutes
-                        delay2 = l2.delayInMinutes
-                        
-                        real_arrival_l1 = arrival_dt + timedelta(minutes=delay1)
-                        real_departure_l2 = self._parse_time(l2.departureTime) + timedelta(minutes=delay2)
-                        
-                        # Check if transfer is still possible (e.g. 5 min buffer)
-                        if real_departure_l2 < real_arrival_l1 + timedelta(minutes=5):
-                            continue # Transfer broken by delay
+                        for l2 in leg2_options:
+                            # Create Journey
+                            # TODO: Propagate delays.
+                            # If l1 has delay, l1.arrivalTime increases.
+                            # min_departure_dt must be calculated from REAL arrival time.
                             
-                        journeys.append(self._create_journey([l1, l2]))
-                except Exception as e:
-                    # print(f"Error processing transfer at {transfer_station}: {e}")
-                    continue
+                            # Update legs with delay info
+                            # We already have delay from TravelService (populated in find_segment)
+                            # But we might want to refresh it or just use it.
+                            # Since find_segment calls simulation, l1.delayInMinutes and l2.delayInMinutes should be set.
+                            
+                            delay1 = l1.delayInMinutes
+                            delay2 = l2.delayInMinutes
+                            
+                            real_arrival_l1 = arrival_dt + timedelta(minutes=delay1)
+                            real_departure_l2 = self._parse_time(l2.departureTime) + timedelta(minutes=delay2)
+                            
+                            # Check if transfer is still possible (e.g. 5 min buffer)
+                            if real_departure_l2 < real_arrival_l1 + timedelta(minutes=5):
+                                continue # Transfer broken by delay
+                                
+                            journeys.append(self._create_journey([l1, l2]))
+                    except Exception as e:
+                        # print(f"Error processing transfer at {transfer_station}: {e}")
+                        continue
                     
         # Sort by total time
         journeys.sort(key=lambda j: j.totalTime)
@@ -137,19 +138,46 @@ class JourneyService:
         try:
             # 1. Prepare Journey Data for Prompt
             legs_info = []
-            for leg in journey.legs:
+            risk_analysis = []
+            
+            for i, leg in enumerate(journey.legs):
                 hist_delay = self.travel_service.get_historical_delay(leg.train.trainNumber)
                 delay_info = f"(Current Delay: {leg.delayInMinutes} min)"
                 if hist_delay is not None:
                     delay_info += f" [Historical Avg: {hist_delay:.1f} min]"
                 
-                legs_info.append(f"- {leg.train.name} from {leg.origin.name} to {leg.destination.name} {delay_info}")
-            
+                legs_info.append(f"- Leg {i+1}: {leg.train.name} ({leg.origin.name} -> {leg.destination.name}) {delay_info}")
+                
+                # Analyze Transfer Risk (if not last leg)
+                if i < len(journey.legs) - 1:
+                    next_leg = journey.legs[i+1]
+                    
+                    # Calculate scheduled transfer time
+                    try:
+                        arr = self._parse_time(leg.arrivalTime)
+                        dep = self._parse_time(next_leg.departureTime)
+                        if dep < arr:
+                            dep += timedelta(days=1)
+                        transfer_min = int((dep - arr).total_seconds() / 60)
+                        
+                        risk_msg = f"Transfer at {leg.destination.name}: {transfer_min} min available."
+                        
+                        if hist_delay and hist_delay > (transfer_min - 5):
+                            risk_msg += f" WARNING: Incoming train has avg delay of {hist_delay:.1f} min, making this transfer VERY RISKY."
+                        elif hist_delay and hist_delay > 5:
+                            risk_msg += f" CAUTION: Incoming train has avg delay of {hist_delay:.1f} min."
+                        else:
+                            risk_msg += " Safe transfer."
+                            
+                        risk_analysis.append(risk_msg)
+                    except:
+                        pass
+
             legs_str = "\n".join(legs_info)
+            risk_str = "\n".join(risk_analysis)
             
             prompt = f"""
-            Analyze this train journey and provide a short, helpful insight (max 1 sentence).
-            Focus on punctuality, comfort, and ease of transfer.
+            Analyze this train journey and provide a concise, data-driven insight (max 2 sentences).
             
             Journey Details:
             - Total Time: {journey.totalTime} min
@@ -157,9 +185,14 @@ class JourneyService:
             - Legs:
             {legs_str}
             
-            If there are delays > 5 min, warn the user.
-            If it's a direct connection, highlight the comfort.
-            If there are tight transfers (assuming 5 min buffer), mention the risk.
+            Transfer Analysis:
+            {risk_str}
+            
+            INSTRUCTIONS:
+            1. Use the "Historical Avg" data to predict likely delays.
+            2. If a transfer is risky based on historical data, EXPLICITLY warn the user (e.g., "High risk of missing connection at Köln due to typical delays of 26min").
+            3. If the route is historically punctual, mention it as a "reliable connection".
+            4. Do NOT be generic. Use the numbers provided.
             
             Output ONLY the insight text.
             """
