@@ -7,7 +7,6 @@
             <h1 class="db-title">Reiseauskunft</h1>
           <div v-if="showPrePlan">
               <v-card class="db-preplan-card" outlined color="#F5F5F7">
-                <v-card-title class="db-preplan-title" style="color: #444;">Pre-Plan</v-card-title>
                 <v-progress-linear
                   v-if="loading"
                   indeterminate
@@ -16,10 +15,18 @@
                   class="mb-2"
                 />
                 
-                <v-card-text v-if="!loading && prePlan" class="db-preplan-text" style="color: #444;">
+                <v-alert
+                  v-if="!loading && isError"
+                  type="error"
+                  variant="tonal"
+                  class="ma-3"
+                  :text="errorMessage"
+                />
+                
+                <v-card-text v-if="!loading && prePlan && !isError" class="db-preplan-text" style="color: #444;">
                   {{ prePlan }}
                 </v-card-text>
-                <v-card-actions v-if="!loading && prePlan">
+                <v-card-actions v-if="!loading && prePlan && !isError">
                   <v-btn
                     to="/connections"
                     color="#EC0016"
@@ -27,7 +34,7 @@
                     class="ml-auto"
                     @click="fetchConnections()"
                   >
-                    Plane meinen Trip ->
+                    Reise planen →
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -167,6 +174,12 @@
   })
 
   const prePlan = computed(() => backendCallsStore.prePlan)
+  const isError = computed(() => prePlan.value && prePlan.value.startsWith('Error fetching prePlan:'))
+  const errorMessage = computed(() => {
+    if (!isError.value) return ''
+    const errorText = prePlan.value.replace('Error fetching prePlan: ', '')
+    return `Verbindung zum Server fehlgeschlagen. Bitte versuchen Sie es erneut.${errorText ? ` (${errorText})` : ''}`
+  })
 
   async function fetchConnections () {
     loading.value = true
