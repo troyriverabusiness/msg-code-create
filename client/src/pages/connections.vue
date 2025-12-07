@@ -1,9 +1,6 @@
 <template>
     <v-row class="ma-1">
       <v-col cols="12">
-        
-      </v-col>
-      <v-col cols="12">
         <v-expansion-panels>
           <v-expansion-panel v-for="item in items" :key="item.name">
             <template #title>
@@ -143,8 +140,116 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import CoachSequence from '@/components/CoachSequence.vue'
+import { useBackendCalls } from '@/stores/backendCalls'
+
+const backendCallsStore = useBackendCalls()
+
+// Transform connections from store to the format expected by the template
+const items = computed(() => {
+  return backendCallsStore.connections.map(connection => {
+    const firstLeg = connection.legs[0]
+    const lastLeg = connection.legs[connection.legs.length - 1]
+    
+    // Build segments from legs
+    const segments = connection.legs.map((leg, index) => {
+      // Build stops array: origin + intermediate stops (path) + destination
+      const stops = [
+        {
+          station: leg.origin.name,
+          platform: String(leg.train.platform),
+          arrival: '-',
+          departure: formatTime(leg.departureTime),
+          delay: 0
+        }
+      ];
+      
+      // Add intermediate stops from path
+      if (leg.train.path && leg.train.path.length > 0) {
+        leg.train.path.forEach(pathStop => {
+          stops.push({
+            station: pathStop.station.name,
+            platform: String(leg.train.platform),
+            arrival: formatTime(pathStop.arrivalTime),
+            departure: formatTime(pathStop.departureTime),
+            delay: 0
+          });
+        });
+      }
+      
+      // Add destination stop
+      stops.push({
+        station: leg.destination.name,
+        platform: String(leg.train.platform),
+        arrival: formatTime(leg.arrivalTime),
+        departure: '-',
+        delay: 0
+      });
+      
+      return {
+        line: leg.train.name,
+        stops: stops,
+        coaches: leg.train.wagons.map((wagon, i) => {
+          const load = Math.floor(Math.random() * 100) + 1;
+          return {
+            number: String(wagon),
+            type: i === 0 ? '1st Class' : '2nd Class',
+            available: load < 100,
+            isQuiet: Math.random() > 0.7,
+            isFamily: Math.random() > 0.8,
+            isBarrierefrei: Math.random() > 0.6,
+            hasBikes: Math.random() > 0.7,
+            load: load,
+            wifi: ['good', 'medium', 'poor'][Math.floor(Math.random() * 3)],
+            toilet: ['available', 'blocked', 'unavailable'][Math.floor(Math.random() * 3)],
+            powerOutlets: Math.floor(Math.random() * 50) + 50
+          };
+        }),
+        transfer: index < connection.legs.length - 1 ? {
+          station: leg.destination.name,
+          minutes: calculateTransferTime(leg.arrivalTime, connection.legs[index + 1].departureTime),
+          platformChange: `Gl. ${leg.train.platform} → Gl. ${connection.legs[index + 1].train.platform}`
+        } : null
+      };
+    });
+
+    return {
+      id: connection.id,
+      name: firstLeg.train.name,
+      line: firstLeg.train.name,
+      route: `${connection.startStation.name} - ${connection.endStation.name}`,
+      destination: connection.endStation.name,
+      start_time: formatTime(firstLeg.departureTime),
+      end_time: formatTime(lastLeg.arrivalTime),
+      duration: formatDuration(connection.totalTime),
+      scheduled_time: formatTime(firstLeg.departureTime),
+      actual_time: formatTime(firstLeg.departureTime),
+      transfers: connection.transfers,
+      segments: segments,
+      stops: [],
+      coaches: segments[0]?.coaches || []
+    }
+  })
+})
+
+const formatTime = (timeStr) => {
+  if (!timeStr) return ''
+  return timeStr.substring(0, 5)
+}
+
+const formatDuration = (minutes) => {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  return `${hours}h ${mins}min`
+}
+
+const calculateTransferTime = (arrivalTime, departureTime) => {
+  if (!arrivalTime || !departureTime) return 0
+  const [arrH, arrM] = arrivalTime.split(':').map(Number)
+  const [depH, depM] = departureTime.split(':').map(Number)
+  return (depH * 60 + depM) - (arrH * 60 + arrM)
+}
 
 const getDelay = (item) => {
   if (!item.scheduled_time || !item.actual_time) return 0
@@ -176,7 +281,6 @@ const getTransferTimeClass = (minutes) => {
 const getCoachRecommendation = (coaches) => {
   if (!coaches || coaches.length === 0) return 'Keine Wagen verfügbar'
   
-  // Finde den Wagen mit der niedrigsten Auslastung
   let bestCoach = coaches[0]
   let lowestLoad = coaches[0].load
   
@@ -213,247 +317,6 @@ const getCoachRecommendation = (coaches) => {
   
   return suggestion
 }
-
-const items = ref([
-  {
-    name: 'RE 54',
-    line: 'RE 54',
-    route: 'Frankfurt (Main) Süd - Hanau Hbf - Aschaffenburg Hbf',
-    destination: 'Würzburg Hbf',
-    start_time: '23:30',
-    end_time: '01:45',
-    duration: '2h 15min',
-    scheduled_time: '23:30',
-    actual_time: '23:30',
-    stops: [
-      { station: 'Frankfurt (Main) Süd', platform: '4', arrival: '23:30', departure: '23:30', delay: 0 },
-      { station: 'Hanau Hbf', platform: '3', arrival: '23:52', departure: '23:54', delay: 0 },
-      { station: 'Aschaffenburg Hbf', platform: '2', arrival: '00:15', departure: '00:17', delay: 0 },
-      { station: 'Würzburg Hbf', platform: '5', arrival: '01:45', departure: '-', delay: 0 }
-    ],
-    coaches: [
-  {
-    number: '1',
-    type: '1st Class',
-    available: true,
-    isQuiet: false,
-    isFamily: true,
-    isBarrierefrei: true,
-    hasBikes: false,
-    load: 45,
-    wifi: 'good',
-    toilet: 'available',
-    powerOutlets: 85
-  },
-  {
-    number: '2',
-    type: '2nd Class',
-    available: true,
-    isQuiet: true,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: true,
-    load: 60,
-    wifi: 'medium',
-    toilet: 'blocked',
-    powerOutlets: 70
-  },
-  {
-    number: '3',
-    type: '2nd Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: true,
-    hasBikes: true,
-    load: 30,
-    wifi: 'good',
-    toilet: 'available',
-    powerOutlets: 90
-  },
-  {
-    number: '4',
-    type: 'Bistro',
-    available: false,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: false,
-    load: 0,
-    wifi: 'poor',
-    powerOutlets: 50
-  },
-  {
-    number: '5',
-    type: '2nd Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: false,
-    hasBikes: false,
-    load: 75,
-    wifi: 'medium',
-    toilet: 'available',
-    powerOutlets: 65
-  },
-  {
-    number: '6',
-    type: '1st Class',
-    available: true,
-    isQuiet: false,
-    isFamily: false,
-    isBarrierefrei: true,
-    hasBikes: false,
-    load: 50,
-    wifi: 'good',
-    toilet: 'available',
-    powerOutlets: 95
-  },
-]
-  },
-  {
-    name: 'Multi-Segment Journey',
-    route: 'Frankfurt Hbf - Würzburg Hbf - München Hbf',
-    destination: 'München Hbf',
-    start_time: '09:00',
-    end_time: '12:30',
-    duration: '3h 30min',
-    scheduled_time: '09:00',
-    actual_time: '09:00',
-    segments: [
-      {
-        line: 'RE 54',
-        stops: [
-          { station: 'Frankfurt Hbf', platform: '5', arrival: '09:00', departure: '09:00', delay: 0 },
-          { station: 'Hanau Hbf', platform: '3', arrival: '09:22', departure: '09:24', delay: 0 },
-          { station: 'Aschaffenburg Hbf', platform: '2', arrival: '09:45', departure: '09:47', delay: 0 },
-          { station: 'Würzburg Hbf', platform: '4', arrival: '10:15', departure: '-', delay: 0 }
-        ],
-        coaches: [
-          { number: '1', type: '2nd Class', available: true, isQuiet: false, isFamily: true, isBarrierefrei: true, hasBikes: false, load: 35, wifi: 'good', toilet: 'available', powerOutlets: 80 },
-          { number: '2', type: '2nd Class', available: true, isQuiet: true, isFamily: false, isBarrierefrei: false, hasBikes: true, load: 50, wifi: 'medium', toilet: 'blocked', powerOutlets: 65 },
-          { number: '3', type: '1st Class', available: true, isQuiet: false, isFamily: false, isBarrierefrei: true, hasBikes: false, load: 25, wifi: 'good', toilet: 'available', powerOutlets: 90 }
-        ],
-        transfer: {
-          station: 'Würzburg Hbf',
-          minutes: 8,
-          platformChange: 'Gleis 4 → Gleis 7',
-          distance: 200
-        }
-      },
-      {
-        line: 'ICE 590',
-        stops: [
-          { station: 'Würzburg Hbf', platform: '7', arrival: '10:23', departure: '10:23', delay: 0 },
-          { station: 'Nürnberg Hbf', platform: '12', arrival: '11:15', departure: '11:18', delay: 0 },
-          { station: 'Ingolstadt Hbf', platform: '3', arrival: '11:50', departure: '11:52', delay: 0 },
-          { station: 'München Hbf', platform: '18', arrival: '12:30', departure: '-', delay: 0 }
-        ],
-        coaches: [
-          { number: '1', type: '1st Class', available: true, isQuiet: true, isFamily: false, isBarrierefrei: true, hasBikes: false, load: 40, wifi: 'good', toilet: 'available', powerOutlets: 90 },
-          { number: '2', type: '2nd Class', available: true, isQuiet: false, isFamily: true, isBarrierefrei: true, hasBikes: false, load: 65, wifi: 'good', toilet: 'available', powerOutlets: 85 },
-          { number: '3', type: '2nd Class', available: true, isQuiet: false, isFamily: false, isBarrierefrei: false, hasBikes: true, load: 55, wifi: 'medium', toilet: 'blocked', powerOutlets: 70 },
-          { number: '4', type: 'Bistro', available: true, isQuiet: false, isFamily: false, isBarrierefrei: true, hasBikes: false, load: 0, wifi: 'good', toilet: 'available', powerOutlets: 50 }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'ICE 690',
-    line: 'ICE 690',
-    route: 'Frankfurt Hbf - Mannheim Hbf - Karlsruhe Hbf',
-    destination: 'Munich Hbf',
-    start_time: '10:05',
-    end_time: '13:35',
-    duration: '3h 30min',
-    scheduled_time: '10:05',
-    actual_time: '10:10',
-    transfer: {
-      station: 'Frankfurt Hbf',
-      minutes: 12,
-      platformChange: 'Gleis 4 → Gleis 7',
-      distance: 150
-    },
-    stops: [
-      { station: 'Frankfurt Hbf', platform: '7', arrival: '10:05', departure: '10:05', delay: 0 },
-      { station: 'Mannheim Hbf', platform: '5', arrival: '10:35', departure: '10:38', delay: 3 },
-      { station: 'Karlsruhe Hbf', platform: '4', arrival: '11:05', departure: '11:08', delay: 5 },
-      { station: 'Stuttgart Hbf', platform: '16', arrival: '11:50', departure: '11:55', delay: 5 },
-      { station: 'Munich Hbf', platform: '18', arrival: '13:35', departure: '-', delay: 5 }
-      ]
-  }
-])
-
-    const mockTrainRouteOption = {
-      
-  // 🚂 Die Route Option (The "Card") - Kurzübersicht für Listenansicht
-  trip_id: "ICE690_F-H_20251205",
-  line_name: "ICE 690",
-  type: "ICE", // Für visuelle Darstellung (Icon)
-  
-  times: {
-    scheduled_departure: "10:00",
-    real_time_departure: "10:05",
-    delay_minutes: 5,
-    scheduled_arrival: "11:30",
-    real_time_arrival: "11:35"
-  },
-  
-  platform: {
-    name: "Gleis 4",
-    // Info aus pathways.txt (oder ähnlicher Quelle)
-    accessibility: "Barrierefreier Zugang (Aufzug/Rampe)" 
-  },
-  
-  // Simulationswert, z.B. basierend auf Wochentag/Uhrzeit
-  occupancy: "high", // Mögliche Werte: 'low', 'medium', 'high', 'full'
-  
-  // 🏢 Stationsdetails (The "Context") - Zusätzliche Infos
-  station_details: {
-    name: "Frankfurt (Main) Hbf",
-    
-    // Abgeleitet aus pathways.txt
-    facilities: [
-      { name: "Aufzug Gleis 4", status: "operational" },
-      { name: "Rolltreppe Gleis 4", status: "operational" },
-      { name: "Information", status: "operational" }
-    ],
-    
-    // Abgeleitet aus NeTEx/GTFS
-    entrances: [
-      { name: "Haupteingang (Süden)", accessibility: "Barrierefrei" },
-      { name: "Eingang Nordseite", accessibility: "Eingeschränkte Barrierefreiheit" }
-    ]
-  },
-  
-  // ⚠️ Echtzeit-Status (The "Ticker") - Wichtige Meldungen (SIRI)
-  real_time_status: {
-    is_disrupted: true, // Ist die Fahrt betroffen?
-    
-    // Abgeleitet aus SIRI oder anderen Echtzeit-Quellen
-    messages: [
-      { 
-        severity: "critical", 
-        text: "Zug fällt wegen technischer Störung aus.",
-        source: "SIRI"
-      }
-    ],
-    
-    // Logik für Alternativen bei Ausfall
-    alternatives: [
-      {
-        line_name: "IC 2018",
-        departure: "10:20",
-        platform: "Gleis 5"
-      },
-      {
-        line_name: "RB 82 (via Offenbach)",
-        departure: "10:15",
-        platform: "Gleis 8"
-      }
-    ]
-  }
-};
 </script>
 
 <style scoped>

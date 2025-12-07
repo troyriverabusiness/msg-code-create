@@ -19,7 +19,6 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
   }
 
   async function fetchPrePlanForPrompt(prompt) {
-    console.log("Fetching prePlan for prompt:", prompt);
     try {
       const headers = { 'Content-Type': 'application/json' }
       
@@ -44,6 +43,21 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
     }
   }
 
+  async function fetchConnections(reiseplan) {
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/connections', { reiseplan }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+
+      connections.value = response.data
+      return response.data
+    } catch (error) {
+      console.error('Error fetching connections:', error.response?.data?.detail || error.message)
+      return null
+    }
+  }
 
   return {
     prePlan,

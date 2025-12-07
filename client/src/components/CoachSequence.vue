@@ -1,12 +1,12 @@
 <template>
-  <v-card class="coach-sequence-card">
-    <v-card-title>Wagenreihung</v-card-title>
-    <v-card-text>
-      <!-- Platform sectors display -->
+  <div>
+    <v-card class="coach-sequence-card">
+      <v-card-title>Wagenreihung</v-card-title>
+      <v-card-text>
       <div class="platform-display">
         <div class="platform-track-label">
           <span class="track-number">Gl. 14</span>
-          <span class="direction-label">Abfahrtsrichtung →</span>
+          <span class="direction-label">Fahrtrichtung →</span>
         </div>
         <div class="platform-sectors">
           <div class="sector" v-for="sector in ['F', 'E', 'D', 'C', 'B', 'A']" :key="sector">
@@ -16,10 +16,8 @@
       </div>
       
       <div class="coaches-container">
-        <!-- left nose shape -->
         <div class="loco-nose">
           <img v-if="getLeftNoseImage()" :src="getLeftNoseImage()" alt="Left Nose" class="nose-image" />
-          <NoseBadge v-else :label="coaches && coaches.length ? coaches[0].number : ''" :width="'100px'" :height="'100%'" :preserve="'none'" :showLabel="false" bg="#f9f9f9" stroke="rgb(217,48,40)" />
         </div>
 
         <div
@@ -27,6 +25,7 @@
           :key="coach.number"
           class="coach-item"
           :class="{ 'coach-disabled': !coach.available || coach.load >= 100 }"
+          @click="openSeatSelection(coach)"
         >
           <div class="coach-header">
             <span class="coach-number">{{ coach.number }}</span>
@@ -39,7 +38,6 @@
             <span v-if="coach.hasBikes" class="amenity-badge bikes" title="Bikes allowed">🚲</span>
           </div>
           
-          <!-- Service Info -->
           <div class="coach-services">
             <div class="service-row" v-if="coach.wifi">
               <span class="service-icon">📶</span>
@@ -70,23 +68,26 @@
           </div>
         </div>
 
-        <!-- right nose shape -->
         <div class="loco-nose">
           <img v-if="getRightNoseImage()" :src="getRightNoseImage()" alt="Right Nose" class="nose-image" />
-          <NoseBadge v-else :label="coaches && coaches.length ? coaches[coaches.length-1].number : ''" :width="'100px'" :height="'100%'" :preserve="'none'" :showLabel="false" bg="#f9f9f9" stroke="rgb(217,48,40)" :flip="true" />
         </div>
       </div>
     </v-card-text>
   </v-card>
+
+  <SeatSelection ref="seatSelectionRef" />
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import NoseBadge from '@/components/NoseBadge.vue'
+import SeatSelection from '@/components/SeatSelection.vue'
 import regio1 from '@/assets/regio1.png'
 import regio2 from '@/assets/regio2.png'
 import ice1 from '@/assets/ice1.png'
 import ice2 from '@/assets/ice2.png'
+
+const seatSelectionRef = ref(null)
 
 const props = defineProps({
   coaches: {
@@ -124,6 +125,12 @@ const getRightNoseImage = () => {
   if (props.trainType.startsWith('RE')) return regio2
   if (props.trainType.startsWith('ICE') || props.trainType.startsWith('IC')) return ice2
   return null
+}
+
+const openSeatSelection = (coach) => {
+  if (coach.available && coach.load < 100) {
+    seatSelectionRef.value?.openCoachSeats(coach)
+  }
 }
 
 </script>
