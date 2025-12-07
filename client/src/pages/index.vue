@@ -44,6 +44,7 @@
                 density="comfortable"
                 class="db-input"
                 @click:append-inner="send"
+                @keydown.enter="send"
               />
             </div>
 
