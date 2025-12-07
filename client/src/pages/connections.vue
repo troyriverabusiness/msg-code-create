@@ -78,7 +78,7 @@
                 <!-- Route Info -->
                 <v-col cols="7" sm="8">
                   <div class="route-text">
-                    {{ formatTime(journey.legs[0].departureTime) }} • {{ journey.startStation.name }}
+                    {{ formatTime(journey.trains[0].departureTime) }} • {{ journey.startStation.name }}
                   </div>
                   <div class="destination-text">
                     → {{ journey.endStation.name }}
@@ -87,7 +87,7 @@
                      Duration: {{ formatDuration(journey.totalTime) }}
                   </div>
                   <div class="journey-info">
-                    {{ formatTime(journey.legs[0].departureTime) }} → {{ formatTime(journey.legs[journey.legs.length-1].arrivalTime) }}
+                    {{ formatTime(journey.trains[0].departureTime) }} → {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
                   </div>
 
                 </v-col>
@@ -95,7 +95,7 @@
                 <!-- Times -->
                 <v-col cols="3" class="text-right pr-2">
                   <div class="time-scheduled">
-                    {{ formatTime(journey.legs[journey.legs.length-1].arrivalTime) }}
+                    {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
                   </div>
                   <!-- Realtime data not yet in Journey model, hiding actual time for now -->
                   <!-- <div class="time-actual" :class="{ 'time-delayed': getDelay(journey) > 0 }">
@@ -107,25 +107,25 @@
             
             <v-expansion-panel-text>
               <div class="panel-content">
-                <!-- Iterate over Legs as Segments -->
-                <div v-for="(leg, index) in journey.legs" :key="index">
+                <!-- Iterate over Trains as Segments -->
+                <div v-for="(train, index) in journey.trains" :key="index">
                   
                   <!-- Train/Leg Header -->
                   <div class="stops-section">
                     <h4 class="stops-title">
-                      {{ leg.train.name }} ({{ leg.train.trainNumber }})
+                      {{ train.name }} ({{ train.trainNumber }})
                       <span class="text-caption text-grey ml-2">
-                        {{ leg.origin.name }} → {{ leg.destination.name }}
+                        {{ train.startLocation.name }} → {{ train.endLocation.name }}
                       </span>
                     </h4>
 
                     <!-- Intermediate Stops (Path) -->
                     <!-- The backend 'train.path' is a list of Stations. -->
-                    <div class="stops-timeline" v-if="leg.train.path && leg.train.path.length > 0">
-                      <div v-for="(stop, stopIndex) in leg.train.path" :key="stopIndex" class="timeline-stop">
+                    <div class="stops-timeline" v-if="train.path && train.path.length > 0">
+                      <div v-for="(stop, stopIndex) in train.path" :key="stopIndex" class="timeline-stop">
                         <div class="timeline-marker">
                           <div class="timeline-dot"></div>
-                          <div class="timeline-line" v-if="stopIndex < leg.train.path.length - 1"></div>
+                          <div class="timeline-line" v-if="stopIndex < train.path.length - 1"></div>
                         </div>
                         <div class="timeline-content">
                           <div class="stop-header">
@@ -142,11 +142,11 @@
                   </div>
 
                   <!-- Transfer Information (only between segments) -->
-                  <div class="transfer-section" v-if="index < journey.legs.length - 1">
+                  <div class="transfer-section" v-if="index < journey.trains.length - 1">
                     <div class="transfer-indicator">
                       <div class="transfer-icon">🔄</div>
                       <div class="transfer-details">
-                        <div class="transfer-station">Umstieg in {{ leg.destination.name }}</div>
+                        <div class="transfer-station">Umstieg in {{ train.endLocation.name }}</div>
                         <div class="transfer-info">
                            <!-- Calculate transfer time if possible, or just show text -->
                            Transfer
@@ -162,9 +162,9 @@
                        We will construct dummy coach objects from the load data to visualize it.
                   -->
                   <CoachSequence 
-                    v-if="leg.train.wagons && leg.train.wagons.length > 0"
-                    :coaches="mapWagonsToCoaches(leg.train.wagons)" 
-                    :train-type="leg.train.name"
+                    v-if="train.wagons && train.wagons.length > 0"
+                    :coaches="mapWagonsToCoaches(train.wagons)" 
+                    :train-type="train.name"
                   />
                 </div>
 
@@ -207,9 +207,10 @@ async function doSearch() {
 }
 
 function getJourneyLabel(journey) {
-  if (!journey.legs || journey.legs.length === 0) return '??'
+  if (!journey.trains || journey.trains.length === 0) return '??'
   // Return first train name e.g. "ICE"
-  return journey.legs[0].train.name.split(' ')[0]
+  const train = journey.trains[0];
+  return train.name ? train.name.split(' ')[0] : (train.trainCategory || 'Bahn')
 }
 
 function formatTime(isoString) {
@@ -242,12 +243,6 @@ function mapWagonsToCoaches(wagonLoads) {
     powerOutlets: 80
   }))
 }
-
-/*
-// Legacy/Unused helpers from frontend (kept for reference if we enhance backend data)
-const getDelay = (item) => { ... }
-const getCoachRecommendation = (coaches) => { ... }
-*/
 </script>
 
 <style scoped>

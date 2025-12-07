@@ -11,7 +11,7 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
   async function fetchPrePlanForPrompt(prompt) {
     console.log("Fetching prePlan for prompt:", prompt);
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/chat', { message: prompt }, {
+      const response = await axios.post('/api/v1/chat', { message: prompt }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -30,16 +30,20 @@ export const useBackendCalls = defineStore('BackendCalls', () => {
     loading.value = true
     error.value = null
     try {
+      // Map frontend 'origin'/'destination' to backend 'start'/'end'
+      const requestBody = {
+        start: origin,
+        end: destination,
+        trip_plan: "", // Optional context
+        departure_time: date
+      }
+
       const response = await fetch('/api/v1/connections', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          origin,
-          destination,
-          date
-        })
+        body: JSON.stringify(requestBody)
       })
 
       if (!response.ok) {
