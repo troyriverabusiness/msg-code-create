@@ -68,7 +68,14 @@ class JourneyService:
         # Sort by total time
         journeys.sort(key=lambda j: j.totalTime)
         
-        return journeys[:10] # Return top 10
+        top_journeys = journeys[:10]
+        
+        # Generate AI Insights ONLY for the top 3 to save time/cost
+        print(f"Generating AI insights for top {min(3, len(top_journeys))} journeys...")
+        for i in range(min(3, len(top_journeys))):
+            top_journeys[i].aiInsight = self._generate_ai_insight(top_journeys[i])
+            
+        return top_journeys
 
     def _create_journey(self, legs: List[Leg]) -> Journey:
         start = legs[0].origin
@@ -97,7 +104,7 @@ class JourneyService:
             description=f"{len(legs)-1} Transfers" if len(legs) > 1 else "Direct"
         )
         
-        journey.aiInsight = self._generate_ai_insight(journey)
+        # journey.aiInsight = self._generate_ai_insight(journey) # Moved to find_routes for performance
         return journey
 
     def _parse_time(self, time_str: str) -> datetime:
@@ -120,34 +127,46 @@ class JourneyService:
 
     def _generate_ai_insight(self, journey: Journey) -> str:
         """
-        Simulates an AI evaluation of the journey.
+        Generates a real AI evaluation of the journey using Bedrock.
         """
-        reasons = []
-        
-        # 1. Punctuality
-        max_delay = 0
-        for leg in journey.legs:
-            if leg.delayInMinutes > max_delay:
-                max_delay = leg.delayInMinutes
-        
-        if max_delay == 0:
-            reasons.append("Typically very punctual.")
-        elif max_delay < 5:
-            reasons.append("Usually on time with minor fluctuations.")
-        elif max_delay < 15:
-            reasons.append("Moderate delays expected on this route.")
-        else:
-            reasons.append("High risk of delay, plan accordingly.")
-
-        # 2. Transfers
-        if journey.transfers == 0:
-            reasons.append("Direct connection - most relaxed option.")
-        elif journey.transfers == 1:
-            reasons.append("Single transfer required.")
+        try:
+            # 1. Prepare Journey Data for Prompt
+            legs_info = []
+            for leg in journey.legs:
+                legs_info.append(f"- {leg.train.name} from {leg.origin.name} to {leg.destination.name} (Delay: {leg.delayInMinutes} min)")
             
-        # 3. Crowd / Comfort (Simulated)
-        train_types = [leg.train.name for leg in journey.legs]
-        if any("ICE" in t for t in train_types):
-            reasons.append("High-speed comfort with ICE.")
-        
-        return "AI Analysis: " + " ".join(reasons)
+            legs_str = "\n".join(legs_info)
+            
+            prompt = f"""
+            Analyze this train journey and provide a short, helpful insight (max 1 sentence).
+            Focus on punctuality, comfort, and ease of transfer.
+            
+            Journey Details:
+            - Total Time: {journey.totalTime} min
+            - Transfers: {journey.transfers}
+            - Legs:
+            {legs_str}
+            
+            If there are delays > 5 min, warn the user.
+            If it's a direct connection, highlight the comfort.
+            If there are tight transfers (assuming 5 min buffer), mention the risk.
+            
+            Output ONLY the insight text.
+            """
+            
+            # 2. Call Bedrock
+            # We use a fresh instance or a shared one. For now, creating a fresh one is safer for statelessness,
+            # but less efficient. Ideally, inject it.
+            from ..data_access.AWS.bedrock_service import BedrockService
+            from ..data_access.AWS.config import AWS_ACCESS_KEY, AWS_SECRET, AWS_REGION
+            
+            bedrock = BedrockService(aws_access_key=AWS_ACCESS_KEY, aws_secret_key=AWS_SECRET, region=AWS_REGION)
+            
+            # We use send_message which returns a dict
+            response = bedrock.send_message(message=prompt, system_prompt="You are a helpful travel assistant.")
+            
+            return response["text"]
+            
+        except Exception as e:
+            print(f"AI Insight Generation Failed: {e}")
+            return "AI Analysis unavailable."

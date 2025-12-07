@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/v1", tags=["connections"])
 
 
 @router.post("/connections", response_model=ConnectionsResponse)
-async def get_connections(request: ConnectionsRequest):
+def get_connections(request: ConnectionsRequest):
     """
     Get train connections between two stations.
 
@@ -24,11 +24,11 @@ async def get_connections(request: ConnectionsRequest):
 
     Returns a list of possible journeys sorted by total travel time.
     """
-    return connections.get_connections(request, departure_time=request.departure_time)
+    return connections.get_connections(request)
 
 
 @router.post("/connections/example", response_model=ConnectionsResponse)
-async def get_connections_example(request: ConnectionsRequest):
+def get_connections_example(request: ConnectionsRequest):
     """
     Get example connections (mock data for testing).
 
@@ -38,7 +38,7 @@ async def get_connections_example(request: ConnectionsRequest):
 
 
 @router.get("/connections", response_model=ConnectionsResponse)
-async def get_connections_get(
+def get_connections_get(
     start: str = Query(..., description="Name of the departure station"),
     end: str = Query(..., description="Name of the destination station"),
     departure_time: Optional[str] = Query(
@@ -63,5 +63,5 @@ async def get_connections_get(
         except ValueError:
             pass
 
-    request = ConnectionsRequest(start=start, end=end, trip_plan="")
-    return connections.get_connections(request, departure_time=dt)
+    request = ConnectionsRequest(start=start, end=end, trip_plan="", departure_time=dt)
+    return connections.get_connections(request)

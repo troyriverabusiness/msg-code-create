@@ -79,7 +79,7 @@
                   <!-- Route Info -->
                   <v-col cols="7" sm="8">
                     <div class="route-text">
-                      {{ formatTime(journey.trains[0].departureTime) }} • {{ journey.startStation.name }}
+                      {{ formatTime(journey.legs[0].departureTime) }} • {{ journey.startStation.name }}
                     </div>
                     <div class="destination-text">
                       → {{ journey.endStation.name }}
@@ -88,7 +88,7 @@
                        Duration: {{ formatDuration(journey.totalTime) }}
                     </div>
                     <div class="journey-info">
-                      {{ formatTime(journey.trains[0].departureTime) }} → {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
+                      {{ formatTime(journey.legs[0].departureTime) }} → {{ formatTime(journey.legs[journey.legs.length-1].arrivalTime) }}
                     </div>
 
                   </v-col>
@@ -96,7 +96,7 @@
                   <!-- Times -->
                   <v-col cols="3" class="text-right pr-2">
                     <div class="time-scheduled">
-                      {{ formatTime(journey.trains[journey.trains.length-1].arrivalTime) }}
+                      {{ formatTime(journey.legs[journey.legs.length-1].arrivalTime) }}
                     </div>
                     <!-- Realtime data not yet in Journey model, hiding actual time for now -->
                     <!-- <div class="time-actual" :class="{ 'time-delayed': getDelay(journey) > 0 }">
@@ -119,25 +119,25 @@
                   </div>
                 </div>
 
-                <!-- Iterate over Trains as Segments -->
-                <div v-for="(train, index) in journey.trains" :key="index">
+                <!-- Iterate over Legs as Segments -->
+                <div v-for="(leg, index) in journey.legs" :key="index">
                     
                     <!-- Train/Leg Header -->
                     <div class="stops-section">
                       <h4 class="stops-title">
-                        {{ train.name }} ({{ train.trainNumber }})
+                        {{ leg.train.name }} ({{ leg.train.trainNumber }})
                         <span class="text-caption text-grey ml-2">
-                          {{ train.startLocation.name }} → {{ train.endLocation.name }}
+                          {{ leg.origin.name }} → {{ leg.destination.name }}
                         </span>
                       </h4>
 
                       <!-- Intermediate Stops (Path) -->
-                      <!-- The backend 'train.path' is a list of Stations. -->
-                      <div class="stops-timeline" v-if="train.path && train.path.length > 0">
-                        <div v-for="(stop, stopIndex) in train.path" :key="stopIndex" class="timeline-stop">
+                      <!-- The backend 'leg.train.path' is a list of Stations. -->
+                      <div class="stops-timeline" v-if="leg.train.path && leg.train.path.length > 0">
+                        <div v-for="(stop, stopIndex) in leg.train.path" :key="stopIndex" class="timeline-stop">
                           <div class="timeline-marker">
                             <div class="timeline-dot"></div>
-                            <div class="timeline-line" v-if="stopIndex < train.path.length - 1"></div>
+                            <div class="timeline-line" v-if="stopIndex < leg.train.path.length - 1"></div>
                           </div>
                           <div class="timeline-content">
                             <div class="stop-header">
@@ -158,14 +158,14 @@
                     </div>
 
                     <!-- Transfer Information (only between segments) -->
-                    <div class="transfer-section" v-if="index < journey.trains.length - 1">
+                    <div class="transfer-section" v-if="index < journey.legs.length - 1">
                       <div class="transfer-indicator">
                         <div class="transfer-icon">🔄</div>
                         <div class="transfer-details">
-                          <div class="transfer-station">Umstieg in {{ train.endLocation.name }}</div>
+                          <div class="transfer-station">Umstieg in {{ leg.destination.name }}</div>
                           <div class="transfer-info">
-                             <span class="transfer-time" :class="getTransferClass(train.arrivalTime, journey.trains[index + 1].departureTime)">
-                               {{ getTransferDuration(train.arrivalTime, journey.trains[index + 1].departureTime) }}
+                             <span class="transfer-time" :class="getTransferClass(leg.arrivalTime, journey.legs[index + 1].departureTime)">
+                               {{ getTransferDuration(leg.arrivalTime, journey.legs[index + 1].departureTime) }}
                              </span>
                              <span class="transfer-separator">•</span>
                              <span class="transfer-distance">Change trains</span>
@@ -175,15 +175,10 @@
                     </div>
                     
                     <!-- Coach Sequence -->
-                    <!-- 
-                         Backend 'wagons' is List[int] (load percentages). 
-                         Frontend 'CoachSequence' expects complex objects.
-                         We will construct dummy coach objects from the load data to visualize it.
-                    -->
                     <CoachSequence 
-                      v-if="train.wagons && train.wagons.length > 0"
-                      :coaches="mapWagonsToCoaches(train.wagons)" 
-                      :train-type="train.name"
+                      v-if="leg.train.wagons && leg.train.wagons.length > 0"
+                      :coaches="mapWagonsToCoaches(leg.train.wagons)" 
+                      :train-type="leg.train.name"
                     />
                   </div>
 
@@ -220,16 +215,20 @@ const search = reactive({
 
 async function doSearch() {
   hasSearched.value = true
-  const today = new Date().toISOString().split('T')[0]
-  const isoDate = `${today}T${search.time}:00`
+  let isoDate = null
+  
+  if (search.time) {
+    const today = new Date().toISOString().split('T')[0]
+    isoDate = `${today}T${search.time}:00`
+  }
   
   await store.fetchConnections(search.origin, search.destination, isoDate)
 }
 
 function getJourneyLabel(journey) {
-  if (!journey.trains || journey.trains.length === 0) return '??'
+  if (!journey.legs || journey.legs.length === 0) return '??'
   // Return first train name e.g. "ICE"
-  const train = journey.trains[0];
+  const train = journey.legs[0].train;
   return train.name ? train.name.split(' ')[0] : (train.trainCategory || 'Bahn')
 }
 

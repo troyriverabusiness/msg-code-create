@@ -5,17 +5,12 @@ from datetime import datetime
 journey_service = JourneyService()
 
 def get_connections(request: ConnectionsRequest) -> ConnectionsResponse:
-    origin = request.origin
-    destination = request.destination
+    origin = request.start
+    destination = request.end
     
     # Extract time from date or use current time
-    # request.date is ISO format (YYYY-MM-DDTHH:MM:SS)
-    if request.date:
-        try:
-            dt = datetime.fromisoformat(request.date)
-            time_str = dt.strftime("%H:%M:%S")
-        except ValueError:
-             time_str = datetime.now().strftime("%H:%M:%S")
+    if request.departure_time:
+        time_str = request.departure_time.strftime("%H:%M:%S")
     else:
         time_str = datetime.now().strftime("%H:%M:%S")
     

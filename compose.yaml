@@ -20,3 +20,5 @@ services:
     restart: unless-stopped
     env_file:
       - server/.env
+    volumes:
+      - ./server:/app/server
