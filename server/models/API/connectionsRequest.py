@@ -14,5 +14,5 @@ class ConnectionsRequest(BaseModel):
         default=None,
         description="Departure time in ISO format (e.g., '2025-12-07T13:00:00'). Defaults to current time if not provided.",
     )
-    via: Optional[str] = None
+    via: Optional[list[str]] = None
     min_transfer_time: Optional[int] = 0

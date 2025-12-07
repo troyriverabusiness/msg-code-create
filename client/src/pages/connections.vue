@@ -332,9 +332,15 @@ async function doSearch() {
 
 function getJourneyLabel(journey) {
   if (!journey.legs || journey.legs.length === 0) return '??'
-  // Return train name e.g. "ICE 123"
-  const train = journey.legs[0].train;
-  return train.name || (train.trainCategory || 'Bahn')
+  
+  // Collect all train names
+  const names = journey.legs.map(leg => {
+    const train = leg.train;
+    return train.name || (train.trainCategory || 'Bahn')
+  });
+  
+  // Join with +
+  return names.join(' + ');
 }
 
 function formatTime(isoString) {

@@ -44,7 +44,8 @@ def get_connections_get(
     departure_time: Optional[str] = Query(
         None, description="Departure time in ISO format (YYYY-MM-DDTHH:MM:SS)"
     ),
-    via: Optional[str] = Query(None, description="Optional via station"),
+    via: Optional[list[str]] = Query(None, description="Optional via station"),
+    via_array: Optional[list[str]] = Query(None, alias="via[]", description="Optional via station (array format)"),
     min_transfer_time: Optional[int] = Query(0, description="Minimum transfer time in minutes"),
 ):
     """
@@ -65,6 +66,15 @@ def get_connections_get(
         except ValueError:
             pass
 
-    print(f"DEBUG: Received request - Start: {start}, End: {end}, Via: {via}, MinTransfer: {min_transfer_time}")
-    request = ConnectionsRequest(start=start, end=end, trip_plan="", departure_time=dt, via=via, min_transfer_time=min_transfer_time)
+    # Merge via and via_array
+    final_via = via or []
+    if via_array:
+        final_via.extend(via_array)
+    
+    # Deduplicate
+    if final_via:
+        final_via = list(set(final_via))
+
+    print(f"DEBUG: Received request - Start: {start}, End: {end}, Via: {final_via}, MinTransfer: {min_transfer_time}")
+    request = ConnectionsRequest(start=start, end=end, trip_plan="", departure_time=dt, via=final_via, min_transfer_time=min_transfer_time)
     return connections.get_connections(request)
