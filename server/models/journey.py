@@ -15,3 +15,4 @@ class Journey(BaseModel):
 
     totalTime: int
     description: str
+    aiInsight: Optional[str] = None

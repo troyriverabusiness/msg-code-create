@@ -10,6 +10,7 @@ COPY . ./server/
 
 # Install dependencies (uv sync needs pyproject.toml)
 WORKDIR /app/server
+ENV UV_HTTP_TIMEOUT=300
 RUN uv sync
 
 # Run the application (from /app so server package is importable)

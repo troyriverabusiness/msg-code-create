@@ -24,6 +24,7 @@ def test_hybrid_flow():
         print(f"SUCCESS: Found journey {journey.id}")
         print(f" - Start: {journey.startStation.name}")
         print(f" - End: {journey.endStation.name}")
+        print(f" - Insight: {journey.aiInsight}")
         print(f" - Legs: {len(journey.legs)}")
         for leg in journey.legs:
             print(f"   - {leg.train.name}: {leg.origin.name} -> {leg.destination.name} (Delay: {leg.delayInMinutes} min, Path: {len(leg.train.path)} stops)")

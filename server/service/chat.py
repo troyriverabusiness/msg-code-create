@@ -1,6 +1,6 @@
 from typing import Optional
-from server.data.AWS.bedrock_service import BedrockService
-from server.data.AWS.config import (
+from server.data_access.AWS.bedrock_service import BedrockService
+from server.data_access.AWS.config import (
     AWS_ACCESS_KEY,
     AWS_SECRET,
     AWS_REGION,

@@ -87,7 +87,7 @@ class JourneyService:
              
         duration_minutes = int((end_dt - start_dt).total_seconds() / 60)
         
-        return Journey(
+        journey = Journey(
             id=str(uuid.uuid4()),
             startStation=start,
             endStation=end,
@@ -96,6 +96,9 @@ class JourneyService:
             totalTime=duration_minutes,
             description=f"{len(legs)-1} Transfers" if len(legs) > 1 else "Direct"
         )
+        
+        journey.aiInsight = self._generate_ai_insight(journey)
+        return journey
 
     def _parse_time(self, time_str: str) -> datetime:
         """
@@ -114,3 +117,37 @@ class JourneyService:
             
         dt = datetime.strptime(f"{h:02d}:{m:02d}:{s:02d}", "%H:%M:%S")
         return dt + timedelta(days=days_delta)
+
+    def _generate_ai_insight(self, journey: Journey) -> str:
+        """
+        Simulates an AI evaluation of the journey.
+        """
+        reasons = []
+        
+        # 1. Punctuality
+        max_delay = 0
+        for leg in journey.legs:
+            if leg.delayInMinutes > max_delay:
+                max_delay = leg.delayInMinutes
+        
+        if max_delay == 0:
+            reasons.append("Typically very punctual.")
+        elif max_delay < 5:
+            reasons.append("Usually on time with minor fluctuations.")
+        elif max_delay < 15:
+            reasons.append("Moderate delays expected on this route.")
+        else:
+            reasons.append("High risk of delay, plan accordingly.")
+
+        # 2. Transfers
+        if journey.transfers == 0:
+            reasons.append("Direct connection - most relaxed option.")
+        elif journey.transfers == 1:
+            reasons.append("Single transfer required.")
+            
+        # 3. Crowd / Comfort (Simulated)
+        train_types = [leg.train.name for leg in journey.legs]
+        if any("ICE" in t for t in train_types):
+            reasons.append("High-speed comfort with ICE.")
+        
+        return "AI Analysis: " + " ".join(reasons)

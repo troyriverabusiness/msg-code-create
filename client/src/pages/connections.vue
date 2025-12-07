@@ -108,8 +108,19 @@
               
               <v-expansion-panel-text>
                 <div class="panel-content">
-                  <!-- Iterate over Trains as Segments -->
-                  <div v-for="(train, index) in journey.trains" :key="index">
+                <!-- AI Insight -->
+                <div class="ai-recommendation-section" v-if="journey.aiInsight">
+                  <div class="recommendation-header">
+                    <div class="ai-icon">✨</div>
+                    <h4 class="recommendation-title">AI Trip Analysis</h4>
+                  </div>
+                  <div class="recommendation-content">
+                    <p class="recommendation-text">{{ journey.aiInsight }}</p>
+                  </div>
+                </div>
+
+                <!-- Iterate over Trains as Segments -->
+                <div v-for="(train, index) in journey.trains" :key="index">
                     
                     <!-- Train/Leg Header -->
                     <div class="stops-section">
@@ -196,7 +207,7 @@
 import { ref, reactive } from 'vue'
 import { useBackendCalls } from '@/stores/backendCalls'
 import CoachSequence from '@/components/CoachSequence.vue'
-import NoseBadge from '@/components/NoseBadge.vue'
+
 
 const store = useBackendCalls()
 const hasSearched = ref(false)

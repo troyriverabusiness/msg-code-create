@@ -13,6 +13,7 @@
             "transfers": 0,
             "totalTime": 105,
             "description": "Direct Connection",
+            "aiInsight": "AI Analysis: Typically very punctual. Direct connection - most relaxed option. High-speed comfort with ICE.",
             "legs": [
                 {
                     "origin": {
@@ -98,6 +99,7 @@
             "transfers": 1,
             "totalTime": 240,
             "description": "1 Transfer",
+            "aiInsight": "AI Analysis: Moderate delays expected on this route. Single transfer required. High-speed comfort with ICE.",
             "legs": [
                 {
                     "origin": {

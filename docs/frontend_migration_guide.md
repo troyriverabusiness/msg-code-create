@@ -162,3 +162,14 @@ The `path` field in the `Train` object has changed from a list of simple `Statio
 - Update loops over `train.path` to access `stop.station.name` instead of `stop.name`.
 - You can now display `stop.arrivalTime` and `stop.departureTime`.
 - You can also display `stop.platform`.
+
+### 4. AI Insights
+
+The `Journey` object now includes an `aiInsight` field with a text summary of the trip's characteristics (punctuality, comfort, etc.).
+
+```json
+"aiInsight": "AI Analysis: Typically very punctual. Direct connection - most relaxed option."
+```
+
+**Frontend Action:**
+- Display this text prominently (e.g., in a highlighted box) to give users quick context.
